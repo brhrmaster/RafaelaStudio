@@ -43,6 +43,17 @@ input.btn-localizar {
   display: block;
   float: right;
 }
+.container table .table-row-et:nth-child(even) {
+  background-color: #b4cffd;
+}
+
+.container table .table-row-et:nth-child(odd) {
+  background-color: #b8fcd9;
+}
+.container table .table-row-et .table-icons {
+  display: block;
+  float: right;
+}
 
 .container table .table-row .table-icons i {
   

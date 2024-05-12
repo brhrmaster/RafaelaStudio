@@ -16,55 +16,55 @@
     <form>
         <div class="container">
             <div class="page-header">
-            <h1><strong>Saída Estoque</strong></h1>
+                <h1><strong>Saída Estoque</strong></h1>
             </div>
             <div class="product">
-        <!--Caixas para inserir as informações-->
-        <div class="input-group">
-            <label for="produto">Produto:</label>
-            <input type="text" id="produto" name="produto">
-            </div>
-            <div class="input-group">
-            <label for="total-saída">Total saída:</label>
-            <input type="number" id="total-saída" name="total-saída">
-            </div>
-        <!--Botões de opção-->
-        <div class="input-field">
-            <label class="label">Produto com validade definida:</label>
-            <input type="radio" id="sim" name="validade-definida" value="sim">
-            <label for="sim">Sim</label>
-            <input type="radio" id="nao" name="validade-definida" value="nao">
-            <label for="nao">Não</label>
-        </div>
-            <div>
-                <label class="input-group" for="date">Validade: 
-                    <input type="date" id="date" name="date">
-                </label>
-              </div>
-              <div class="input-group">
-                <label for="qtd-saída-clientes">Qtd. saída clientes:</label>
-                <input type="number" id="qtd-saída-clientes" name="qtd-saída-clientes">
-                <label for="qtd-saída-clientes-atual">Atual</label>
-                <input type="number" id="qtd-saída-clientes-atual" name="qtd-saída-clientes-atual" disabled>
-                </div>
+                <!--Caixas para inserir as informações-->
                 <div class="input-group">
-                <label for="qtd-saída-cursos">Qtd. saída cursos:</label>
-                <input type="number" id="qtd-saída-cursos" name="qtd-saída-cursos">
-                <label for="qtd-saída-clientes-atual">Atual</label>
-                <input type="number" id="qtd-saída-cursos-atual" name="qtd-saída-cursos-atual" disabled>
+                    <label for="produto">Produto:</label>
+                    <input type="text" id="produto" name="produto">
                 </div>
+                <div class="input-group" style="margin-bottom: 20px;">
+                    <label for="total-saída">Total saída:</label>
+                    <input type="number" id="total-saída" name="total-saída">
+                </div>
+                <!--Botões de opção-->
                 <div class="input-field">
+                    <label class="label">Produto com validade definida:</label>
+                    <input type="radio" id="sim" name="validade-definida" value="sim">
+                    <label for="sim">Sim</label>
+                    <input type="radio" id="nao" name="validade-definida" value="nao">
+                    <label for="nao">Não</label>
+                </div>
+                <div class="input-group" style="margin-bottom: 20px;">
+                    <label for="date">Validade:</label>
+                    <input type="date" id="date" name="date">
+                </div>
+                <div class="input-group" style="margin-bottom: 20px;">
+                    <label for="qtd-saída-clientes">Qtd. Saída clientes:</label>
+                    <input type="number" id="qtd-saída-clientes" name="qtd-saída-clientes">
+                    <label for="qtd-saída-clientes-atual">Atual</label>
+                    <input type="number" id="qtd-saída-clientes-atual" name="qtd-saída-clientes-atual" disabled>
+                </div>
+                <div class="input-group" style="margin-bottom: 20px;">
+                    <label for="qtd-saída-cursos">Qtd. Saída cursos:</label>
+                    <input type="number" id="qtd-saída-cursos" name="qtd-saída-cursos">
+                    <label for="qtd-saída-cursos-atual">Atual</label>
+                    <input type="number" id="qtd-saída-cursos-atual" name="qtd-saída-cursos-atual" disabled>
+                </div>
+                <div class="input-field" style="margin-bottom: 20px;">
                     <label class="label">Estoque atual:</label>
                     <span class="autofill" id="estoque-atual">0</span>
                 </div>
-                <div class="input-field">
+                <div class="input-field" style="margin-bottom: 20px;">
                     <label class="label">Estoque após saída:</label>
                     <span class="autofill" id="estoque-apos-saída">0</span>
-                </div><br>
-            <button class="cancel-button">CANCELAR</button>
-            <button class="save-button">SALVAR</button>
-          </div>
+                </div>
+                <br>
+                <button class="cancel-button">CANCELAR</button>
+                <button class="save-button">SALVAR</button>
+            </div>
+        </div>
     </form>
 </body>
-<!--Novo-->
 </html>

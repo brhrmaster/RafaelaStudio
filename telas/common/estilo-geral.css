@@ -1,8 +1,19 @@
 
+
+/* ------------ LAYOUT ---------------- */
 .page-header {
   background: #E4CCCC;
+}
+
+.row .align-right {
+  float: right
+}
+
+.page-content {
   display: block;
 }
+
+/* ------------ CONTENT ELEMENTS ---------------- */
 
 .page-header h1 {
   display: inline-block;
@@ -11,13 +22,10 @@
   margin: 20px 30px;
 }
 
-.page-content {
-  display: block;
+.table-footer {
+  margin-top: 20px;
 }
 
-input.btn-localizar {
-  margin: 20px 0px;
-}
 
 .container table {
   border-collapse: collapse;
@@ -55,25 +63,26 @@ input.btn-localizar {
   float: right;
 }
 
-.container table .table-row .table-icons i {
-  
-}
 
-.table-footer {
-  margin-top: 20px;
-}
-
+/* NOTA: se isso for específico para a página de produtos, incluir lá na pagina de produtos */
 .product {
   text-align: right;
   padding: 10px;  
 }
 
+
+/* ------------ FORM ELEMENTS ---------------- */
+
+input.btn-localizar {
+  margin: 20px 0px;
+}
+
 button {
   background-color: #4CAF50;
   color: white;
-  border-radius: 15px ;
+  border-radius: 8px ;
   border: 1px solid #cccc;
-  filter:drop-shadow(4px 4px 4px #cccc);
+  filter:drop-shadow(4px 4px 4px #acacac);
   padding: 10px 20px;
   text-align: center;
   text-decoration: none;
@@ -95,37 +104,59 @@ button:hover {
   background-color: #da190b;
 }
 
-input[type="number"] {
+.page-footer button {
+  float: right
+}
+
+input, select {
+  padding: 5px;
+  border-radius: 4px;
   background: #ffff;
   border: 1px solid #cccc;
-  border-radius: 15px;
-  filter:drop-shadow(2px 2px 2px #cccc);
-  padding: 5px;
+  filter:drop-shadow(2px 2px 2px #acacac);
   font-size: 16px;
+}
+
+input.wide {
+  width: 87% !important;
+}
+
+input.small {
+  width: 200px !important;
+}
+
+input[type="number"] {
   width: 150px;
 }
 
 input[type="date"] {
-  background: #ffff;
-  border: 1px solid #cccc;
-  border-radius: 15px;
-  filter:drop-shadow(2px 2px 2px #cccc);
-  padding: 5px;
-  font-size: 16px;
   width: 200px;
 }
 
 input[type="text"] {
-  background: #ffff;
-  border: 1px solid #cccc;
-  border-radius: 15px;
-  filter:drop-shadow(2px 2px 2px #cccc);
-  padding: 5px;
-  font-size: 16px;
   width: 450px;
 }
 
-.input-grpup {
+.input-field {
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+}
+
+.input-field label {
+  width: 150px;
+  text-align: left;
+}
+.input-field input[type="number"],
+.input-field span {
+  width: 100px
+}
+
+.input-field input[type="radio"] {
+  margin-right: 10px;
+}
+
+.input-group {
   display: flex;
   margin-bottom: 24px;
   margin-top: 40px;
@@ -138,30 +169,6 @@ input[type="text"] {
   align-items: stretch;
 }
 
-.input-field {
-  margin-bottom: 10px;
-  display: flex;
-  align-items: center;
-}
-
-.input-field label {
-  width: 150px;
-  text-align: left;
-  margin-right: 10px;
-}
-.input-field input[type="number"],
-.input-field span {
-  width: 100px
-}
-
-.input-field input[type="text"] {
-  width: 100%;
-  padding: 10px;
-  border: 1px solid #ccc;
-}
-.input-field input[type="radio"] {
-  margin-right: 10px;
-}
 .autofill {
   font-weight: bold;
   color: #666;

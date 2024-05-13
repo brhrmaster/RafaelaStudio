@@ -20,6 +20,7 @@
   font-size: 24pt;
   font-family: sans-serif;
   margin: 20px 30px;
+  font-weight: bold;
 }
 
 .table-footer {
@@ -52,24 +53,36 @@
   float: right;
 }
 .container table .table-row-et:nth-child(even) {
-  background-color: #b4cffd;
+  background-color: #CEF4F9;
 }
 
 .container table .table-row-et:nth-child(odd) {
-  background-color: #b8fcd9;
+  background-color: #CEF9D5;
 }
 .container table .table-row-et .table-icons {
   display: block;
   float: right;
 }
 
-
-/* NOTA: se isso for específico para a página de produtos, incluir lá na pagina de produtos */
-.product {
-  text-align: right;
-  padding: 10px;  
+.divisor-block {
+  max-width: 650px;
+  border: 2px solid #d7d7d7;
+  border-radius: 10px;
+  padding: 10px;
+  margin-bottom: 10px;
 }
 
+.read-only label {
+  margin-top: 8px;
+}
+
+.read-only label:last-child {
+  border: 2px solid #ededed;
+  padding: 3px;
+  width: 70px;
+  border-radius: 4px;
+  text-align: center;
+}
 
 /* ------------ FORM ELEMENTS ---------------- */
 
@@ -158,8 +171,7 @@ input[type="text"] {
 
 .input-group {
   display: flex;
-  margin-bottom: 24px;
-  margin-top: 40px;
+  margin-top: 10px;
 }
 
 .input-group label {

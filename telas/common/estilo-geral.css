@@ -185,3 +185,22 @@ input[type="text"] {
   font-weight: bold;
   color: #666;
 }
+
+/*--------------Elemento da lista expansíva-----------*/
+
+summary {
+  display: list-item;
+  cursor:pointer;
+}
+
+details {
+  display: block;
+}
+
+details[open] > summary:first-of-type {
+  list-style-type: disclosure-open;
+}
+
+details > summary:first-of-type {
+  list-style: inside disclosure-closed;
+}

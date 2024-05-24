@@ -121,6 +121,14 @@ button:hover {
   float: right
 }
 
+.ok-button {
+  background-color: rgb(18, 218, 218);
+}
+
+.ok-button:hover {
+  background-color: rgb(3, 146, 146);
+}
+
 input, select {
   padding: 5px;
   border-radius: 4px;
@@ -204,3 +212,11 @@ details[open] > summary:first-of-type {
 details > summary:first-of-type {
   list-style: inside disclosure-closed;
 }
+
+/*---------Modal------------*/
+
+.modal-title-h5 {
+  color:#fcfcfc;
+  background-color: #f56494;
+  text-align: center;
+} 

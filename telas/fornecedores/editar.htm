@@ -28,7 +28,7 @@
         <div class="col-sm-12">
           <div class="input-field">
             <label for="company">Empresa</label>
-            <input type="text" id="company" name="company"/>
+            <input type="text" id="company" name="company" required/>
           </div>
         </div>
       </div>
@@ -37,7 +37,7 @@
         <div class="col-sm-12">
           <div class="input-field">
             <label for="representative">Representante:</label>
-            <input type="text" for="text" id="representative" name="representative">
+            <input type="text" for="text" id="representative" name="representative" required>
           </div>
         </div>
       </div>
@@ -46,7 +46,7 @@
         <div class="col-sm-12">
           <div class="input-field">
             <label for="phone"> Telefone:</label>
-            <input type="text" class="small" id="phone" name="phone" pattern="\([0-9]{2}\)\s[0-9]{4}-[0-9]{4}">
+            <input type="text" class="small" id="phone" name="phone" pattern="\([0-9]{2}\)\s[0-9]{4}-[0-9]{4}" required>
           </div>
         </div>
       </div>
@@ -113,10 +113,37 @@
         </div>
       </div>
 
+      <div class="row">
+        <div class="col-sm-12">
+          <div class="input-field">
+            <label for="product">Produtos:</label>
+            <textarea class="form-control" id="product" rows="3"></textarea>
+          </div>
+        </div>
+      </div>
+
       <div class="row page-footer">
         <div class="col-sm-12">
-          <button class="save-button">SALVAR</button>
-          <button class="cancel-button">CANCELAR</button>
+          <button type="button" class="save-button">SALVAR</button>
+          <button type="button" class="cancel-button">CANCELAR</button>
+        </div>
+      </div>
+
+      <div class="modal fade" id="Mensagem" tabindex="-1" role="dialog" aria-labelledby="Menssagemcentralizada" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-titulo" id="Menssagemcentralizada">Atenção</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              ...
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="ok-button" data-dismiss="modal">Ok</button>
+          </div>
         </div>
       </div>
     </div> 

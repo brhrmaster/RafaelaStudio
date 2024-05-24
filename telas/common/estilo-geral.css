@@ -194,6 +194,15 @@ input[type="text"] {
   color: #666;
 }
 
+.btn-group {
+  display: flex;
+  justify-content: center;
+}
+
+.btn-group button {
+  margin: 0 10px;
+}
+
 /*--------------Elemento da lista expansíva-----------*/
 
 summary {
@@ -217,6 +226,11 @@ details > summary:first-of-type {
 
 .modal-title-h5 {
   color:#fcfcfc;
-  background-color: #f56494;
+  background-color: #eca3bc;
   text-align: center;
 } 
+
+.modal-header-title {
+  background-color: #eca3bc;
+  text-align: center;
+}

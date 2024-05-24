@@ -57,13 +57,13 @@
                 <button type="button" class="btn btn-link" data-bs-toggle="modal" data-bs-target="#deleteModal">
                   <i class="bi bi-arrow-down-up"></i>
                 </button>
-                <button type="button" class="btn btn-link" data-bs-toggle="modal" data-bs-target="#deleteModal">
+                <button type="button" class="btn btn-link" data-bs-toggle="modal" data-bs-target="#manageStockModalLabel">
                   <i class="bi bi-truck"></i>
                 </button>
                 <button type="button" class="btn btn-link" data-bs-toggle="modal" data-bs-target="#deleteModal">
                   <i class="bi bi-pencil-square"></i>
                 </button>
-                <button type="button" class="btn btn-link" data-bs-toggle="modal" data-bs-target="#deleteModal">
+                <button type="button" class="btn btn-link" data-bs-toggle="modal" data-bs-target="#viewModalLabel">
                   <i class="bi bi-trash"></i>
                 </button>
               </td>
@@ -78,14 +78,14 @@
                 <button type="button" class="btn btn-link" data-bs-toggle="modal" data-bs-target="#deleteModal">
                   <i class="bi bi-arrow-down-up"></i>
                 </button>
-                <button type="button" class="btn btn-link" data-bs-toggle="modal" data-bs-target="#deleteModal">
+                <button type="button" class="btn btn-link" data-bs-toggle="modal" data-bs-target="#manageStockModalLabel">
                   <i class="bi bi-truck"></i>
                 </button>
                 <button type="button" class="btn btn-link" data-bs-toggle="modal" data-bs-target="#deleteModal">
                   <i class="bi bi-pencil-square"></i>
                 </button>
                 <i class="bi bi-pencil-square"></i>
-                <button type="button" class="btn btn-link" data-bs-toggle="modal" data-bs-target="#deleteModal">
+                <button type="button" class="btn btn-link" data-bs-toggle="modal" data-bs-target="#viewModalLabel">
                   <i class="bi bi-trash"></i>
                 </button>
               </td>
@@ -100,14 +100,14 @@
                 <button type="button" class="btn btn-link" data-bs-toggle="modal" data-bs-target="#deleteModal">
                   <i class="bi bi-arrow-down-up"></i>
                 </button>
-                <button type="button" class="btn btn-link" data-bs-toggle="modal" data-bs-target="#deleteModal">
+                <button type="button" class="btn btn-link" data-bs-toggle="modal" data-bs-target="#manageStockModalLabel">
                   <i class="bi bi-truck"></i>
                 </button>
                 <button type="button" class="btn btn-link" data-bs-toggle="modal" data-bs-target="#deleteModal">
                   <i class="bi bi-pencil-square"></i>
                 </button>
                 <i class="bi bi-pencil-square"></i>
-                <button type="button" class="btn btn-link" data-bs-toggle="modal" data-bs-target="#deleteModal">
+                <button type="button" class="btn btn-link" data-bs-toggle="modal" data-bs-target="#viewModalLabel">
                   <i class="bi bi-trash"></i>
                 </button>
               </td>
@@ -122,48 +122,52 @@
       </div>
     </div>
     <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="deleteModalLabel">REMOVER PRODUTO</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <div class="modal-body">
-            Deseja realmente remover o produto?
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Não</button>
-            <button type="button" class="btn btn-danger">Sim</button>
-          </div>
+      <div class="modal-dialog modal-dialog-centered modal-dialog-vertical-centered">
+            <div class="modal-content">
+                <div class="modal-header modal-header-title">
+                    <h5 class="modal-title modal-title-h5" id="deleteModalLabel">REMOVER PRODUTO</h5>
+                </div>
+                <div class="modal-body text-center">
+                   <strong>Deseja realmente remover o produto?</strong> 
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="save-button" data-bs-dismiss="modal">Não</button>
+                    <button type="button" class="cancel-button">Sim</button>
+                  </div>
+                </div>
+            </div>
         </div>
       </div>
-    </div>
   </div>
 
   <div class="modal fade" id="manageStockModal" tabindex="-1" aria-labelledby="manageStockModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-vertical-centered">
       <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="manageStockModalLabel">Gerenciar Estoque</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+        <div class="modal-header modal-header-title">
+          <h5 class="modal-title modal-title-h5" id="manageStockModalLabel">Gerenciar Estoque</h5>
         </div>
-        <div class="modal-body">
-          Atualizar estoque do produto: 
+        <div class="modal-body text-center">
+          Atualizar estoque do produto:
         </div>
-        <div class="modal-footer">
-          <strong>Operação desejada:</strong> 
+        <div class="modal-body text-center">
+        <strong>Operação desejada:</strong> 
+        </div>
+        <div class="modal-footer text-center">
+          <div class="btn-group">
           <button type="button" class="save-button" data-bs-dismiss="modal">CANCELAR</button>
           <button type="button" class="ok-button" data-dismiss="modal">ENTRADA</button>
           <button type="button" class="cancel-button" id="btn-save-stock">SAÍDA</button>
         </div>
       </div>
-    </div>
-
-    <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+  </div>
+</div>
+</div>
+</div>  
+      <div class="modal fade" id="viewModal" tabindex="-1" aria-labelledby="viewModalLabel" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="deleteModalLabel">Fornecedores do Produto</h5>
+            <h5 class="modal-title" id="viewModalLabel">Fornecedores do Produto</h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">

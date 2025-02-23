@@ -23,7 +23,9 @@
         <h1>Produtos</h1>
       </div>
       <div class="col-sm-6">
+        <a href="../produtos/cadastro.htm">
         <button class="save-button align-right"><strong>INCLUIR</strong></button>
+      </a>
       </div>
     </div>
     <div class="page-content">
@@ -123,14 +125,16 @@
 <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered modal-dialog-vertical-centered">
     <div class="modal-content">
-      <div class="modal-header">
+      <div class="modal-header justify-content-center">
         <h5 class="modal-title" id="deleteModalLabel">REMOVER PRODUTO</h5>
       </div>
       <div class="modal-body text-center">
         <strong>Deseja realmente remover o produto?</strong>
       </div>
       <div class="modal-footer">
+        <a href="https://github.com/LariCristina/RafaelaStudio/blob/main/carregamento/carregamentoconcluido.html">
         <button type="button" class="save-button"><strong>SIM</strong></button>
+      </a>
               <button type="button" class="cancel-button"><strong>NÃO</strong></button>
       </div>
     </div>
@@ -141,17 +145,21 @@
 <div class="modal fade" id="manageStockModal" tabindex="-1" aria-labelledby="manageStockModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered modal-dialog-vertical-centered">
     <div class="modal-content">
-      <div class="modal-header">
+      <div class="modal-header justify-content-center">
         <h5 class="modal-title" id="manageStockModalLabel">Gerenciar Estoque</h5>
       </div>
       <div class="modal-body text-center">
         <p>Atualizar estoque do produto:</p>
         <strong>Operação desejada:</strong>
       </div>
-      <div class="modal-footer text-center">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">CANCELAR</button>
-        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">ENTRADA</button>
-        <button type="button" class="btn btn-danger" id="btn-save-stock">SAÍDA</button>
+      <div class="modal-footer d-flex justify-content-center">
+        <button type="button" class="cancel-button" data-bs-dismiss="modal"><strong>CANCELAR</strong></button>
+      <a href="../estoque/entrada.htm">
+        <button type="button" class="save-button" data-bs-dismiss="modal"><strong>ENTRADA</strong></button>
+      </a>
+      <a href="../estoque/saida.htm">
+        <button type="button" class="cancel-button" id="btn-save-stock"><strong>SAÍDA</strong></button>
+      </a>
       </div>
     </div>
   </div>
@@ -169,7 +177,7 @@
         <textarea class="form-control" id="product" rows="3"></textarea>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">FECHAR</button>
+        <button type="button" class="save-button" data-bs-dismiss="modal"><strong>FECHAR</strong></button>
       </div>
     </div>
   </div>
@@ -179,15 +187,17 @@
 <div class="modal fade" id="editStockModal" tabindex="-1" aria-labelledby="editStockModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered modal-dialog-vertical-centered">
     <div class="modal-content">
-      <div class="modal-header">
+      <div class="modal-header justify-content-center">
         <h5 class="modal-title" id="editStockModalLabel">Editar Produto</h5>
       </div>
-      <div class="modal-body text-center">
+      <div class="modal-body text-center justify-content-center">
         <strong>Deseja editar esse produto?</strong>
       </div>
       <div class="modal-footer text-center">
-        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Sim</button>
-        <button type="button" class="btn btn-danger" id="btn-save-stock">Não</button>
+        <a href="../produtos/editar.htm">
+        <button type="button" class="save-button" data-bs-dismiss="modal"><strong>SIM</strong></button>
+      </a>
+        <button type="button" class="cancel-button" id="btn-save-stock"><strong>NÃO</strong></button>
       </div>
     </div>
   </div>

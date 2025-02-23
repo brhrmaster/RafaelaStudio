@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Usuário</title>
@@ -9,19 +9,54 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="css/style.css"/>
     <link href="../common/estilo-geral.css" rel="stylesheet">
+    <link rel="stylesheet" href="../home/css/sidebar.css">
     <script src="../common/utils.js"></script>
-  </head>
-  <body>
+    <style>
+        .rounded-image {
+            width: 100px; /* Tamanho da imagem */
+            height: 100px; /* Tamanho da imagem */
+            border-radius: 50%; /* Formato redondo */
+        }
+        .info-box {
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 15px;
+            margin-top: 15px;
+            background-color: rgb(220, 197, 200);
+        }
+    </style>
+</head>
+<body>
     <div class="container">
-      <div class="row page-header">
-        <div class="col-sm-12">
-          <h1>Usuário</h1>
+        <div class="row page-header">
+            <div class="col-sm-6">
+                <h1>Usuário</h1>
+            </div>
+            <div class="col-sm-6 text-end">
+                <button class="save-button"><strong>CADASTRAR USUÁRIO</strong></button>
+            </div>
         </div>
-      </div>
-      <div class="image-container">
-        ​<div class="image-container-user" scr="../img/Rafa1" alt="user">
-
+        
+        <div class="row">
+            <div class="col-sm-8">
+                <div class="info-box">
+                    <h5>Informações do Usuário</h5>
+                    <p><strong>Nome Completo:</strong> Rafaela Moraes</p>
+                    <p><strong>Idade:</strong> 30 anos (Data de Nascimento: 01/01/1995)</p>
+                    <p><strong>Cargo:</strong> Designer de Sobrancelha</p>
+                    <p><strong>Dia de Admissão:</strong> 15/03/2020</p>
+                    <p><strong>Telefone:</strong> (11) 91234-5678</p>
+                </div>
+            </div>
+            <div class="col-sm-4 d-flex align-items-center">
+                <div class="container-login text-center">
+                    <img class="rounded-image" src="../img/Rafa1.jpg" alt="bx-user-circle">
+                    <button class="btn btn-light ms-2" title="Editar imagem">
+                        <i class="bi bi-pencil"></i>
+                    </button>
+                </div>
+            </div>
         </div>
-      </div>
-  </body>
+    </div>
+</body>
 </html>

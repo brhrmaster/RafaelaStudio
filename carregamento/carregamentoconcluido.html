@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tela de Carregamento concluido</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <style>
+        body, html {
+            height: 100%;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: rgb(220, 197, 200);
+        }
+        .loader {
+            width: 100px;
+            height: 100px;
+            border: 8px solid rgb(165, 65, 98); /* Cor do círculo */
+            border-top: 8px solid rgb(218, 37, 97); /* Cor do topo do círculo */
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            position: relative;
+        }
+        .loader.complete {
+            border-color: #28a745; /* Cor verde quando completo */
+            animation: none; /* Para a animação */
+        }
+        .check-icon {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 40px;
+            color: #28a745;
+            display: none; /* Escondido inicialmente */
+        }
+        .message {
+            display: none; /* Escondido inicialmente */
+            margin-top: 20px;
+            font-size: 20px;
+            color: #28a745; /* Cor verde */
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="loader" id="loader">
+        <i class="bi bi-check-circle check-icon" id="checkIcon"></i>
+    </div>
+    <div class="message" id="message"><strong>Concluído</strong></div>
+
+    <script>
+        // Simula o carregamento
+        setTimeout(() => {
+            const loader = document.getElementById('loader');
+            const checkIcon = document.getElementById('checkIcon');
+            const message = document.getElementById('message');
+
+            // Muda o estado do loader
+            loader.classList.add('complete');
+            checkIcon.style.display = 'block'; // Mostra o ícone de check
+            message.style.display = 'block'; // Mostra a mensagem
+        }, 3000); // Tempo de carregamento em milissegundos (3 segundos)
+    </script>
+</body>
+</html>

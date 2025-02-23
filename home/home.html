@@ -22,7 +22,7 @@
               <span class="tooltip">Search</span>
           </li>
           <li>
-            <a href="#">
+            <a href="../telas/usuario/usuario.html">
               <i class='bx bx-user-circle'></i>
               <span class="links_name">Usuário</span>
             </a>
@@ -36,35 +36,35 @@
               <span class="tooltip">Menssagens</span>
           </li>
           <li>
-              <a href="#">
+              <a href="../telas/estoque/lista.htm">
                   <i class='bx bxs-inbox'></i> <!--Estilo de botão-->
                   <span class="links_name">Estoque</span>
               </a>
               <span class="tooltip">Estoque</span>
           </li>
           <li>
-              <a href="#">
+              <a href="../telas/produtos/lista.htm">
                   <i class='bx bx-folder'></i> <!--Estilo de botão-->
                   <span class="links_name">Produtos</span>
               </a>
               <span class="tooltip">Produtos</span>
           </li>
           <li>
-              <a href="#">
+              <a href="../telas/fornecedores/lista.htm">
                   <i class='bx bx-cart-add'></i> <!--Estilo de botão--> 
                   <span class="links_name">Fornecedores</span>
               </a>
               <span class="tooltip">Fornecedores</span>
           </li>
           <li>
-              <a href="#">
+              <a href="../telas/estoque/entrada.htm">
                   <i class='bx bx-bookmark-plus'></i> <!--Estilo de botão--> 
                   <span class="links_name">Entrada</span>
               </a>
               <span class="tooltip">Entrada</span>
           </li>
           <li>
-              <a href="#">
+              <a href="../telas/estoque/saida.htm">
                   <i class='bx bx-bookmark-alt-minus'></i> <!--Estilo de botão-->
                   <span class="links_name">Saída</span>
               </a>
@@ -78,15 +78,34 @@
                 <div class="job">Desing de Sobrancelha</div>
               </div>
             </div>      
-              <i class='bx bx-log-out' id="log_out"></i> <!--Caixa de logout-->
+            <i class='bx bx-log-out' id="log_out"></i> <!-- Ícone de logout -->
+                <span class="tooltip">Sair</span>
           </li>
       </ul>
     </div>
     <section class="home-section">
-        <div class="text">Estoque</div> <!--Nome da caixa de Menu-->
+        <div class="text"><strong>Olá, Rafaela!</strong></div> <!--Nome da caixa de Menu-->
         <div class="">
             <img class="rounded-image" src="../img/RafaLogo.jpeg" alt="Logo">
         </div>
     </section>
+
+    <!--Modal de sair-->
+
+    <div class="modal" id="log_outModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Sair</h5>
+                <span class="close" id="closeModal">&times;</span>
+            </div>
+            <div class="modal-body text-center">
+                <strong>Deseja sair?</strong>
+            </div>
+            <div class="modal-footer">
+                <button class="btn yes-button" id="yesButton">Sim</button>
+                <button class="btn no-button" id="noButton">Não</button>
+            </div>
+        </div>
+    </div>
 </body>
 </html>

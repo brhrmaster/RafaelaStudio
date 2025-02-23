@@ -361,3 +361,14 @@ a:hover {
     0% {transform:rotateY(0);}
     50% {transform:rotateY(90deg);}
 }
+
+.image-container-user {
+    display: block;
+    align-items:center; /* Centraliza verticalmente */
+    width: 280px 50%;
+    height: 280px 10%;
+    margin-left: auto;
+    margin-right: auto;
+    object-fit: contain;
+
+}

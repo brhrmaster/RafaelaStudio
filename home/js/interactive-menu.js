@@ -28,3 +28,28 @@ function prepareButtons() {
     // });
     //Retirar o código comentado para funcionar normalmente.
 }
+
+document.getElementById('log_out').onclick = function() {
+    document.getElementById('log_outModal').style.display = 'block';
+}
+
+document.getElementById('closeModal').onclick = function() {
+    document.getElementById('log_outModal').style.display = 'none';
+}
+
+document.getElementById('noButton').onclick = function() {
+    document.getElementById('log_outModal').style.display = 'none';
+}
+
+document.getElementById('yesButton').onclick = function() {
+    alert('Você saiu!'); // Aqui você pode adicionar a lógica de logout
+    document.getElementById('log_outModal').style.display = 'none';
+}
+
+// Fecha o modal se o usuário clicar fora dele
+window.onclick = function(event) {
+    const modal = document.getElementById('log_outModal');
+    if (event.target == modal) {
+        modal.style.display = 'none';
+    }
+}

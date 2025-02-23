@@ -60,8 +60,12 @@
           <td>Maurício Lima</td>
           <td><i class="bi bi-whatsapp"></i> (11) 98428-1525</td>
           <td class="table-icons">
-            <i class="bi bi-pencil-square"></i>
-            <i class="bi bi-trash"></i>
+            <button type="button" class="btn btn-link" data-bs-toggle="modal" data-bs-target="#editStockModal">
+              <i class="bi bi-pencil-square"></i>
+            </button>
+            <button type="button" class="btn btn-link" data-bs-toggle="modal" data-bs-target="#deleteModal">
+              <i class="bi bi-trash"></i>
+            </button>
           </td>
         </tr>
         <tr class="table-row" details>
@@ -78,8 +82,12 @@
             <td>João Carlos</td>
             <td><i class="bi bi-whatsapp"></i> (18) 99541-1215</td>
             <td class="table-icons">
-              <i class="bi bi-pencil-square"></i>
-              <i class="bi bi-trash"></i>
+              <button type="button" class="btn btn-link" data-bs-toggle="modal" data-bs-target="#editStockModal">
+                <i class="bi bi-pencil-square"></i>
+              </button>
+              <button type="button" class="btn btn-link" data-bs-toggle="modal" data-bs-target="#deleteModal">
+                <i class="bi bi-trash"></i>
+              </button>
             </td>
           </tr><tr class="table-row" details>
             <td>
@@ -95,8 +103,12 @@
             <td>Marta Dias</td>
             <td><i class="bi bi-whatsapp"></i> (21) 97415-5222</td>
             <td class="table-icons">
-              <i class="bi bi-pencil-square"></i>
-              <i class="bi bi-trash"></i>
+              <button type="button" class="btn btn-link" data-bs-toggle="modal" data-bs-target="#editStockModal">
+                <i class="bi bi-pencil-square"></i>
+              </button>
+              <button type="button" class="btn btn-link" data-bs-toggle="modal" data-bs-target="#deleteModal">
+                <i class="bi bi-trash"></i>
+              </button>
             </td>
           </tr>
       </table>
@@ -108,5 +120,39 @@
         </div>
     </div>
   </div>
+      <!-- Modal REMOVER PRODUTO -->
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-vertical-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="deleteModalLabel">REMOVER PRODUTO</h5>
+      </div>
+      <div class="modal-body text-center">
+        <strong>Deseja realmente remover o produto?</strong>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="save-button"><strong>SIM</strong></button>
+              <button type="button" class="cancel-button"><strong>NÃO</strong></button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Modal Editar produto -->
+<div class="modal fade" id="editStockModal" tabindex="-1" aria-labelledby="editStockModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-vertical-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="editStockModalLabel">Editar Produto</h5>
+      </div>
+      <div class="modal-body text-center">
+        <strong>Deseja editar esse produto?</strong>
+      </div>
+      <div class="modal-footer text-center">
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Sim</button>
+        <button type="button" class="btn btn-danger" id="btn-save-stock">Não</button>
+      </div>
+    </div>
+  </div>
+</div>
 </body>
 </html>

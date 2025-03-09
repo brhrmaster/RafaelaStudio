@@ -341,7 +341,7 @@ a:hover {
 .image-slider {
     overflow: hidden;
     position: absolute; /* Mude a posição para 'relative' */
-    bottom: 115px;
+    bottom: 40px;
     filter:drop-shadow(10px 8px 6px #ac8290);
     object-fit: cover;
     border-radius: 50%;

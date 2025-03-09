@@ -1,64 +1,53 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8"/>
-        <meta http-equiv="X-UA-Compatible" content="Ie=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Login Estoque Rafaela Moraes</title>
-        <link rel="stylesheet" href="css/style.css"/>
-        <script src="js/slider.js"></script>
-        <script src="js/login.js"></script>
-    </head>
-    <body onload="prepareAndRunSlides(8)">
-        <div class="container">
-            <div class="image-container">
-                <div class="image-slider image-ani" style="display: none;">
-                    <img src="img/RafaLogo.jpeg" alt="Imagem 1" width="500" height="500" object-fit="containe">
-                </div>
-                <div class="image-slider  image-ani">
-                    <img src="img/Rafa1.jpg" alt="Imagem 2" width="500" height="500" object-fit="containe">
-                </div>
-                <div class="image-slider image-ani">
-                    <img src="img/Rafa2.jpeg" alt="Imagem 3" width="500" height="500" object-fit="containe">
-                </div>
-            </div>
 
-            <div class="container-login"> <!---- Estilo do login--> 
-                <div class="wrap-login"> <!--Estilo do fomulário de login-->
-                    <form class="login-form">
-                        <span class="login-form-title">
-                            Login <!--Titulo do Login que aparece na página-->
-                        </span>
-                        <div class="wrap-input margin-top-35 margin-bottom-35">
-                            <input class="input-form" type="usuario" name="usuario" autocomplete="off"/>
-                            <span class="focus-input-form" data-placeholder="Usuário">
-                                <!--Como vai aparcer na tela solicitando o usuário-->
-                            </span>
-                        </div>
-                        <div class="wrap-input margin-bottom-35">
-                            <input class="input-form" type="password" name="password"/>
-                            <span class="focus-input-form" data-placeholder="Senha">
-                                <!--Como vai aparcer na tela solicitando a senha-->
-                            </span>
-                        </div>
-                        <div class="container-login-form-btn">
-                            <button class="login-form-btn">
-                                Login
-                            </button>
-                        </div>
-                        <ul class="login-utlis"> <!--Lista-->
-                            <li class="margen-top-8 margen-bottom-8"> <!--Itens da Lista--> 
-                            <span class="text1">
-                                Esqueceu sua 
-                            </span>
-                            <a href="#" class="text2">
-                                Senha?
-                            </a>
-                            </li>
-                        </ul>
-                    </form>
-                </div>
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="Ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Estoque Rafaela Moraes</title>
+    <link rel="stylesheet" href="css/style.css" />
+    <script src="js/slider.js"></script>
+    <script src="js/login.js"></script>
+</head>
+
+<body onload="prepareAndRunSlides(8)">
+    <div class="container">
+        <div class="image-container">
+            <div class="image-slider image-ani" style="display: none;">
+                <img src="img/RafaLogo.jpeg" alt="Imagem 1" width="500" height="500" style="object-fit: contain;">
+            </div>
+            <div class="image-slider image-ani">
+                <img src="img/Rafa1.jpg" alt="Imagem 2" width="500" height="500" style="object-fit: contain;">
             </div>
         </div>
-    </body>
+
+        <div class="container-login"> <!-- Estilo do login -->
+            <div class="wrap-login"> <!-- Estilo do formulário de login -->
+                <form class="login-form" action="../RafaelaStudio/home/home.html" method="GET"> <!-- Redireciona ao enviar -->
+                    <span class="login-form-title">
+                        Login <!-- Título do Login que aparece na página -->
+                    </span>
+                    <div class="wrap-input margin-top-35 margin-bottom-35">
+                        <input class="input-form" type="text" name="usuario" autocomplete="off" required />
+                        <span class="focus-input-form" data-placeholder="Usuário"></span>
+                    </div>
+                    <div class="wrap-input margin-bottom-35">
+                        <input class="input-form" type="password" name="password" required />
+                        <span class="focus-input-form" data-placeholder="Senha"></span>
+                    </div>
+                    <div class="container-login-form-btn">
+                        <button type="submit" class="login-form-btn"><strong>Login</strong></button>
+                    </div>
+                    <ul class="login-utlis"> <!-- Lista -->
+                        <li class="margen-top-8 margen-bottom-8"> <!-- Itens da Lista -->
+                            <span class="text1">Esqueceu sua</span>
+                            <a href="carregamento/index2.html" class="text2">Senha?</a>
+                        </li>
+                    </ul>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
 </html>

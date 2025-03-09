@@ -35,11 +35,11 @@
     left: 0;
     top: 0;
     height: 100%;
-    width: 78px;
+    width: 82px;
     background-color: #333333;
-    padding: 6px 14px;
+    padding: 6px 0px;
     z-index: 99;
-    transition: all 0.5s ease;
+    transition: all 0.5sease;
 }
 
 .sidebar.open {
@@ -70,6 +70,7 @@
 .sidebar.open .logo-details .icon,
 .sidebar.open .logo-details .logo_nome {
     opacity: 1;
+    right: 15px;
 }
 
 .sidebar .logo-details #btn {
@@ -87,6 +88,7 @@
 
 .sidebar.open .logo-details #btn {
     text-align: right;
+    left: 149px;
 }
 
 .sidebar i {
@@ -99,7 +101,7 @@
 }
 
 .sidebar .nav-list {
-    margin-top: 20px;
+    margin-top: 0px;
     height: 100%;
 }
 
@@ -176,6 +178,67 @@
     color:#333333;
  }
 
+ .sidebar.open .bx-user-circle:hover {
+    background: #333333;
+    color:#ffB6C1;
+ }
+
+ .sidebar .bx-user-circle:hover {
+    background: #ffB6C1;
+    color:#333333;
+ }
+
+ .sidebar.open .bx-chat:hover {
+    background: #333333;
+    color:#ffB6C1;
+ }
+
+ .sidebar .bx-chat:hover {
+    background: #ffB6C1;
+    color:#333333;
+ }
+
+ .sidebar.open .bxs-inbox:hover {
+    background: #333333;
+    color:#ffB6C1;
+ }
+
+ .sidebar .bxs-inbox:hover {
+    background: #ffB6C1;
+    color:#333333;
+ }
+
+ .sidebar.open .bx-bx-folder:hover {
+    background: #333333;
+    color:#ffB6C1;
+ }
+
+ .sidebar .bx-folder:hover {
+    background: #ffB6C1;
+    color:#333333;
+ }
+
+ .sidebar.open .bx-bookmark-plus:hover {
+    background: #333333;
+    color:#ffB6C1;
+ }
+
+ .sidebar .bx-bookmark-plus:hover {
+    background: #ffB6C1;
+    color:#333333;
+ }
+
+ .sidebar.open .bx-bookmark-alt-minus:hover {
+    background: #333333;
+    color:#ffB6C1;
+ }
+
+ .sidebar .bx-bookmark-alt-minus:hover {
+    background: #ffB6C1;
+    color:#333333;
+ }
+
+
  .sidebar li a {
     display: flex;
     height: 100%;
@@ -188,22 +251,24 @@
  }
 
  .sidebar li a:hover {
-    background-color: #ffB6C1;
+
+    background-color: #333333;
  }
 
  .sidebar li a .links_name {
-    color: #ffB6C1;
-    font-size: 15px;
+    font-size: 22px;
     font-weight: 400;
     white-space: nowrap;
     opacity: 0;
     pointer-events: none;
     transition: 0.4s;
+ 
  }
 
  .sidebar.open li a .links_name {
     opacity: 1;
     pointer-events: auto;
+    color: #ffB6C1;
  }
 
  .sidebar li a:hover .links_name,
@@ -264,6 +329,32 @@
     font-size:12px;
 }
 
+.profile-details {
+    display: flex;
+    align-items: center; /* Alinha verticalmente */
+}
+
+.profile-details img {
+    border-radius: 50%; /* Torna a imagem redonda */
+    width: 50px; /* Ajuste o tamanho da imagem conforme necessário */
+    height: 50px; /* Ajuste o tamanho da imagem conforme necessário */
+    margin-right: 10px; /* Espaçamento à direita da imagem */
+}
+
+.name_job {
+    display: flex;
+    flex-direction: column; /* Coloca o nome e o trabalho em coluna */
+}
+
+.name {
+    font-weight: bold; /* Negrito para o nome */
+}
+
+.job {
+    font-size: 0.9em; /* Tamanho da fonte menor para o trabalho */
+    color: gray; /* Cor do texto do trabalho */
+}
+
 .sidebar .profile #log_out {
     position: absolute;
     top: 50%;
@@ -278,7 +369,7 @@
 }
 
 .sidebar.open .profile #log_out {
-    width: 50px;
+    width:110px;
     background: none;
 }
 
@@ -288,7 +379,7 @@
     background-attachment: scroll;
     min-height: 100vh;
     top: 0;
-    left: 78px;
+    left: 82px;
     width: calc(100% - 78px);
     transition: all 0.5 ease;
 

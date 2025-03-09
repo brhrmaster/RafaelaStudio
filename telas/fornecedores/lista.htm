@@ -1,30 +1,42 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Lista Fornecedores</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+    crossorigin="anonymous"></script>
 
   <link href="../common/estilo-geral.css" rel="stylesheet">
   <script src="../common/utils.js"></script>
 
   <style>
     /* Correção para expandir a linha da tabela */
-    tr.details { display: none; }
-    tr.details.open { display: table-row; }
+    tr.details {
+      display: none;
+    }
+
+    tr.details.open {
+      display: table-row;
+    }
   </style>
 </head>
+
 <body>
   <div class="container">
     <div class="row page-header">
       <div class="col-sm-6">
-        <h1>Produtos</h1>
+        <h1>Lista de Fornecedores</h1>
       </div>
       <div class="col-sm-6">
-        <button class="save-button align-right"><strong>INCLUIR</strong></button>
+        <a href="../fornecedores/cadastro.htm">
+          <button class="save-button align-right"><strong>INCLUIR</strong></button>
+        </a>
       </div>
     </div>
     <div class="page-content">
@@ -37,122 +49,130 @@
             aria-label="Localizar produto..">
         </div>
       </div>
-<div class="row">
-    <div class="col-sm-12">
-      <table>
-        <tr class="table-header">
-          <td><b>Empresa</b></td>
-          <td><b>Representante</b></td>
-          <td><b>Telefone</b></td>
-          <td>&nbsp;</td>
-        </tr>
-        <tr class="table-row" details>
-          <td>
-            <details>
-           <summary>Almeida cosmésticos</summary> 
-            <br>
-            <p><strong>Endereço:</strong></p>
-            <p><strong>Cep:</strong></p>
-            <p><strong>Email:</strong><a class="link-opacity-10-hover" href="#"> contato@almeidacosmeticos.com</a></p>
-            <p><strong>Site:</strong><a class="link-opacity-10-hover" href="#"> www.almeidacosmetesticos.com.br</a></p>
-        </details>
-          </td>
-          <td>Maurício Lima</td>
-          <td><i class="bi bi-whatsapp"></i> (11) 98428-1525</td>
-          <td class="table-icons">
-            <button type="button" class="btn btn-link" data-bs-toggle="modal" data-bs-target="#editStockModal">
-              <i class="bi bi-pencil-square"></i>
-            </button>
-            <button type="button" class="btn btn-link" data-bs-toggle="modal" data-bs-target="#deleteModal">
-              <i class="bi bi-trash"></i>
-            </button>
-          </td>
-        </tr>
-        <tr class="table-row" details>
-            <td>
-              <details>
-             <summary>Vienna Hair</summary> 
-              <br>
-              <p><strong>Endereço:</strong></p>
-            <p><strong>Cep:</strong></p>
-            <p><strong>Email:</strong></p>
-            <p><strong>Site:</strong></p>
-          </details>
-            </td>
-            <td>João Carlos</td>
-            <td><i class="bi bi-whatsapp"></i> (18) 99541-1215</td>
-            <td class="table-icons">
-              <button type="button" class="btn btn-link" data-bs-toggle="modal" data-bs-target="#editStockModal">
-                <i class="bi bi-pencil-square"></i>
-              </button>
-              <button type="button" class="btn btn-link" data-bs-toggle="modal" data-bs-target="#deleteModal">
-                <i class="bi bi-trash"></i>
-              </button>
-            </td>
-          </tr><tr class="table-row" details>
-            <td>
-              <details>
-             <summary>Commetti Lins Pair</summary> 
-              <br>
-              <p><strong>Endereço:</strong></p>
-            <p><strong>Cep:</strong></p>
-            <p><strong>Email:</strong></p>
-            <p><strong>Site:</strong></p>
-          </details>
-            </td>
-            <td>Marta Dias</td>
-            <td><i class="bi bi-whatsapp"></i> (21) 97415-5222</td>
-            <td class="table-icons">
-              <button type="button" class="btn btn-link" data-bs-toggle="modal" data-bs-target="#editStockModal">
-                <i class="bi bi-pencil-square"></i>
-              </button>
-              <button type="button" class="btn btn-link" data-bs-toggle="modal" data-bs-target="#deleteModal">
-                <i class="bi bi-trash"></i>
-              </button>
-            </td>
-          </tr>
-      </table>
-    </div>
+      <div class="row">
+        <div class="col-sm-12">
+          <table>
+            <tr class="table-header">
+              <td><b>Empresa</b></td>
+              <td><b>Representante</b></td>
+              <td><b>Telefone</b></td>
+              <td>&nbsp;</td>
+            </tr>
+            <tr class="table-row" details>
+              <td>
+                <details>
+                  <summary>Almeida cosmésticos</summary>
+                  <br>
+                  <p><strong>Endereço:</strong></p>
+                  <p><strong>Cep:</strong></p>
+                  <p><strong>Email:</strong><a class="link-opacity-10-hover" href="#"> contato@almeidacosmeticos.com</a>
+                  </p>
+                  <p><strong>Site:</strong><a class="link-opacity-10-hover" href="#">
+                      www.almeidacosmetesticos.com.br</a></p>
+                </details>
+              </td>
+              <td>Maurício Lima</td>
+              <td><i class="bi bi-whatsapp"></i> (11) 98428-1525</td>
+              <td class="table-icons">
+                <button type="button" class="btn btn-link" data-bs-toggle="modal" data-bs-target="#editStockModal">
+                  <i class="bi bi-pencil-square"></i>
+                </button>
+                <button type="button" class="btn btn-link" data-bs-toggle="modal" data-bs-target="#deleteModal">
+                  <i class="bi bi-trash"></i>
+                </button>
+              </td>
+            </tr>
+            <tr class="table-row" details>
+              <td>
+                <details>
+                  <summary>Vienna Hair</summary>
+                  <br>
+                  <p><strong>Endereço:</strong></p>
+                  <p><strong>Cep:</strong></p>
+                  <p><strong>Email:</strong></p>
+                  <p><strong>Site:</strong></p>
+                </details>
+              </td>
+              <td>João Carlos</td>
+              <td><i class="bi bi-whatsapp"></i> (18) 99541-1215</td>
+              <td class="table-icons">
+                <button type="button" class="btn btn-link" data-bs-toggle="modal" data-bs-target="#editStockModal">
+                  <i class="bi bi-pencil-square"></i>
+                </button>
+                <button type="button" class="btn btn-link" data-bs-toggle="modal" data-bs-target="#deleteModal">
+                  <i class="bi bi-trash"></i>
+                </button>
+              </td>
+            </tr>
+            <tr class="table-row" details>
+              <td>
+                <details>
+                  <summary>Commetti Lins Pair</summary>
+                  <br>
+                  <p><strong>Endereço:</strong></p>
+                  <p><strong>Cep:</strong></p>
+                  <p><strong>Email:</strong></p>
+                  <p><strong>Site:</strong></p>
+                </details>
+              </td>
+              <td>Marta Dias</td>
+              <td><i class="bi bi-whatsapp"></i> (21) 97415-5222</td>
+              <td class="table-icons">
+                <button type="button" class="btn btn-link" data-bs-toggle="modal" data-bs-target="#editStockModal">
+                  <i class="bi bi-pencil-square"></i>
+                </button>
+                <button type="button" class="btn btn-link" data-bs-toggle="modal" data-bs-target="#deleteModal">
+                  <i class="bi bi-trash"></i>
+                </button>
+              </td>
+            </tr>
+          </table>
+        </div>
       </div>
       <div class="row">
         <div class="col-sm-12 text-center table-footer">
           <i class="bi bi-arrow-left-circle"></i> 1 / 1 <i class="bi bi-arrow-right-circle"></i>
         </div>
-    </div>
-  </div>
-      <!-- Modal REMOVER PRODUTO -->
-<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered modal-dialog-vertical-centered">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="deleteModalLabel">REMOVER PRODUTO</h5>
-      </div>
-      <div class="modal-body text-center">
-        <strong>Deseja realmente remover o produto?</strong>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="save-button"><strong>SIM</strong></button>
-              <button type="button" class="cancel-button"><strong>NÃO</strong></button>
       </div>
     </div>
-  </div>
-</div>
-<!-- Modal Editar produto -->
-<div class="modal fade" id="editStockModal" tabindex="-1" aria-labelledby="editStockModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered modal-dialog-vertical-centered">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="editStockModalLabel">Editar Produto</h5>
-      </div>
-      <div class="modal-body text-center">
-        <strong>Deseja editar esse produto?</strong>
-      </div>
-      <div class="modal-footer text-center">
-        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Sim</button>
-        <button type="button" class="btn btn-danger" id="btn-save-stock">Não</button>
+    <!-- Modal REMOVER PRODUTO -->
+    <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered modal-dialog-vertical-centered">
+        <div class="modal-content">
+          <div class="modal-header justify-content-center">
+            <h5 class="modal-title" id="deleteModalLabel">REMOVER PRODUTO</h5>
+          </div>
+          <div class="modal-body text-center">
+            <strong>Deseja realmente remover o produto?</strong>
+          </div>
+          <div class="modal-footer">
+            <a href="../produtos/concluido.htm">
+              <button type="button" class="save-button"><strong>SIM</strong></button>
+            </a>
+            <button type="button" class="cancel-button"><strong>NÃO</strong></button>
+          </div>
+        </div>
       </div>
     </div>
-  </div>
-</div>
+    <!-- Modal Editar produto -->
+    <div class="modal fade" id="editStockModal" tabindex="-1" aria-labelledby="editStockModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered modal-dialog-vertical-centered">
+        <div class="modal-content">
+          <div class="modal-header justify-content-center">
+            <h5 class="modal-title" id="editStockModalLabel">Editar Produto</h5>
+          </div>
+          <div class="modal-body text-center">
+            <strong>Deseja editar esse produto?</strong>
+          </div>
+          <div class="modal-footer text-center ">
+            <a href="../fornecedores/editar.htm">
+              <button type="button" class="save-button" data-bs-dismiss="modal"><strong>SIM</strong></button>
+            </a>
+            <button type="button" class="cancel-button" id="btn-save-stock"><strong>NÃO</strong></button>
+          </div>
+        </div>
+      </div>
+    </div>
 </body>
+
 </html>

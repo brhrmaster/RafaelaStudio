@@ -1,0 +1,41 @@
+<app-menu-lateral (alterarPaginaAtual)="alterarPaginaAtual($event)"></app-menu-lateral>
+
+<div class="page">
+  <!-- header pagina -->
+  <app-header-pagina [titulo]="titulo"></app-header-pagina>
+
+  <app-home *ngIf="paginaAtual === 'HOME'"></app-home>
+
+  <app-produto-lista *ngIf="paginaAtual === 'PRODUTO-LISTA'"></app-produto-lista>
+  <app-produto-form *ngIf="paginaAtual === 'PRODUTO-FORM'"></app-produto-form>
+
+  <app-fornecedor-lista *ngIf="paginaAtual === 'FORNECEDOR-LISTA'"></app-fornecedor-lista>
+  <app-fornecedor-form *ngIf="paginaAtual === 'FORNECEDOR-FORM'"></app-fornecedor-form>
+
+  <app-usuario-lista *ngIf="paginaAtual === 'USUARIO-LISTA'"></app-usuario-lista>
+  <app-usuario-form *ngIf="paginaAtual === 'USUARIO-FORM'"></app-usuario-form>
+
+  <footer class="main-footer w-100 position-absolute bottom-0 start-0 py-2" style="background: #222">
+    <div class="container-fluid">
+      <div class="row text-center gy-3">
+        <div class="col-sm-6 text-sm-start">
+          <p class="mb-0 text-sm text-gray-600">Rafaela Studio &copy; 2025</p>
+        </div>
+        <div class="col-sm-6 text-sm-end">
+          <p class="mb-0 text-sm text-gray-600">Vers&atilde;o 1.0.0</p>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Notifications  -->
+  <div class="toast-container position-fixed top-0 end-0 p-4">
+    <div class="toast hide bg-white" role="alert" aria-live="assertive" aria-atomic="true">
+      <div class="toast-header"><strong class="me-auto">Bootstrap</strong><small>11 mins ago</small>
+        <button class="btn-close" type="button" data-bs-dismiss="toast" aria-label="Close"></button>
+      </div>
+      <div class="toast-body">Hello, world! This is a toast message.</div>
+    </div>
+  </div>
+
+</div>

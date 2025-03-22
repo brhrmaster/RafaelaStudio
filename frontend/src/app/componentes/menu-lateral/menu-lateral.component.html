@@ -1,0 +1,57 @@
+<!-- Side Navbar -->
+<nav class="side-navbar">
+  <div class="side-navbar-inner">
+    <!-- Sidebar Header    -->
+    <div class="sidebar-header d-flex align-items-center justify-content-center p-3 mb-3">
+      <!-- User Info-->
+      <div class="sidenav-header-inner text-center"><a href="#">
+        <img class="img-fluid rounded-circle avatar mb-2" src="https://i.pravatar.cc/262" alt="person"></a>
+        <h2 class="h5 text-white text-uppercase mb-0">Usuário X</h2>
+      </div>
+      <!-- Small Brand information, appears on minimized sidebar-->
+      <a class="brand-small text-center" href="">
+        <p class="h1 m-0">RS</p>
+      </a>
+    </div>
+    <!-- Sidebar Navigation Menus--><span class="text-uppercase text-gray-500 text-sm fw-bold letter-spacing-0 mx-lg-2 heading">Menu</span>
+    <ul class="list-unstyled">
+
+      <li class="sidebar-item">
+        <a class="sidebar-link" style="cursor: pointer" (click)="alterarPagina('HOME')">
+          <i class="fa-solid fa-house"></i>&nbsp;&nbsp; Home
+        </a>
+      </li>
+
+      <li class="sidebar-item"><a class="sidebar-link" href="#produtos" data-bs-toggle="collapse">
+        <i class="fa-solid fa-cubes"></i>&nbsp;&nbsp; Produtos </a>
+        <ul class="collapse list-unstyled " id="produtos">
+          <li><a style="cursor: pointer" (click)="alterarPagina('PRODUTO-LISTA')" class="sidebar-link">Ver Lista</a></li>
+          <li><a style="cursor: pointer" (click)="alterarPagina('PRODUTO-FORM')" class="sidebar-link">Cadastrar</a></li>
+        </ul>
+      </li>
+
+      <li class="sidebar-item"><a class="sidebar-link" href="#fornecedores" data-bs-toggle="collapse">
+        <i class="fa-solid fa-truck-fast"></i>&nbsp;&nbsp; Fornecedores </a>
+      <ul class="collapse list-unstyled " id="fornecedores">
+        <li><a style="cursor: pointer" (click)="alterarPagina('FORNECEDOR-LISTA')" class="sidebar-link">Ver Lista</a></li>
+        <li><a style="cursor: pointer" (click)="alterarPagina('FORNECEDOR-FORM')" class="sidebar-link">Cadastrar</a></li>
+      </ul>
+
+      <li class="sidebar-item"><a class="sidebar-link" href="#usuarios" data-bs-toggle="collapse">
+        <i class="fa-solid fa-users"></i>&nbsp;&nbsp; Usuários </a>
+      <ul class="collapse list-unstyled " id="usuarios">
+        <li><a class="sidebar-link" style="cursor: pointer" (click)="alterarPagina('USUARIO-LISTA')">Ver Lista</a></li>
+        <li><a class="sidebar-link" style="cursor: pointer" (click)="alterarPagina('USUARIO-FORM')">Cadastrar</a></li>
+      </ul>
+    </li>
+    </ul>
+
+    <span class="text-uppercase text-gray-500 text-sm fw-bold letter-spacing-0 mx-lg-2 heading">&nbsp;</span>
+
+    <ul class="list-unstyled py-4">
+      <li class="sidebar-item"> <a class="sidebar-link" href="#!">
+        <i class="fa-solid fa-door-open"></i>&nbsp;&nbsp; Sair</a>
+      </li>
+    </ul>
+  </div>
+</nav>

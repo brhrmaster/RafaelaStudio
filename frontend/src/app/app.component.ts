@@ -2,13 +2,14 @@ import { Component, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HeaderPaginaComponent } from './componentes/header-pagina/header-pagina.component';
 import { MenuLateralComponent } from "./componentes/menu-lateral/menu-lateral.component";
-import { HomeComponent } from "./paginas/home/home.component";
-import { ProdutoListaComponent } from "./paginas/produto-lista/produto-lista.component";
-import { ProdutoFormComponent } from "./paginas/produto-form/produto-form.component";
-import { FornecedorListaComponent } from "./paginas/fornecedor-lista/fornecedor-lista.component";
-import { FornecedorFormComponent } from "./paginas/fornecedor-form/fornecedor-form.component";
-import { UsuarioListaComponent } from "./paginas/usuario-lista/produto-lista.component";
-import { UsuarioFormComponent } from "./paginas/usuario-form/usuario-form.component";
+import { HomeComponent } from "./telas/home/home.component";
+import { ProdutoListaComponent } from "./telas/produto-lista/produto-lista.component";
+import { ProdutoFormComponent } from "./telas/produto-form/produto-form.component";
+import { FornecedorListaComponent } from "./telas/fornecedor-lista/fornecedor-lista.component";
+import { FornecedorFormComponent } from "./telas/fornecedor-form/fornecedor-form.component";
+import { UsuarioListaComponent } from "./telas/usuario-lista/produto-lista.component";
+import { UsuarioFormComponent } from "./telas/usuario-form/usuario-form.component";
+import { LoginComponent } from "./telas/login/login.component";
 
 interface IPagina {
   [key: string]: string;
@@ -26,7 +27,8 @@ interface IPagina {
     FornecedorListaComponent,
     FornecedorFormComponent,
     UsuarioListaComponent,
-    UsuarioFormComponent
+    UsuarioFormComponent,
+    LoginComponent
 ],
   templateUrl: './app.component.html',
   styles: ''
@@ -39,10 +41,11 @@ export class AppComponent {
     'FORNECEDOR-LISTA': 'Lista de Fornecedores',
     'FORNECEDOR-FORM': 'Cadastro de Fornecedores',
     'USUARIO-LISTA': 'Lista de Usuários',
-    'USUARIO-FORM': 'Cadastro de Usuários'
+    'USUARIO-FORM': 'Cadastro de Usuários',
+    'LOGIN': 'Acesso Restrito'
   };
 
-  paginaAtual: string = 'HOME';
+  paginaAtual: string = 'LOGIN';
   titulo: string = this.titulos[this.paginaAtual];
 
   alterarPaginaAtual(pagina: string) {

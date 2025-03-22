@@ -6,13 +6,13 @@ function showSlides() {
     for (let i = 0; i < slides.length; i++) {
         slides[i].style.display = "none";
     }
-        
+
     if (slideIndex >= slides.length) {
         slideIndex = 0;
     }
-    
+
     slides[slideIndex].style.display = "block";
-    
+
     slideIndex++;
     const milis = seconds * 1000;
 

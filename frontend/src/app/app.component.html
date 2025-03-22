@@ -1,6 +1,8 @@
-<app-menu-lateral (alterarPaginaAtual)="alterarPaginaAtual($event)"></app-menu-lateral>
+<app-login *ngIf="paginaAtual === 'LOGIN'" (alterarPaginaAtual)="alterarPaginaAtual($event)"></app-login>
 
-<div class="page">
+<app-menu-lateral *ngIf="paginaAtual !== 'LOGIN'" (alterarPaginaAtual)="alterarPaginaAtual($event)"></app-menu-lateral>
+
+<div class="page" *ngIf="paginaAtual !== 'LOGIN'">
   <!-- header pagina -->
   <app-header-pagina [titulo]="titulo"></app-header-pagina>
 

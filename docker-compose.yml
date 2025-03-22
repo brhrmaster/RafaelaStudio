@@ -1,0 +1,61 @@
+services:
+
+  mysql:
+    build:
+      context: ./database/
+      args:
+        - MYSQL_DATABASE=RAFAELA_STUDIO_DB
+        - MYSQL_USER=rafaela_studio
+        - MYSQL_PASSWORD=123456
+        - MYSQL_ROOT_PASSWORD=root@123456
+    container_name: rafaela-studio-db
+    ports:
+      - "3306:3306"
+    networks:
+      - app-network
+    volumes:
+      - rafaela-studio-mysql-data:/var/lib/mysql
+    healthcheck:
+      test: mysqladmin ping -h 127.0.0.1 -u $$MYSQL_USER --password=$$MYSQL_PASSWORD
+      start_period: 5s
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  backend-api:
+    build: ./backend/
+    image: rafaela-studio/api:latest
+    container_name: rafaela-studio-api
+    ports:
+      - 3000:3000
+    environment:
+      - DB_HOST=mysql
+      - DB_USER=rafaela_studio
+      - DB_PASSWORD=123456
+      - DB_NAME=RAFAELA_STUDIO_DB
+    depends_on:
+      mysql:
+        condition: service_healthy
+    networks:
+      - app-network
+
+  frontend:
+    build: ./frontend/
+    image: rafaela-studio/app:latest
+    container_name: rafaela-studio-app
+    ports:
+      - 8080:80
+    environment:
+      - API_HOST:backend-api
+    depends_on:
+      backend-api:
+        condition: service_started
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  rafaela-studio-mysql-data:

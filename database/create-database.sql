@@ -12,8 +12,8 @@ CREATE TABLE IF NOT EXISTS tbl_usuarios (
     primary key(id)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
 
-DROP TABLE IF EXISTS tbl_placeholder;
-CREATE TABLE IF NOT EXISTS tbl_placeholder(
+DROP TABLE IF EXISTS _DUMMY;
+CREATE TABLE IF NOT EXISTS _DUMMY(
     id int,
     primary key(id)
 );

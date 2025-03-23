@@ -33,7 +33,7 @@ CREATE TABLE IF NOT EXISTS tbl_produtos (
     id int not null auto_increment,
     nome varchar(100),
     preco decimal(5,2),
-    is_validade_definida tinyint(1),
+    is_validade_definida tinyint,
     formato_id int,
     created_at date,
     updated_at date,

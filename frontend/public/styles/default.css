@@ -150,6 +150,7 @@ https://bootstrapious.com/p/bootstrap-4-dashboard-premium
   --bs-form-valid-border-color: #28a745;
   --bs-form-invalid-color: #dc3545;
   --bs-form-invalid-border-color: #dc3545;
+  --bs-base-pink-color: #e080a0;
 }
 
 [data-bs-theme=dark] {
@@ -366,6 +367,7 @@ sup {
 a {
   color: rgba(var(--bs-link-color-rgb), var(--bs-link-opacity, 1));
   text-decoration: underline;
+  cursor: pointer;
 }
 a:hover {
   --bs-link-color-rgb: var(--bs-link-hover-color-rgb);
@@ -374,6 +376,10 @@ a:hover {
 a:not([href]):not([class]), a:not([href]):not([class]):hover {
   color: inherit;
   text-decoration: none;
+}
+
+.base-color {
+  color: var(--bs-base-pink-color) !important;
 }
 
 pre,
@@ -15579,10 +15585,10 @@ nav.navbar .dropdown-menu.show {
 }
 .sidebar-item.active > .sidebar-link {
   color: #fff;
-  background: #33b35a;
+  background: #e080a0;
 }
 .sidebar-item.active > .sidebar-link:hover {
-  background: #33b35a;
+  background: #e080a0;
 }
 .sidebar-item li.active > a.sidebar-link {
   color: #fff;
@@ -15590,7 +15596,7 @@ nav.navbar .dropdown-menu.show {
 }
 .sidebar-item .collapse,
 .sidebar-item .collapsing {
-  border-left: 2px solid #33b35a;
+  border-left: 2px solid #e080a0;
   background: #292929;
 }
 .sidebar-item .collapse li:not(.active) .sidebar-link:hover, .sidebar-item .collapse li:not(.active) .sidebar-link:focus,
@@ -15617,7 +15623,7 @@ nav.navbar .dropdown-menu.show {
 }
 .sidebar-link:hover {
   color: #fff;
-  background: #33b35a;
+  background: #e080a0;
 }
 .sidebar-link[data-bs-toggle=collapse]::before {
   display: block;
@@ -15637,7 +15643,7 @@ nav.navbar .dropdown-menu.show {
   right: 10px;
 }
 .sidebar-link[aria-expanded=true], .sidebar-link[aria-expanded=aria-expanded] {
-  background: #33b35a;
+  background: #e080a0;
 }
 .sidebar-link[aria-expanded=true]::before, .sidebar-link[aria-expanded=aria-expanded]::before {
   -webkit-transform: translateY(-50%) rotate(90deg);
@@ -15645,7 +15651,7 @@ nav.navbar .dropdown-menu.show {
 }
 .sidebar-link[aria-expanded=true]:hover, .sidebar-link[aria-expanded=aria-expanded]:hover {
   color: #fff;
-  background: #33b35a;
+  background: #e080a0;
 }
 .sidebar-link .badge {
   margin-left: 0.25rem;

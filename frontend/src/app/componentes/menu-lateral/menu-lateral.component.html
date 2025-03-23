@@ -17,7 +17,7 @@
     <ul class="list-unstyled">
 
       <li class="sidebar-item">
-        <a class="sidebar-link" style="cursor: pointer" (click)="alterarPagina('HOME')">
+        <a class="sidebar-link" (click)="alterarPagina('HOME')">
           <i class="fa-solid fa-house"></i>&nbsp;&nbsp; Home
         </a>
       </li>
@@ -25,23 +25,23 @@
       <li class="sidebar-item"><a class="sidebar-link" href="#produtos" data-bs-toggle="collapse">
         <i class="fa-solid fa-cubes"></i>&nbsp;&nbsp; Produtos </a>
         <ul class="collapse list-unstyled " id="produtos">
-          <li><a style="cursor: pointer" (click)="alterarPagina('PRODUTO-LISTA')" class="sidebar-link">Ver Lista</a></li>
-          <li><a style="cursor: pointer" (click)="alterarPagina('PRODUTO-FORM')" class="sidebar-link">Cadastrar</a></li>
+          <li><a (click)="alterarPagina('PRODUTO-LISTA')" class="sidebar-link">Ver Lista</a></li>
+          <li><a (click)="alterarPagina('PRODUTO-FORM')" class="sidebar-link">Cadastrar</a></li>
         </ul>
       </li>
 
       <li class="sidebar-item"><a class="sidebar-link" href="#fornecedores" data-bs-toggle="collapse">
         <i class="fa-solid fa-truck-fast"></i>&nbsp;&nbsp; Fornecedores </a>
       <ul class="collapse list-unstyled " id="fornecedores">
-        <li><a style="cursor: pointer" (click)="alterarPagina('FORNECEDOR-LISTA')" class="sidebar-link">Ver Lista</a></li>
-        <li><a style="cursor: pointer" (click)="alterarPagina('FORNECEDOR-FORM')" class="sidebar-link">Cadastrar</a></li>
+        <li><a (click)="alterarPagina('FORNECEDOR-LISTA')" class="sidebar-link">Ver Lista</a></li>
+        <li><a (click)="alterarPagina('FORNECEDOR-FORM')" class="sidebar-link">Cadastrar</a></li>
       </ul>
 
       <li class="sidebar-item"><a class="sidebar-link" href="#usuarios" data-bs-toggle="collapse">
         <i class="fa-solid fa-users"></i>&nbsp;&nbsp; Usuários </a>
       <ul class="collapse list-unstyled " id="usuarios">
-        <li><a class="sidebar-link" style="cursor: pointer" (click)="alterarPagina('USUARIO-LISTA')">Ver Lista</a></li>
-        <li><a class="sidebar-link" style="cursor: pointer" (click)="alterarPagina('USUARIO-FORM')">Cadastrar</a></li>
+        <li><a class="sidebar-link" (click)="alterarPagina('USUARIO-LISTA')">Ver Lista</a></li>
+        <li><a class="sidebar-link" (click)="alterarPagina('USUARIO-FORM')">Cadastrar</a></li>
       </ul>
     </li>
     </ul>

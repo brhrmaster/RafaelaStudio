@@ -1,5 +1,186 @@
 
-<p>Lista de Produtos</p>
+  <div class="container">
+    <div class="row page-header">
+      <div class="col-sm-6">
+        <h1>Produtos</h1>
+      </div>
+      <div class="col-sm-6">
+        <a href="../produtos/cadastro.htm">
+        <button class="save-button align-right"><strong>INCLUIR</strong></button>
+      </a>
+      </div>
+    </div>
+    <div class="page-content">
+      <div class="row">
+        <div class="col-sm-6">
+          &nbsp;
+        </div>
+        <div class="col-sm-6">
+          <input class="form-control btn-localizar align-right" type="text" placeholder="Localizar produto.."
+            aria-label="Localizar produto..">
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-12">
+          <table>
+            <tr class="table-header">
+              <td><b>Produto</b></td>
+              <td><b>Pre&ccedil;o</b></td>
+              <td><b>Validade</b></td>
+              <td><b>Formato</b></td>
+              <td><b>Estoque</b></td>
+              <td>&nbsp;</td>
+            </tr>
+            <tr class="table-row">
+              <td>Levitta Anti Frizz</td>
+              <td>R$ 75,90</td>
+              <td>15/09/2025</td>
+              <td>Caixa</td>
+              <td>5 CL : 10 CS de 20</td>
+              <td class="table-icons">
+                <button type="button" class="btn btn-link" data-bs-toggle="modal" data-bs-target="#manageStockModal">
+                  <i class="bi bi-arrow-down-up"></i>
+                </button>
+                <button type="button" class="btn btn-link" data-bs-toggle="modal" data-bs-target="#viewModal">
+                  <i class="bi bi-truck"></i>
+                </button>
+                <button type="button" class="btn btn-link" data-bs-toggle="modal" data-bs-target="#editStockModal">
+                  <i class="bi bi-pencil-square"></i>
+                </button>
+                <button type="button" class="btn btn-link" data-bs-toggle="modal" data-bs-target="#deleteModal">
+                  <i class="bi bi-trash"></i>
+                </button>
+              </td>
+            </tr>
+            <tr class="table-row">
+              <td>M&aacute;scara Negra</td>
+              <td>R$ 39,90</td>
+              <td>15/10/2025</td>
+              <td>Unidade</td>
+              <td>1 CL : 3 CS de 5</td>
+              <td class="table-icons">
+                <button type="button" class="btn btn-link" data-bs-toggle="modal" data-bs-target="#manageStockModal">
+                  <i class="bi bi-arrow-down-up"></i>
+                </button>
+                <button type="button" class="btn btn-link" data-bs-toggle="modal" data-bs-target="#viewModal">
+                  <i class="bi bi-truck"></i>
+                </button>
+                <button type="button" class="btn btn-link" data-bs-toggle="modal" data-bs-target="#editStockModal">
+                  <i class="bi bi-pencil-square"></i>
+                </button>
+                <button type="button" class="btn btn-link" data-bs-toggle="modal" data-bs-target="#deleteModal">
+                  <i class="bi bi-trash"></i>
+                </button>
+              </td>
+            </tr>
+            <tr class="table-row">
+              <td>Esmalte Magik Pearl</td>
+              <td>R$ 14,80</td>
+              <td>23/11/2024</td>
+              <td>Caixa</td>
+              <td>11 CL : 0 CS de 50</td>
+              <td class="table-icons">
+                <button type="button" class="btn btn-link" data-bs-toggle="modal" data-bs-target="#manageStockModal">
+                  <i class="bi bi-arrow-down-up"></i>
+                </button>
+                <button type="button" class="btn btn-link" data-bs-toggle="modal" data-bs-target="#viewModal">
+                  <i class="bi bi-truck"></i>
+                </button>
+                <button type="button" class="btn btn-link" data-bs-toggle="modal" data-bs-target="#editStockModal">
+                  <i class="bi bi-pencil-square"></i>
+                </button>
+                <button type="button" class="btn btn-link" data-bs-toggle="modal" data-bs-target="#deleteModal">
+                  <i class="bi bi-trash"></i>
+                </button>
+              </td>
+            </tr>
+          </table>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-12 text-center table-footer">
+          <i class="bi bi-arrow-left-circle"></i> 1 / 1 <i class="bi bi-arrow-right-circle"></i>
+        </div>
+      </div>
+    </div>
+    <!-- Modal REMOVER PRODUTO -->
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-vertical-centered">
+    <div class="modal-content">
+      <div class="modal-header justify-content-center">
+        <h5 class="modal-title" id="deleteModalLabel">REMOVER PRODUTO</h5>
+      </div>
+      <div class="modal-body text-center">
+        <strong>Deseja realmente remover o produto?</strong>
+      </div>
+      <div class="modal-footer">
+        <a href="../produtos/concluido.htm">
+        <button type="button" class="save-button"><strong>SIM</strong></button>
+      </a>
+         <button type="button" class="cancel-button"><strong>NÃO</strong></button>
+      </div>
+    </div>
+  </div>
+</div>
 
-<!-- conteudo da pagina  -->
+<!-- Modal Gerenciar Estoque -->
+<div class="modal fade" id="manageStockModal" tabindex="-1" aria-labelledby="manageStockModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-vertical-centered">
+    <div class="modal-content">
+      <div class="modal-header justify-content-center">
+        <h5 class="modal-title" id="manageStockModalLabel">Gerenciar Estoque</h5>
+      </div>
+      <div class="modal-body text-center">
+        <p>Atualizar estoque do produto:</p>
+        <strong>Operação desejada:</strong>
+      </div>
+      <div class="modal-footer d-flex justify-content-center">
+        <button type="button" class="cancel-button" data-bs-dismiss="modal"><strong>CANCELAR</strong></button>
+      <a href="../estoque/entrada.htm">
+        <button type="button" class="save-button" data-bs-dismiss="modal"><strong>ENTRADA</strong></button>
+      </a>
+      <a href="../estoque/saida.htm">
+        <button type="button" class="cancel-button" id="btn-save-stock"><strong>SAÍDA</strong></button>
+      </a>
+      </div>
+    </div>
+  </div>
+</div>
 
+<!-- Modal Fornecedores do Produto -->
+<div class="modal fade" id="viewModal" tabindex="-1" aria-labelledby="viewModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="viewModalLabel">Fornecedores do Produto</h5>
+      </div>
+      <div class="modal-body">
+        <strong>Produto:</strong>
+        <textarea class="form-control" id="product" rows="3"></textarea>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="save-button" data-bs-dismiss="modal"><strong>FECHAR</strong></button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Editar produto -->
+<div class="modal fade" id="editStockModal" tabindex="-1" aria-labelledby="editStockModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-vertical-centered">
+    <div class="modal-content">
+      <div class="modal-header justify-content-center">
+        <h5 class="modal-title" id="editStockModalLabel">Editar Produto</h5>
+      </div>
+      <div class="modal-body text-center justify-content-center">
+        <strong>Deseja editar esse produto?</strong>
+      </div>
+      <div class="modal-footer text-center">
+        <a href="../produtos/editar.htm">
+        <button type="button" class="save-button" data-bs-dismiss="modal"><strong>SIM</strong></button>
+      </a>
+        <button type="button" class="cancel-button" id="btn-save-stock"><strong>NÃO</strong></button>
+      </div>
+    </div>
+  </div>
+</div>

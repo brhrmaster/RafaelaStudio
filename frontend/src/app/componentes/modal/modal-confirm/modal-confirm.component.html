@@ -1,0 +1,20 @@
+
+<ng-template #template>
+  <div class="modal-header">
+    <h4 class="modal-title">{{modalContent.title}}</h4>
+    <button type="button" class="btn-close" aria-label="Close" (click)="decline()"></button>
+  </div>
+  <div class="modal-body">
+    <div class="container">
+      <div class="row">
+        <div class="col-12">
+          <div class="model-desc">{{modalContent.message}}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-secondary" (click)="decline()">Cancelar</button>
+    <button type="button" class="btn btn-primary" (click)="confirm()">Prosseguir</button>
+  </div>
+</ng-template>

@@ -16,6 +16,9 @@ export interface Product extends Model {
 export interface Category extends Model {
 };
 
+export interface User extends Model {
+};
+
 export interface ResponseData {
   categories: Category[],
   products: Product[],
@@ -24,3 +27,8 @@ export interface ResponseData {
 export interface RequestData {
   id: number
 };
+
+export interface ModalContent {
+  title: string,
+  message: string
+}

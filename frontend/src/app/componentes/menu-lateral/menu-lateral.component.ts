@@ -13,4 +13,9 @@ export class MenuLateralComponent {
   public alterarPagina(pagina: string) {
     this.alterarPaginaAtual.emit(pagina);
   }
+
+  public loggout() {
+    localStorage.removeItem('currentUser');
+    this.alterarPagina('LOGIN');
+  }
 }

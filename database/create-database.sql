@@ -10,6 +10,8 @@ CREATE TABLE IF NOT EXISTS tbl_usuarios (
     login varchar(100) default null,
     password varchar(32) default null,
     is_active tinyint default 1,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     primary key(id)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
 
@@ -34,23 +36,26 @@ CREATE TABLE IF NOT EXISTS tbl_produtos (
     id int not null auto_increment,
     nome varchar(100),
     preco decimal(5,2),
-    is_validade_definida tinyint,
+    is_validade_definida bit(1) default b'0',
     formato_id int,
-    created_at date,
-    updated_at date,
+    estoque_total int default 0,
+    estoque_cursos int default 0,
+    estoque_clientes int default 0,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     primary key (id)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
 
 
 CREATE TABLE IF NOT EXISTS tbl_produto_estoque (
     id int not null auto_increment,
-    tipo int default 1, -- 1 ENTRADA, 2 - SAIDA
+    tipo tinyint default 1, -- 1 ENTRADA, 0 - SAIDA
     produto_id int,
     total int,
     validade date null,
     qtd_clientes int,
     qtd_cursos int,
-    created_at date,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     primary key (id)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
 
@@ -73,8 +78,8 @@ CREATE TABLE IF NOT EXISTS tbl_fornecedores (
     cidade_id int default null,
     cep varchar(10) default null,
     site varchar(100) default null,
-    created_at date,
-    updated_at date,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     primary key(id)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
 

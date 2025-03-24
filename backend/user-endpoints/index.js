@@ -31,7 +31,7 @@ const validateUserPassword = (password) => {
 
 module.exports = (app, db) => {
 
-    const createUser = async (req, res) => {
+    const insertUser = async (req, res) => {
         const { nome, login, password } = req.body;
 
         try {
@@ -89,7 +89,7 @@ module.exports = (app, db) => {
             return res.status(201).json({ message: 'Usuário adicionado com sucesso' });
         } catch (e) {
             if (!e.statusCode) e.statusCode = 400;
-            return res.status(e.statusCode).send({ error: e.message });
+            return res.status(e.statusCode).json({ error: e.message });
         }
     };
 
@@ -139,7 +139,7 @@ module.exports = (app, db) => {
             return res.status(201).json({ message: 'Usuário atualizado com sucesso' });
         } catch (e) {
             if (!e.statusCode) e.statusCode = 400;
-            return res.status(e.statusCode).send({ error: e.message });
+            return res.status(e.statusCode).json({ error: e.message });
         }
     };
 
@@ -174,7 +174,7 @@ module.exports = (app, db) => {
             return res.status(201).json({ message: 'Usuário removido com sucesso' });
         } catch (e) {
             if (!e.statusCode) e.statusCode = 400;
-            return res.status(e.statusCode).send({ error: e.message });
+            return res.status(e.statusCode).json({ error: e.message });
         }
     };
 
@@ -190,10 +190,10 @@ module.exports = (app, db) => {
 
             const [results] = await db.query(queryUsers);
 
-            return res.status(201).json({ users: results });
+            return res.status(200).json({ users: results });
         } catch (e) {
             if (!e.statusCode) e.statusCode = 400;
-            return res.status(e.statusCode).send({ error: e.message });
+            return res.status(e.statusCode).json({ error: e.message });
         }
     };
 
@@ -220,7 +220,7 @@ module.exports = (app, db) => {
 
         } catch (e) {
             if (!e.statusCode) e.statusCode = 400;
-            return res.status(e.statusCode).send({ error: e.message });
+            return res.status(e.statusCode).json({ error: e.message });
         }
     };
 
@@ -228,7 +228,7 @@ module.exports = (app, db) => {
 
     app.get('/api/usuarios', getUsers);
 
-    app.post('/api/usuario', createUser);
+    app.post('/api/usuario', insertUser);
 
     app.put('/api/usuario/:id', updateUser);
     

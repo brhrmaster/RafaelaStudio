@@ -24,3 +24,11 @@ Agora é só aguardar que todas as aplicações estarão disponíveis e integrad
 - BackEnd API
   -  Container: rafaela-studio-app
   -  Porta: 8080
+  
+
+## Testando no Postman
+
+Basta utilizar a coleção de chamadas para a API disponível neste [arquivo](./docs/RafaelaStudio_API.postman_collection.json)
+Para isso, salve o arquivo e importe no Postman
+
+[Download do Postman](https://www.postman.com/)

@@ -1,10 +1,11 @@
 require('dotenv').config();
 const express = require('express');
-const mysql = require('mysql2');
+const mysql = require('mysql2/promise');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const healthEndpoints = require('./health-check');
 const productEndpoints = require('./product-endpoints');
+const userEndpoints = require('./user-endpoints');
 
 // Create Express app
 const app = express();
@@ -20,25 +21,30 @@ const DB_CONFIG = {
     database: process.env.DB_NAME
 };
 
-console.log(JSON.stringify(DB_CONFIG, null, 2));
+const startApp = async () => {
+    
+    // Database connection
+    const db = await mysql.createConnection(DB_CONFIG);
 
-// Database connection
-const db = mysql.createConnection(DB_CONFIG);
+    // Open the database connection
+    db.connect((err) => {
+        if (err) throw err;
+        console.log('Database connected...');
+    });
 
-// Open the database connection
-db.connect((err) => {
-    if (err) throw err;
-    console.log('Database connected...');
-});
+    healthEndpoints(app, db);
 
-healthEndpoints(app, db);
+    userEndpoints(app, db);
 
-productEndpoints(app, db);
+    productEndpoints(app, db);
 
-// fornecedorEndpoints(app, db);
+    // fornecedorEndpoints(app, db);
 
-// outrosEndpoints(app, db);
+    // outrosEndpoints(app, db);
 
-app.listen(3000, () => {
-    console.log('Server is running on http://localhost:3000');
-});
+    app.listen(3000, () => {
+        console.log('Server is running on http://localhost:3000');
+    });
+};
+
+startApp();

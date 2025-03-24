@@ -9,6 +9,7 @@ CREATE TABLE IF NOT EXISTS tbl_usuarios (
     nome varchar(100) default null,
     login varchar(100) default null,
     password varchar(32) default null,
+    is_active tinyint default 1,
     primary key(id)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
 

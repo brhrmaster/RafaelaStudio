@@ -3,11 +3,6 @@ services:
   mysql:
     build:
       context: ./database/
-      args:
-        - MYSQL_DATABASE=RAFAELA_STUDIO_DB
-        - MYSQL_USER=rafaela_studio
-        - MYSQL_PASSWORD=123456
-        - MYSQL_ROOT_PASSWORD=root@123456
     container_name: rafaela-studio-db
     ports:
       - "3306:3306"

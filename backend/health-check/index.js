@@ -1,4 +1,4 @@
-module.exports = (app, db) => {
+module.exports = (app) => {
     
     // GET endpoint to health check
     app.get('/health/ready', (req, res) => {

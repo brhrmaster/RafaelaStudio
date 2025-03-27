@@ -1,6 +1,12 @@
 # Sistema Controle Estoque - Rafaela Studio
 
-## Have all libs available
+## Have NVM (NodeJS Version Manager) installed [dowload for windows](https://github.com/coreybutler/nvm-windows/releases)
+
+```bash
+nvm install 22
+```
+
+## Have all libs (node modules) available
 
 ```bash
 npm install
@@ -16,7 +22,7 @@ npm run start
 
 Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
 
-## Building
+## Building (optional) -> or you can use docker compose from [here](../)
 
 To build the project run:
 

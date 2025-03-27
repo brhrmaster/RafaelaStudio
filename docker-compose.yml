@@ -19,7 +19,6 @@ services:
 
   backend-api:
     build: ./backend/
-    image: rafaela-studio/api:latest
     container_name: rafaela-studio-api
     ports:
       - 3000:3000
@@ -36,7 +35,6 @@ services:
 
   frontend:
     build: ./frontend/
-    image: rafaela-studio/app:latest
     container_name: rafaela-studio-app
     ports:
       - 8080:80

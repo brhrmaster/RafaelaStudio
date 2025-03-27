@@ -13,16 +13,17 @@
       <span class="login-form-title">
           Login <!-- Título do Login que aparece na página -->
       </span>
+      <p *ngIf="errorMessage !== ''">{{errorMessage}}</p>
       <div class="wrap-input margin-top-35 margin-bottom-35">
-        <input class="input-form" type="text" name="usuario" autocomplete="off" required />
+        <input class="input-form" type="text" name="usuario" [(ngModel)]="login" autocomplete="off" required />
         <span class="focus-input-form" data-placeholder="Usuário"></span>
       </div>
       <div class="wrap-input margin-bottom-35">
-        <input class="input-form" type="password" name="password" required />
+        <input class="input-form" type="password" name="password"  [(ngModel)]="password" required />
         <span class="focus-input-form" data-placeholder="Senha"></span>
       </div>
       <div class="container-login-form-btn">
-        <button type="button" (click)="login()" class="login-form-btn"><strong>Login</strong></button>
+        <button type="button" (click)="efetuarLogin()" class="login-form-btn"><strong>Login</strong></button>
       </div>
       <ul class="login-utlis"> <!-- Lista -->
         <li class="margen-top-8 margen-bottom-8"> <!-- Itens da Lista -->

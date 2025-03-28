@@ -50,6 +50,7 @@
   display: block;
   width: 100%;
   border: 1px #e080a0 solid;
+  border-radius: 5px;
   padding: 5px;
 }
 

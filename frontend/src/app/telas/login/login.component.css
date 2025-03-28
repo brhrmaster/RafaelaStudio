@@ -3,11 +3,14 @@
   height: 100%;
   width:100%;
   position: relative;
+  background-color: rgba(255,255,255,0.2);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
 }
 
 #faixa{
   display: block;
-  background-color: #000;
+  background-color: #363435;
   width:100%;
   height: 100px;
   position: absolute;
@@ -16,13 +19,46 @@
 
 #logo-rafaela {
   display: block;
-  background-image: url('/img/RafaLogo.jpeg');
-  height: 1024px;
-  width: 1024px;
+  background-image: url('/img/rafa-logo.jpg');
+  height: 400px;
+  width: 400px;
   position: absolute;
-  border-radius: 1024px;
+  border-radius: 400px;
+  left: 50%;
+  margin-left: -200px;
 }
 
 #bloco-login {
+  display: block;
+  position: absolute;
+  top: 310px;
+  left: 50%;
+  margin-left: -150px;
+  border:  #363435 2px solid;
+  width: 300px;
+  Background-color: rgba(255,255,255,0.4);
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+  padding: 15px;
+  border-radius: 15px;
+  color: #9E2C52;
+}
 
+#bloco-login input,
+#bloco-login button {
+  display: block;
+  width: 100%;
+  border: 1px #e080a0 solid;
+  padding: 5px;
+}
+
+#bloco-login input {
+  width: 266px;
+  margin-bottom: 5px;
+}
+
+#bloco-login button {
+  background-color: #F7D3DF;
+  color: #9E2C52;
+  margin-top: 20px;
 }

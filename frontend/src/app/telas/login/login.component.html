@@ -6,15 +6,18 @@
   <div id="bloco-login"> <!--Bloco login-->    
     <p *ngIf="errorMessage !== ''">{{errorMessage}}</p>
     <div>
-      <span class="focus-input-form" data-placeholder="Usuário"></span>
+      <label>Usu&aacute;rio <br/>
       <input class="input-form" type="text" name="usuario" [(ngModel)]="login" autocomplete="off" required />
+      </label>
     </div>
+
     <div>
-      <span class="focus-input-form" data-placeholder="Senha"></span>
+      <label> Senha <br/>
       <input class="input-form" type="password" name="password"  [(ngModel)]="password" required />
+      </label>
     </div>
     <div>
-      <button type="button" (click)="efetuarLogin()"><strong>Login</strong></button>
+      <button type="button" (click)="efetuarLogin()"><strong>ENTRAR</strong></button>
     </div>
   </div>
 </div>

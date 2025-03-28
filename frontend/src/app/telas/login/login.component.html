@@ -1,10 +1,9 @@
 <div id="principal">
   <div id="faixa"> <!--Linha que fica atras-->
   </div>
-  <div id="logo-rafaela"> <!--Imagem--> 
-  </div> 
-  <div id="bloco-login"> <!--Bloco login-->    
-    <p *ngIf="errorMessage !== ''">{{errorMessage}}</p>
+  <div id="logo-rafaela"> <!--Imagem-->
+  </div>
+  <div id="bloco-login"> <!--Bloco login-->
     <div>
       <label>Usu&aacute;rio <br/>
       <input class="input-form" type="text" name="usuario" [(ngModel)]="login" autocomplete="off" required />
@@ -17,6 +16,7 @@
       </label>
     </div>
     <div>
+      <p *ngIf="errorMessage !== ''" style="text-align:center">{{errorMessage}}</p>
       <button type="button" (click)="efetuarLogin()"><strong>ENTRAR</strong></button>
     </div>
   </div>

@@ -10,6 +10,7 @@ import { FornecedorFormComponent } from "./telas/fornecedor-form/fornecedor-form
 import { UsuarioListaComponent } from "./telas/usuario-lista/produto-lista.component";
 import { UsuarioFormComponent } from "./telas/usuario-form/usuario-form.component";
 import { LoginComponent } from "./telas/login/login.component";
+import { LoadingComponent } from "./componentes/loading/loading.component";
 import { User } from './models/models.component';
 
 interface IPagina {
@@ -29,7 +30,8 @@ interface IPagina {
     FornecedorFormComponent,
     UsuarioListaComponent,
     UsuarioFormComponent,
-    LoginComponent
+    LoginComponent,
+    LoadingComponent
 ],
   templateUrl: './app.component.html',
   styles: ''
@@ -46,6 +48,7 @@ export class AppComponent {
     'LOGIN': 'Acesso Restrito'
   };
 
+  isLoadingVisible: boolean = false;
   paginaAtual: string = 'LOGIN';
   titulo: string = this.titulos[this.paginaAtual];
   user!: User;
@@ -66,5 +69,9 @@ export class AppComponent {
       this.paginaAtual = 'HOME';
       this.titulo = this.titulos[this.paginaAtual];
     }
+  }
+
+  showLoading(show: boolean) {
+    this.isLoadingVisible = show; // show or hide -> true or false
   }
 }

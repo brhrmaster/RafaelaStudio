@@ -1,4 +1,4 @@
-<app-login *ngIf="paginaAtual === 'LOGIN'" (alterarPaginaAtual)="alterarPaginaAtual($event)"></app-login>
+<app-login *ngIf="paginaAtual === 'LOGIN'" (alterarPaginaAtual)="alterarPaginaAtual($event)" (showLoading)="showLoading($event)"></app-login>
 
 <app-menu-lateral *ngIf="paginaAtual !== 'LOGIN'" (alterarPaginaAtual)="alterarPaginaAtual($event)"></app-menu-lateral>
 
@@ -41,3 +41,5 @@
   </div>
 
 </div>
+
+<app-loading *ngIf="isLoadingVisible"></app-loading>

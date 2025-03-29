@@ -40,6 +40,9 @@ export class LoginComponent {
 
     this.loginService.efetuarLogin(this.user)
     .pipe(catchError(async (error) => {
+      if (error.status == 0) {
+        this.errorMessage = 'Falha na comunicação com o servidor';
+      }
       if (error.status == 401) {
         this.errorMessage = 'LOGIN INCORRETO';
       }

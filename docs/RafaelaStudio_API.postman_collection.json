@@ -331,6 +331,149 @@
 					"response": []
 				}
 			]
+		},
+		{
+			"name": "Fornecedores",
+			"item": [
+				{
+					"name": "Insert Fornecedor",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"empresa\": \"Cigana Cosmésticos\",\r\n    \"nomeRepresentante\": \"Maria Padilha\",\r\n    \"telefone\": \"(11) 98454-5214\",\r\n    \"email\": \"paulo@natacosm.com.br\",\r\n    \"endereco\": \"Rua de baixo\",\r\n    \"numero\": \"42\",\r\n    \"cidadeId\": 5270,\r\n    \"cep\": \"12411-112\",\r\n    \"site\": \"www.natacosm.com.br\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/api/fornecedor",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"fornecedor"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update fornecedor",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"empresa\": \"Empresa X\",\r\n    \"nomeRepresentante\": \"Aqui mais uma pessoa que representa\",\r\n    \"telefone\": \"(99) 99999-9999\",\r\n    \"email\": \"\",\r\n    \"endereco\": \"\",\r\n    \"numero\": \"\",\r\n    \"cidadeId\": 53,\r\n    \"cep\": \"\",\r\n    \"site\": \"\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/api/fornecedor/1",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"fornecedor",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete fornecedor",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/api/fornecedor/10",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"fornecedor",
+								"10"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET fornecedores",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/api/fornecedores?filtro=",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"fornecedores"
+							],
+							"query": [
+								{
+									"key": "filtro",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Saude",
+			"item": [
+				{
+					"name": "Verificar Server UP",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/health/live",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"health",
+								"live"
+							]
+						}
+					},
+					"response": []
+				}
+			]
 		}
 	]
 }

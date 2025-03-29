@@ -1,5 +1,54 @@
+{{errorMessage}}
 
-<p>Lista de Fornecedores</p>
-
-<!-- conteudo da pagina  -->
-
+<div class="container">
+  <div class="row page-header">
+    <div class="col-sm-6">
+      <h1>Fornecedores</h1>
+    </div>
+    <div class="col-sm-6">
+      <button class="align-right"><strong>INCLUIR</strong></button>
+    </div>
+  </div>
+  <div class="page-content">
+    <div class="row">
+      <div class="col-sm-6">
+        &nbsp;
+      </div>
+      <div class="col-sm-6">
+        <input class="form-control btn-localizar align-right" type="text" placeholder="Localizar fornecedor.."
+          aria-label="Localizar fornecedor..">
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-12">
+        <table>
+          <tr class="table-header">
+            <td>Empresa</td>
+            <td>Representante</td>
+            <td>Telefone</td>
+            <td>&nbsp;</td>
+          </tr>
+          <tr class="table-row" *ngFor="let fornecedor of fornecedoresPaginados">
+            <td>{{fornecedor.empresa}}</td>
+            <td>{{fornecedor.nomeRepresentante}}</td>
+            <td>{{fornecedor.telefone}}</td>
+            <td class="table-icons">
+              <button type="button" class="btn btn-link" (click)="atualizarFornecedor(fornecedor.id)" data-bs-toggle="modal" data-bs-target="#editStockModal">
+                <i class="bi bi-pencil-square"></i>
+              </button>
+              <button type="button" class="btn btn-link" (click)="deletarFornecedor(fornecedor.id)" data-bs-toggle="modal" data-bs-target="#deleteModal">
+                <i class="bi bi-trash"></i>
+              </button>
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-12 text-center table-footer">
+        <a (click)="paginaAnterior()" *ngIf="paginaAtual > 1"><<</a>
+        <i class="bi bi-arrow-left-circle"></i> {{paginaAtual}} / {{totalPaginas}} <i class="bi bi-arrow-right-circle"></i>
+        <a (click)="proximaPagina()" *ngIf="paginaAtual < totalPaginas">>></a>
+      </div>
+    </div>
+  </div>

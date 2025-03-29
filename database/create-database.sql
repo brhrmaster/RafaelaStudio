@@ -69,13 +69,13 @@ CREATE TABLE IF NOT EXISTS tbl_produto_formatos (
 
 CREATE TABLE IF NOT EXISTS tbl_fornecedores (
     id int not null auto_increment, 
-    empresa varchar(100) default null,
-    nome_representante varchar(100) default null,
+    empresa varchar(100) not null,
+    nome_representante varchar(100) not null,
     telefone varchar(20) default null,
     email varchar(150) default null,
     endereco varchar(150) default null,
     numero varchar(10) default null,
-    cidade_id int default null,
+    cidade_id int not null,
     cep varchar(10) default null,
     site varchar(100) default null,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -93,49 +93,13 @@ CREATE TABLE IF NOT EXISTS tbl_produto_fornecedor(
     foreign key(fornecedor_id) references tbl_fornecedores (id)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
 
-
-
--- O QUE É DEPARTAMENTO??
-
--- IREMOS CONTROLAR CLIENTES??
-
--- CREATE TABLE IF NOT EXISTS tbl_departamento_cliente (
---     id int not null auto_increment, 
---     quantidade int, 
---     cliente_id int not null,
---     departamento_id int not null,
---     primary key (id),
---     foreign key (cliente_id) references tbl_produtos (id),
---     foreign key (departamento_id) references tbl_departamentos (id)
--- ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
-
-
--- CREATE TABLE IF NOT EXISTS tbl_departamento_fornecedor (
---     id int not null auto_increment, 
---     quantidade int, 
---     fornecedor_id int not null,
---     departamento_id int not null,
---     primary key (id),
---     foreign key (fornecedor_id) references tbl_fornecedores (id),
---     foreign key (departamento_id) references tbl_departamentos (id)
--- ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
-
-
--- CREATE TABLE IF NOT EXISTS tbl_departamentos (
---     id int not null auto_increment, 
---     name varchar(100),
---     tipo int not null, -- Pode ser 0 (Cliente) | 1 (Fornecedor) | 2 (Curso)
---     primary key (id)
--- ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
-
-
 DROP TABLE IF EXISTS tbl_estados;
 CREATE TABLE IF NOT EXISTS tbl_estados (
   id int NOT NULL AUTO_INCREMENT,
   nome varchar(75) DEFAULT NULL,
   uf varchar(5) DEFAULT NULL,
   PRIMARY KEY (id)
-) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8;
 
 
 INSERT INTO tbl_estados (id, nome, uf) VALUES
@@ -175,7 +139,7 @@ CREATE TABLE IF NOT EXISTS tbl_cidades (
     estado_id int DEFAULT NULL,
     PRIMARY KEY (id),
     foreign key (estado_id) references tbl_estados (id)
-) ENGINE=InnoDB AUTO_INCREMENT=5565 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=5565 DEFAULT CHARSET=utf8;
 
 
 INSERT INTO tbl_cidades (id, nome, estado_id) VALUES

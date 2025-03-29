@@ -6,6 +6,7 @@ const bodyParser = require('body-parser');
 const healthEndpoints = require('./health-check');
 const productEndpoints = require('./product-endpoints');
 const userEndpoints = require('./user-endpoints');
+const fornecedoresEndpoints = require('./fornecedores-endpoints');
 
 // Create Express app
 const app = express();
@@ -18,8 +19,11 @@ const DB_CONFIG = {
     host: process.env.DB_HOST,
     user: process.env.DB_USER,
     password: process.env.DB_PASSWORD,
-    database: process.env.DB_NAME
+    database: process.env.DB_NAME,
+    charset: 'UTF8_GENERAL_CI'
 };
+
+console.log(DB_CONFIG);
 
 const startApp = async () => {
     
@@ -38,7 +42,7 @@ const startApp = async () => {
 
     productEndpoints(app, db);
 
-    // fornecedorEndpoints(app, db);
+    fornecedoresEndpoints(app, db);
 
     // outrosEndpoints(app, db);
 

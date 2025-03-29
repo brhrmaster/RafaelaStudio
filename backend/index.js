@@ -20,7 +20,7 @@ const DB_CONFIG = {
     user: process.env.DB_USER,
     password: process.env.DB_PASSWORD,
     database: process.env.DB_NAME,
-    charset: 'UTF8_GENERAL_CI'
+    charset: 'latin1_bin'
 };
 
 console.log(DB_CONFIG);

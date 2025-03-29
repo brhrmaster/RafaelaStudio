@@ -1,9 +1,12 @@
 const { throwError } = require('../commons/error');
 
-module.exports = (app, db) => {
+module.exports = (app, db, helpers) => {
     
     // API endpoints
     const getProducts = async (req, res) => {
+
+        await helpers.waitForABit(3000);
+
         const consulta = req.query;
         try {
             let filtro;
@@ -43,6 +46,9 @@ module.exports = (app, db) => {
     };
 
     const insertProduct = async (req, res) => {
+
+        await helpers.waitForABit(2000);
+
         const product = req.body;
         try {
             // verificar se já existe um produto com o mesmo nome
@@ -103,6 +109,9 @@ module.exports = (app, db) => {
     };
 
     const updateProduct = async (req, res) => {
+
+        await helpers.waitForABit(2000);
+
         const { id } = req.params;
         const product = req.body;
 
@@ -171,6 +180,9 @@ module.exports = (app, db) => {
     };
 
     const deleteProduct = async (req, res) => {
+
+        await helpers.waitForABit(2000);
+
         const { id } = req.params;
 
         try {
@@ -204,6 +216,9 @@ module.exports = (app, db) => {
     
     // controle estoques
     const insertProductStock = async (req, res) => {
+
+        await helpers.waitForABit(2000);
+
         try {
             const estoque = req.body;
             const { id } = req.params;
@@ -287,6 +302,9 @@ module.exports = (app, db) => {
     };
 
     const getProductStock = async (req, res) => {
+
+        await helpers.waitForABit(3000);
+
         const consulta = req.query;
         try {
             let query = `

@@ -1,9 +1,10 @@
 const { throwError } = require('../commons/error');
 
-module.exports = (app, db) => {
+module.exports = (app, db, helpers) => {
     
     // API endpoints
     const getFornecedores = async (req, res) => {
+        await helpers.waitForABit(3000);
         const consulta = req.query;
         try {
             let filtro;
@@ -44,6 +45,7 @@ module.exports = (app, db) => {
     };
 
     const insertFornecedor = async (req, res) => {
+        await helpers.waitForABit(3000);
         const fornecedor = req.body;
         try {
             if (!fornecedor) throw new Error('Por favor, envie os dados do fornecedor');
@@ -83,6 +85,7 @@ module.exports = (app, db) => {
     };
 
     const updateFornecedor = async (req, res) => {
+        await helpers.waitForABit(3000);
         const { id } = req.params;
         const fornecedor = req.body;
 
@@ -134,6 +137,7 @@ module.exports = (app, db) => {
     };
 
     const deleteFornecedor = async (req, res) => {
+        await helpers.waitForABit(2000);
         const { id } = req.params;
 
         try {

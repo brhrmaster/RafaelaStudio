@@ -29,9 +29,12 @@ const validateUserPassword = (password) => {
     }
 }
 
-module.exports = (app, db) => {
+module.exports = (app, db, helpers) => {
 
     const insertUser = async (req, res) => {
+
+        await helpers.waitForABit(1500);
+
         const { nome, login, password } = req.body;
 
         try {
@@ -94,6 +97,9 @@ module.exports = (app, db) => {
     };
 
     const updateUser = async (req, res) => {
+
+        await helpers.waitForABit(2000);
+
         const { id } = req.params;
         const { nome, login } = req.body;
 
@@ -144,6 +150,9 @@ module.exports = (app, db) => {
     };
 
     const deleteUser = async (req, res) => {
+
+        await helpers.waitForABit(2000);
+
         const { id } = req.params;
 
         try {
@@ -180,6 +189,8 @@ module.exports = (app, db) => {
 
     const getUsers = async (req, res) => {
 
+        await helpers.waitForABit(3000);
+
         try {
             // Search by product name
             const queryUsers = `
@@ -198,6 +209,8 @@ module.exports = (app, db) => {
     };
 
     const loginUser = async (req, res) => {
+
+        await helpers.waitForABit(3000);
 
         const { login, password } = req.body;
 

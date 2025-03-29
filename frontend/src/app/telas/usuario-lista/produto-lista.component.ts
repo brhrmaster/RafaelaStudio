@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -12,4 +12,10 @@ import { CommonModule } from '@angular/common';
 export class UsuarioListaComponent {
   usuarios = [];
   usuarioSelecionado = {};
+  @Output() showLoading = new EventEmitter<boolean>();
+
+  private showLogin(show: boolean) {
+    this.showLoading.emit(show);
+  }
+
 }

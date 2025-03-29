@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FornecedorService } from '../../services/fornecedor.service';
 import { Fornecedor } from '../../models/models.component';
@@ -23,16 +23,25 @@ export class FornecedorListaComponent {
   totalPaginas: number = 1;
   totalPorPagina: number = 3;
   totalRegistros: number = 0;
+  @Output() showLoading = new EventEmitter<boolean>();
 
   constructor(private fornecedorService: FornecedorService) {
     this.obterFornecedores();
   }
 
+  private showLogin(show: boolean) {
+    this.showLoading.emit(show);
+  }
+
   obterFornecedores() {
+
+    this.showLogin(true);
+
     this.fornecedorService.getAll('')
     .pipe(catchError(async (error) => {
       if (error.status == 0) {
         this.errorMessage = 'Falha na comunicação com o servidor';
+        this.showLogin(false);
       }
     }))
     .subscribe((getFornecedoresResponse) => {
@@ -41,25 +50,34 @@ export class FornecedorListaComponent {
 
         console.log(this.fornecedores);
         this.setupPaginacao();
+        this.showLogin(false);
       }
     });
   }
 
   atualizarFornecedor(id: number) {
+
+    this.showLogin(true);
+
     // chamar tela fornecedor-form para atualizar com base no ID
     console.log('abrir tela fornecedor-form com o id ' + id);
   }
 
   deletarFornecedor(id: number) {
+
+    this.showLogin(true);
+
     this.fornecedorService.deleteById(id)
     .pipe(catchError(async (error) => {
       if (error.status == 0) {
         this.errorMessage = 'Falha na comunicação com o servidor';
+        this.showLogin(false);
       }
     }))
     .subscribe((genericResponse) => {
       console.log(genericResponse);
       this.obterFornecedores();
+      this.showLogin(false);
     });
   }
 

@@ -3,6 +3,7 @@ const express = require('express');
 const mysql = require('mysql2/promise');
 const cors = require('cors');
 const bodyParser = require('body-parser');
+const helpers = require('./commons/helpers');
 const healthEndpoints = require('./health-check');
 const productEndpoints = require('./product-endpoints');
 const userEndpoints = require('./user-endpoints');
@@ -36,13 +37,13 @@ const startApp = async () => {
         console.log('Database connected...');
     });
 
-    healthEndpoints(app, db);
+    healthEndpoints(app, db, helpers);
 
-    userEndpoints(app, db);
+    userEndpoints(app, db, helpers);
 
-    productEndpoints(app, db);
+    productEndpoints(app, db, helpers);
 
-    fornecedoresEndpoints(app, db);
+    fornecedoresEndpoints(app, db, helpers);
 
     // outrosEndpoints(app, db);
 

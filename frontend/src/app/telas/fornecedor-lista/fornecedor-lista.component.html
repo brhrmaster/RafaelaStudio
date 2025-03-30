@@ -28,7 +28,7 @@
             <td>Telefone</td>
             <td>&nbsp;</td>
           </tr>
-          <tr class="table-row" *ngFor="let fornecedor of fornecedoresPaginados">
+          <tr class="table-row" *ngFor="let fornecedor of getListaFornecedores()">
             <td>{{fornecedor.empresa}}</td>
             <td>{{fornecedor.nomeRepresentante}}</td>
             <td>{{fornecedor.telefone}}</td>
@@ -46,9 +46,9 @@
     </div>
     <div class="row">
       <div class="col-sm-12 text-center table-footer">
-        <a (click)="paginaAnterior()" *ngIf="paginaAtual > 1"><<</a>
-        <i class="bi bi-arrow-left-circle"></i> {{paginaAtual}} / {{totalPaginas}} <i class="bi bi-arrow-right-circle"></i>
-        <a (click)="proximaPagina()" *ngIf="paginaAtual < totalPaginas">>></a>
+        <a (click)="paginaAnterior()" *ngIf="paginacao.paginaAtual > 1"><<</a>
+        <i class="bi bi-arrow-left-circle"></i> {{paginacao.paginaAtual}} / {{paginacao.totalPaginas}} <i class="bi bi-arrow-right-circle"></i>
+        <a (click)="proximaPagina()" *ngIf="paginacao.paginaAtual < paginacao.totalPaginas">>></a>
       </div>
     </div>
   </div>

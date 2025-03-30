@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ProductService } from '../../services/product.service';
-import { Product } from '../../models/models.component';
+import { ProdutoService } from '../../services/produto.service';
+import { Produto } from '../../models/models.component';
 
 @Component({
   selector: 'app-produto-form',
@@ -13,18 +13,19 @@ import { Product } from '../../models/models.component';
 })
 export class ProdutoFormComponent {
 
-  produtoSelecionado!: Product;
+  produtoSelecionado!: Produto;
+  @Output() alterarPaginaAtual = new EventEmitter<string>();
   @Output() showLoading = new EventEmitter<boolean>();
 
-  constructor(private productService: ProductService) {}
+  constructor(private produtoService: ProdutoService) {
 
-  private showLogin(show: boolean) {
+  }
+
+  private showLoadingComponent(show: boolean) {
     this.showLoading.emit(show);
   }
 
   cadastrar() {
-    // fechando cortina (LOADING...)
-    const apiResponse = this.productService.createNew(this.produtoSelecionado);
 
     // abrindo cortina (ABRIR MODAL)
     console.log('produto cadastrado!');

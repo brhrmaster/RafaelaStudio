@@ -7,11 +7,11 @@ import { ProdutoListaComponent } from "./telas/produto-lista/produto-lista.compo
 import { ProdutoFormComponent } from "./telas/produto-form/produto-form.component";
 import { FornecedorListaComponent } from "./telas/fornecedor-lista/fornecedor-lista.component";
 import { FornecedorFormComponent } from "./telas/fornecedor-form/fornecedor-form.component";
-import { UsuarioListaComponent } from "./telas/usuario-lista/produto-lista.component";
+import { UsuarioListaComponent } from "./telas/usuario-lista/usuario-lista.component";
 import { UsuarioFormComponent } from "./telas/usuario-form/usuario-form.component";
 import { LoginComponent } from "./telas/login/login.component";
 import { LoadingComponent } from "./componentes/loading/loading.component";
-import { User } from './models/models.component';
+import { Usuario } from './models/models.component';
 
 interface IPagina {
   [key: string]: string;
@@ -51,7 +51,7 @@ export class AppComponent {
   isLoadingVisible: boolean = false;
   paginaAtual: string = 'LOGIN';
   titulo: string = this.titulos[this.paginaAtual];
-  user!: User;
+  usuarioLogado!: Usuario;
 
   constructor() {
     this.checkLoggedUser();
@@ -65,13 +65,14 @@ export class AppComponent {
   checkLoggedUser() {
     const currentUser = localStorage.getItem('currentUser');
     if(currentUser) {
-      this.user = JSON.parse(currentUser);
+      this.usuarioLogado = JSON.parse(currentUser);
       this.paginaAtual = 'HOME';
       this.titulo = this.titulos[this.paginaAtual];
     }
   }
 
   showLoading(show: boolean) {
+    console.log(show ? 'Showing Loading' : 'Hiding loading');
     this.isLoadingVisible = show; // show or hide -> true or false
   }
 }

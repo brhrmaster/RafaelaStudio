@@ -3,7 +3,7 @@ const { throwError } = require('../commons/error');
 module.exports = (app, db, helpers) => {
     
     // API endpoints
-    const getProducts = async (req, res) => {
+    const getProdutos = async (req, res) => {
 
         await helpers.waitForABit(3000);
 
@@ -38,18 +38,18 @@ module.exports = (app, db, helpers) => {
             `;
 
             const [results] = await db.query(query, filtro);
-            return res.status(200).json({ products: results });
+            return res.status(200).json({ produtos: results });
         } catch (e) {
             if (!e.statusCode) e.statusCode = 400;
             return res.status(e.statusCode).json({ error: e.message });
         }
     };
 
-    const insertProduct = async (req, res) => {
+    const insertProduto = async (req, res) => {
 
         await helpers.waitForABit(2000);
 
-        const product = req.body;
+        const produto = req.body;
         try {
             // verificar se já existe um produto com o mesmo nome
             const queryVerifyExists = `
@@ -58,7 +58,7 @@ module.exports = (app, db, helpers) => {
                 WHERE nome LIKE ?
             `;
 
-            const [resVerifyExists = results] = await db.query(queryVerifyExists, [ product.nome ]);
+            const [resVerifyExists = results] = await db.query(queryVerifyExists, [ produto.nome ]);
             if (resVerifyExists.length > 0) {
                 throwError('Já existe um produto cadastrado com este nome', 203);
             }
@@ -73,18 +73,18 @@ module.exports = (app, db, helpers) => {
                 VALUES (?, ?, ?, ?)
             `;
 
-            const [productInsertResult = result] = await db.query(insertProdutoQuery, [
-                product.nome,
-                product.preco,
-                product.isValidadeDefinida,
-                product.formatoId
+            const [produtoInsertResult = result] = await db.query(insertProdutoQuery, [
+                produto.nome,
+                produto.preco,
+                produto.isValidadeDefinida,
+                produto.formatoId
             ]);
-            const produtoId = productInsertResult.insertId;
+            const produtoId = produtoInsertResult.insertId;
 
-            if (product.fornecedores && Array.isArray(product.fornecedores)) {
+            if (produto.fornecedores && Array.isArray(produto.fornecedores)) {
                 let errorFornecedorCount = 0;
-                for (let i=0; i < product.fornecedores.length; i++) {
-                    const fornecedorId = product.fornecedores[i];
+                for (let i=0; i < produto.fornecedores.length; i++) {
+                    const fornecedorId = produto.fornecedores[i];
                     try {
                         const insertFornecedorQuery = `
                             INSERT INTO tbl_produto_fornecedor (produto_id, fornecedor_id)
@@ -108,12 +108,12 @@ module.exports = (app, db, helpers) => {
         }
     };
 
-    const updateProduct = async (req, res) => {
+    const updateProduto = async (req, res) => {
 
         await helpers.waitForABit(2000);
 
         const { id } = req.params;
-        const product = req.body;
+        const produto = req.body;
 
         try {
             // verificar se já existe um produto com o mesmo nome
@@ -123,7 +123,7 @@ module.exports = (app, db, helpers) => {
                 WHERE nome LIKE ? AND id <> ?
             `;
 
-            const [resVerifyExists = results] = await db.query(queryVerifyExists, [ product.nome, id ]);
+            const [resVerifyExists = results] = await db.query(queryVerifyExists, [ produto.nome, id ]);
             if (resVerifyExists.length > 0) {
                 throwError('Já existe outro produto cadastrado com este nome', 203);
             }
@@ -139,14 +139,14 @@ module.exports = (app, db, helpers) => {
             `;
 
             await db.query(query, [
-                product.nome,
-                product.preco,
-                product.isValidadeDefinida,
-                product.formatoId,
+                produto.nome,
+                produto.preco,
+                produto.isValidadeDefinida,
+                produto.formatoId,
                 id
             ]);
 
-            if (product.fornecedores && Array.isArray(product.fornecedores)) {
+            if (produto.fornecedores && Array.isArray(produto.fornecedores)) {
                 const deleteFornecedorProdutoQuery = `
                     DELETE FROM tbl_produto_fornecedor
                     WHERE produto_id = ?
@@ -154,8 +154,8 @@ module.exports = (app, db, helpers) => {
                 await db.query(deleteFornecedorProdutoQuery, [id]);
 
                 let errorFornecedorCount = 0;
-                for (let i=0; i < product.fornecedores.length; i++) {
-                    const fornecedorId = product.fornecedores[i];
+                for (let i=0; i < produto.fornecedores.length; i++) {
+                    const fornecedorId = produto.fornecedores[i];
                     try {
                         const insertFornecedorQuery = `
                             INSERT INTO tbl_produto_fornecedor (produto_id, fornecedor_id)
@@ -168,18 +168,18 @@ module.exports = (app, db, helpers) => {
                 };
 
                 if (errorFornecedorCount > 0) {
-                    return res.status(203).json({ message: `Produto #${id} ${product.nome} atualizado com sucesso, mas falhou ao relacionar um ou mais fornecedores` });
+                    return res.status(203).json({ message: `Produto #${id} ${produto.nome} atualizado com sucesso, mas falhou ao relacionar um ou mais fornecedores` });
                 }
             }
 
-            return res.status(200).json({ message: `Produto #${id} ${product.nome} atualizado com sucesso!` });
+            return res.status(200).json({ message: `Produto #${id} ${produto.nome} atualizado com sucesso!` });
         } catch (e) {
             if (!e.statusCode) e.statusCode = 400;
             return res.status(e.statusCode).json({ error: e.message });
         }
     };
 
-    const deleteProduct = async (req, res) => {
+    const deleteProduto = async (req, res) => {
 
         await helpers.waitForABit(2000);
 
@@ -195,8 +195,8 @@ module.exports = (app, db, helpers) => {
             await db.query(queryDelHistoricoEstoque, [id]);
 
             // deletando o produto selecionado
-            const queryDelProduct = 'DELETE FROM tbl_produtos WHERE id = ?';
-            await db.query(queryDelProduct, [id]);
+            const queryDelProduto = 'DELETE FROM tbl_produtos WHERE id = ?';
+            await db.query(queryDelProduto, [id]);
 
             return res.status(200).json({ message: `Produto #${id} removido com sucesso` });
         } catch (e) {
@@ -205,17 +205,17 @@ module.exports = (app, db, helpers) => {
         }
     };
 
-    app.get('/api/produtos', getProducts);
+    app.get('/api/produtos', getProdutos);
 
-    app.post('/api/produto', insertProduct);
+    app.post('/api/produto', insertProduto);
 
-    app.put('/api/produto/:id', updateProduct);
+    app.put('/api/produto/:id', updateProduto);
 
-    app.delete('/api/produto/:id', deleteProduct);
+    app.delete('/api/produto/:id', deleteProduto);
 
     
     // controle estoques
-    const insertProductStock = async (req, res) => {
+    const insertProdutoStock = async (req, res) => {
 
         await helpers.waitForABit(2000);
 
@@ -230,12 +230,12 @@ module.exports = (app, db, helpers) => {
                 WHERE id = ?
             `;
 
-            const [productFromDB = results] = await db.query(queryVerifyExists, [ id ]);
-            if (productFromDB.length == 0) {
+            const [produtoFromDB = results] = await db.query(queryVerifyExists, [ id ]);
+            if (produtoFromDB.length == 0) {
                 throwError('Produto indísponível', 404);
             }
 
-            const produto = productFromDB[0];
+            const produto = produtoFromDB[0];
 
             // update produtos com novos valores de estoque
             const isEntrada = estoque.tipo == 1;
@@ -301,7 +301,7 @@ module.exports = (app, db, helpers) => {
         }
     };
 
-    const getProductStock = async (req, res) => {
+    const getProdutoStock = async (req, res) => {
 
         await helpers.waitForABit(3000);
 
@@ -350,6 +350,6 @@ module.exports = (app, db, helpers) => {
         }
     };
 
-    app.get('/api/produto/estoque', getProductStock);
-    app.post('/api/produto/estoque/:id', insertProductStock);
+    app.get('/api/produto/estoque', getProdutoStock);
+    app.post('/api/produto/estoque/:id', insertProdutoStock);
 }

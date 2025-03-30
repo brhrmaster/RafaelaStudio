@@ -11,9 +11,10 @@ import { CommonModule } from '@angular/common';
 })
 export class UsuarioFormComponent {
   usuarioSelecionado = {};
+  @Output() alterarPaginaAtual = new EventEmitter<string>();
   @Output() showLoading = new EventEmitter<boolean>();
 
-  private showLogin(show: boolean) {
+  private showLoadingComponent(show: boolean) {
     this.showLoading.emit(show);
   }
 

@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FornecedorService } from '../../services/fornecedor.service';
 import { Fornecedor } from '../../models/models.component';
 import { catchError } from 'rxjs';
+import { BaseTelaListagemComponent } from '../../componentes/BaseTelaListagemComponent';
 
 @Component({
   selector: 'app-fornecedor-lista',
@@ -12,52 +13,42 @@ import { catchError } from 'rxjs';
   templateUrl: './fornecedor-lista.component.html',
   styles: ''
 })
-export class FornecedorListaComponent {
-  fornecedores!: Fornecedor[];
-  fornecedoresPaginados!: Fornecedor[];
-  forecedorSelecionado!: Fornecedor;
+export class FornecedorListaComponent extends BaseTelaListagemComponent {
   fornecedorFiltro: string = '';
   errorMessage: string = '';
   serverResponse: string = '';
-  paginaAtual: number = 1;
-  totalPaginas: number = 1;
-  totalPorPagina: number = 3;
-  totalRegistros: number = 0;
+  @Output() alterarPaginaAtual = new EventEmitter<string>();
   @Output() showLoading = new EventEmitter<boolean>();
 
   constructor(private fornecedorService: FornecedorService) {
+    super();
     this.obterFornecedores();
   }
 
-  private showLogin(show: boolean) {
-    this.showLoading.emit(show);
-  }
-
   obterFornecedores() {
-
-    this.showLogin(true);
+    this.showLoading.emit(true);
 
     this.fornecedorService.getAll('')
     .pipe(catchError(async (error) => {
       if (error.status == 0) {
         this.errorMessage = 'Falha na comunicação com o servidor';
-        this.showLogin(false);
+        this.showLoading.emit(false);
       }
     }))
     .subscribe((getFornecedoresResponse) => {
       if (getFornecedoresResponse) {
-        this.fornecedores = getFornecedoresResponse.fornecedores;
+        this.paginacao.listaModels = getFornecedoresResponse.fornecedores;
 
-        console.log(this.fornecedores);
+        console.log(this.paginacao.listaModels);
         this.setupPaginacao();
-        this.showLogin(false);
+        this.showLoading.emit(false);
       }
     });
   }
 
   atualizarFornecedor(id: number) {
 
-    this.showLogin(true);
+    this.showLoading.emit(true);
 
     // chamar tela fornecedor-form para atualizar com base no ID
     console.log('abrir tela fornecedor-form com o id ' + id);
@@ -65,47 +56,23 @@ export class FornecedorListaComponent {
 
   deletarFornecedor(id: number) {
 
-    this.showLogin(true);
+    this.showLoading.emit(true);
 
     this.fornecedorService.deleteById(id)
     .pipe(catchError(async (error) => {
       if (error.status == 0) {
         this.errorMessage = 'Falha na comunicação com o servidor';
-        this.showLogin(false);
+        this.showLoading.emit(false);
       }
     }))
     .subscribe((genericResponse) => {
       console.log(genericResponse);
       this.obterFornecedores();
-      this.showLogin(false);
+      this.showLoading.emit(false);
     });
   }
 
-  setupPaginacao() {
-    if (this.fornecedores) {
-      this.totalRegistros = this.fornecedores.length;
-      this.totalPaginas = Math.ceil(this.totalRegistros / this.totalPorPagina);
-      this.fatiarListaDeFornecedores();
-    }
-  }
-
-  fatiarListaDeFornecedores() {
-    const startIndex = (this.paginaAtual - 1) * this.totalPorPagina;
-    const endIndex = startIndex + this.totalPorPagina;
-    this.fornecedoresPaginados = this.fornecedores.slice(startIndex, endIndex);
-  }
-
-  proximaPagina() {
-    if (this.paginaAtual < this.totalPaginas) {
-      this.paginaAtual++;
-      this.fatiarListaDeFornecedores();
-    }
-  }
-
-  paginaAnterior() {
-    if (this.paginaAtual >= 1) {
-      this.paginaAtual--;
-      this.fatiarListaDeFornecedores();
-    }
+  getListaFornecedores() : Fornecedor[] {
+    return <Fornecedor[]> this.paginacao.listaModelsPaginados;
   }
 }

@@ -1,4 +1,4 @@
 export const environment = {
-  production: true,
+  produtoion: true,
   apiDomain: ''
 }

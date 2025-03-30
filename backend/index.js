@@ -5,7 +5,7 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 const helpers = require('./commons/helpers');
 const healthEndpoints = require('./health-check');
-const productEndpoints = require('./product-endpoints');
+const produtoEndpoints = require('./produto-endpoints');
 const userEndpoints = require('./user-endpoints');
 const fornecedoresEndpoints = require('./fornecedores-endpoints');
 
@@ -41,7 +41,7 @@ const startApp = async () => {
 
     userEndpoints(app, db, helpers);
 
-    productEndpoints(app, db, helpers);
+    produtoEndpoints(app, db, helpers);
 
     fornecedoresEndpoints(app, db, helpers);
 

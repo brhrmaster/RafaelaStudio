@@ -1,7 +1,7 @@
 export interface Model {
 }
 
-export interface Product extends Model {
+export interface Produto extends Model {
   id: number,
   categoryId: number,
   imageLink: string,
@@ -11,7 +11,10 @@ export interface Product extends Model {
   qtd: number
 };
 
-export interface User extends Model {
+export interface Usuario extends Model {
+  id: number,
+  nome: string,
+  login: string
 };
 
 export interface UserLogin extends Model {
@@ -44,14 +47,34 @@ export interface Fornecedor extends Model {
   site: string
 };
 
+export interface Produto extends Model {
+  id: number,
+  nome: string,
+  preco: number,
+  isValidadeDefinida: boolean,
+  formatoId: number,
+  formatoNome: string,
+  estoqueTotal: number,
+  estoqueCursos: number,
+  estoqueClientes: number,
+  validade: Date
+};
+
 export interface GetFornecedoresResponse {
   fornecedores: Fornecedor[]
+};
+
+export interface GetProdutosResponse {
+  produtos: Produto[]
+};
+
+export interface GetUsuariosResponse {
+  users: Usuario[]
 };
 
 export interface GenericResponse {
   message: string
 };
-
 
 export interface ModalContent {
   title: string,

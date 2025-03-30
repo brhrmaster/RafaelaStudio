@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { GenericResponse, GetFornecedoresResponse } from '../models/models.component';
+import { Fornecedor, GenericResponse, GetFornecedoresResponse, ResponseData } from '../models/models.component';
 import { environment } from '../../environments/environment';
 
 @Injectable({
@@ -15,10 +15,19 @@ export class FornecedorService {
   }
 
   getAll(filtro: string): Observable<GetFornecedoresResponse> {
-    return this.http.get<GetFornecedoresResponse>(this.serviceUrl + 'fornecedores?filtro=' + filtro);
+    return this.http.get<GetFornecedoresResponse>(this.getUrlWithPath('fornecedores?filtro=' + filtro));
+  }
+
+  createNew(fornecedor: Fornecedor): Observable<ResponseData> {
+    console.log('Indo até a API para cadastrar novo produto...');
+    return this.http.post<ResponseData>(this.getUrlWithPath('fornecedor'), fornecedor);
   }
 
   deleteById(id: number): Observable<GenericResponse> {
-    return this.http.delete<GenericResponse>(this.serviceUrl + 'fornecedor/' + id);
+    return this.http.delete<GenericResponse>(this.getUrlWithPath('fornecedor/' + id));
+  }
+
+  getUrlWithPath(path: string): string {
+    return this.serviceUrl + path;
   }
 }

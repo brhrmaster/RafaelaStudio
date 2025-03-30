@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 
 
 @Component({
@@ -8,4 +8,7 @@ import { Component } from '@angular/core';
   styleUrl: './home.component.css'
 })
 export class HomeComponent {
+
+  @Output() alterarPaginaAtual = new EventEmitter<string>();
+  @Output() showLoading = new EventEmitter<boolean>();
 }

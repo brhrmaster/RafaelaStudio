@@ -155,7 +155,7 @@
 			"name": "Produtos",
 			"item": [
 				{
-					"name": "Insert Product",
+					"name": "Insert Produto",
 					"request": {
 						"auth": {
 							"type": "noauth"
@@ -186,7 +186,7 @@
 					"response": []
 				},
 				{
-					"name": "Insert Product Stock",
+					"name": "Insert Produto Stock",
 					"request": {
 						"auth": {
 							"type": "noauth"
@@ -219,7 +219,7 @@
 					"response": []
 				},
 				{
-					"name": "Update Product",
+					"name": "Update Produto",
 					"request": {
 						"auth": {
 							"type": "noauth"
@@ -251,7 +251,7 @@
 					"response": []
 				},
 				{
-					"name": "Delete Product",
+					"name": "Delete Produto",
 					"request": {
 						"auth": {
 							"type": "noauth"
@@ -274,7 +274,7 @@
 					"response": []
 				},
 				{
-					"name": "GET Products",
+					"name": "GET Produtos",
 					"request": {
 						"auth": {
 							"type": "noauth"
@@ -296,7 +296,7 @@
 					"response": []
 				},
 				{
-					"name": "Get Product Stock History",
+					"name": "Get Produto Stock History",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},

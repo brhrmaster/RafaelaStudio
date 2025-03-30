@@ -42,7 +42,6 @@ module.exports = (app, db, helpers) => {
             validateUserLogin(login);
             validateUserPassword(password);
 
-            // Search by product name
             const queryVerifyExists = `
                 SELECT u.*
                 FROM tbl_usuarios u
@@ -55,7 +54,6 @@ module.exports = (app, db, helpers) => {
                 throwError('Usuário já existe!', 203);
             }
 
-            // Search by product name
             const queryVerifyExistsInactive = `
                 SELECT u.*
                 FROM tbl_usuarios u
@@ -192,7 +190,6 @@ module.exports = (app, db, helpers) => {
         await helpers.waitForABit(3000);
 
         try {
-            // Search by product name
             const queryUsers = `
                 SELECT u.id, u.nome, u.login
                 FROM tbl_usuarios u
@@ -215,7 +212,6 @@ module.exports = (app, db, helpers) => {
         const { login, password } = req.body;
 
         try {
-            // Search by product name
             const queryUsers = `
                 SELECT u.id, u.nome, u.login
                 FROM tbl_usuarios u

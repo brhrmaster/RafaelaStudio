@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { UserLogin } from '../../models/models.component';
-import { LoginService } from '../../services/login.service';
+import { UsuarioService } from '../../services/usuario.service';
 import { FormsModule } from '@angular/forms';
 import { catchError } from 'rxjs';
 import { CommonModule } from '@angular/common';
@@ -22,7 +22,7 @@ export class LoginComponent {
   @Output() alterarPaginaAtual = new EventEmitter<string>();
   @Output() showLoading = new EventEmitter<boolean>();
 
-  constructor(private loginService: LoginService) {
+  constructor(private usuarioService: UsuarioService) {
     const currentUser = localStorage.getItem('currentUser');
     console.log(currentUser);
     if(currentUser) {
@@ -31,7 +31,7 @@ export class LoginComponent {
     }
   }
 
-  private showLogin(show: boolean) {
+  private showLoadingComponent(show: boolean) {
     this.showLoading.emit(show);
   }
 
@@ -43,24 +43,24 @@ export class LoginComponent {
       password: this.password
     };
 
-    this.showLogin(true);
+    this.showLoadingComponent(true);
 
-    this.loginService.efetuarLogin(this.user)
+    this.usuarioService.efetuarLogin(this.user)
     .pipe(catchError(async (error) => {
       if (error.status == 0) {
         this.errorMessage = 'Falha na comunicação com o servidor';
-        this.showLogin(false);
+        this.showLoadingComponent(false);
       }
       if (error.status == 401) {
         this.errorMessage = 'LOGIN INCORRETO';
-        this.showLogin(false);
+        this.showLoadingComponent(false);
       }
     }))
     .subscribe((loginSuccessData) => {
       if (loginSuccessData) {
         localStorage.setItem('currentUser', JSON.stringify(loginSuccessData));
+        this.showLoadingComponent(false);
         this.alterarPaginaAtual.emit('HOME');
-        this.showLogin(false);
       }
     });
   }

@@ -1,49 +1,46 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { catchError } from 'rxjs';
 import { BaseTelaListagemComponent } from '../../componentes/BaseTelaListagemComponent';
-import { ProdutoService } from '../../services/produto.service';
-import { Produto } from '../../models/models.component';
+import { UsuarioService } from '../../services/usuario.service';
+import { catchError } from 'rxjs';
+import { Usuario } from '../../models/models.component';
 
 @Component({
-  selector: 'app-produto-lista',
+  selector: 'app-usuario-lista',
   imports: [
     CommonModule
   ],
-  templateUrl: './produto-lista.component.html',
+  templateUrl: './usuario-lista.component.html',
   styles: ''
 })
-export class ProdutoListaComponent extends BaseTelaListagemComponent {
-  produtoFiltro: string = '';
-  errorMessage: string = '';
-  serverResponse: string = '';
+export class UsuarioListaComponent extends BaseTelaListagemComponent {
+  usuarios = [];
+  usuarioSelecionado = {};
+  errorMessage!: string;
   @Output() alterarPaginaAtual = new EventEmitter<string>();
   @Output() showLoading = new EventEmitter<boolean>();
 
-  constructor(private produtoService: ProdutoService) {
+  constructor(private usuarioService: UsuarioService) {
     super();
-    this.obterProdutos();
   }
 
-  private showLoadingComponent(show: boolean) {
-    console.log('enviando para o pai: ' + show);
+  showLoadingComponent(show: boolean) {
     this.showLoading.emit(show);
   }
 
-
-  obterProdutos() {
+  obterUsuarios() {
     this.showLoadingComponent(true);
 
-    this.produtoService.getAll('')
+    this.usuarioService.getAll('')
     .pipe(catchError(async (error) => {
       if (error.status == 0) {
         this.errorMessage = 'Falha na comunicação com o servidor';
         this.showLoadingComponent(false);
       }
     }))
-    .subscribe((getProdutosResponse) => {
-      if (getProdutosResponse) {
-        this.paginacao.listaModels = getProdutosResponse.produtos;
+    .subscribe((getUsuariosResponse) => {
+      if (getUsuariosResponse) {
+        this.paginacao.listaModels = getUsuariosResponse.users;
 
         console.log(this.paginacao.listaModels);
         this.setupPaginacao();
@@ -52,19 +49,19 @@ export class ProdutoListaComponent extends BaseTelaListagemComponent {
     });
   }
 
-  atualizarProduto(id: number) {
+  atualizarUsuario(id: number) {
 
     this.showLoadingComponent(true);
 
     // chamar tela fornecedor-form para atualizar com base no ID
-    console.log('abrir tela produto-form com o id ' + id);
+    console.log('abrir tela usuario-form com o id ' + id);
   }
 
-  deletarProduto(id: number) {
+  deletarUsuario(id: number) {
 
     this.showLoadingComponent(true);
 
-    this.produtoService.deleteById(id)
+    this.usuarioService.deleteById(id)
     .pipe(catchError(async (error) => {
       if (error.status == 0) {
         this.errorMessage = 'Falha na comunicação com o servidor';
@@ -73,12 +70,12 @@ export class ProdutoListaComponent extends BaseTelaListagemComponent {
     }))
     .subscribe((genericResponse) => {
       console.log(genericResponse);
-      this.obterProdutos();
+      this.obterUsuarios();
       this.showLoadingComponent(false);
     });
   }
 
-  getListaProdutos() : Produto[] {
-    return <Produto[]> this.paginacao.listaModelsPaginados;
+  getListaUsuarios() : Usuario[] {
+    return <Usuario[]> this.paginacao.listaModelsPaginados;
   }
 }

@@ -8,6 +8,7 @@ const healthEndpoints = require('./health-check');
 const produtoEndpoints = require('./produto-endpoints');
 const userEndpoints = require('./user-endpoints');
 const fornecedoresEndpoints = require('./fornecedores-endpoints');
+const reportsEndpoints = require('./reports-endpoints');
 
 // Create Express app
 const app = express();
@@ -44,6 +45,8 @@ const startApp = async () => {
     produtoEndpoints(app, db, helpers);
 
     fornecedoresEndpoints(app, db, helpers);
+
+    reportsEndpoints(app, db, helpers);
 
     // outrosEndpoints(app, db);
 

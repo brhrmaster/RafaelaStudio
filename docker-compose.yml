@@ -37,7 +37,7 @@ services:
     build: ./frontend/
     container_name: rafaela-studio-app
     ports:
-      - 8080:80
+      - 80:80
     environment:
       - API_HOST:backend-api
     depends_on:

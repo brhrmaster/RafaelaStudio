@@ -80,3 +80,15 @@ export interface ModalContent {
   title: string,
   message: string
 }
+
+export interface TotalEntradaSaidaProdutoReport {
+  dayOfMonth: string,
+  tipo: number,
+  total: number
+}
+
+export interface GetReportsData {
+  totalFornecedoresRecentementeCriados: number,
+  totalProdutosRecentementeCriados: number,
+  totalEntradaSaidaProdutos: TotalEntradaSaidaProdutoReport[]
+}

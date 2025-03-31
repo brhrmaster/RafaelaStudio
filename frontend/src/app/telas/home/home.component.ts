@@ -3,7 +3,9 @@ import { LoadingComponent } from "../../componentes/loading/loading.component";
 import { CommonModule } from '@angular/common';
 import Chart from 'chart.js/auto';
 import Utils from '../../componentes/utils';
-import { NEVER } from 'rxjs';
+import { ReportsService } from '../../services/reports.service';
+import { catchError } from 'rxjs';
+import { GetReportsData } from '../../models/models.component';
 
 @Component({
   selector: 'app-home',
@@ -13,17 +15,42 @@ import { NEVER } from 'rxjs';
 })
 export class HomeComponent implements OnInit {
 
+  errorMessage: string = '';
   isLoadingVisible: boolean = false;
   pieChart: any = [];
   linesChart: any = [];
+  reportsData!: GetReportsData;
   @Output() alterarPaginaAtual = new EventEmitter<string>();
   @Output() showLoading = new EventEmitter<boolean>();
+
+  constructor(private reportsService: ReportsService) {}
 
   private showLoadingComponent(show: boolean) {
     this.isLoadingVisible = show;
   }
 
-  ngOnInit() {
+  obterDadosReports() {
+    this.showLoadingComponent(true);
+
+    this.reportsService.getReports()
+    .pipe(catchError(async (error) => {
+      if (error.status == 0) {
+        this.errorMessage = 'Falha na comunicação com o servidor';
+        this.showLoadingComponent(false);
+      }
+    }))
+    .subscribe((getReportsResponse) => {
+      if (getReportsResponse) {
+        this.reportsData = getReportsResponse;
+        this.setupPieChart();
+        this.setupLineChart();
+        this.showLoadingComponent(false);
+      }
+    });
+  }
+
+
+  setupPieChart() {
     const dataForPie = {
       labels: [
         'Red',
@@ -46,13 +73,34 @@ export class HomeComponent implements OnInit {
       type: 'doughnut',
       data: dataForPie
     });
+  }
 
-    const DATA_COUNT = 7;
-    const NUMBER_CFG = {
-      count: DATA_COUNT,
-      min: -100,
+  setupLineChart() {
+    const totalEntradas = this.reportsData.totalEntradaSaidaProdutos.filter(item => item.tipo == 1).length;
+    const totalSaidas = this.reportsData.totalEntradaSaidaProdutos.filter(item => item.tipo == 0).length;
+
+    const itemsEntrada = this.reportsData.totalEntradaSaidaProdutos
+      .filter(item => item.tipo == 1)
+      .map(item => item.total);
+
+    const NUMBER_CFG_Entradas = {
+      count: totalEntradas,
+      min: 0,
       max: 100,
-      from: [],
+      from: itemsEntrada,
+      decimals: 0,
+      continuity: 0
+    };
+
+    const itemsSaida = this.reportsData.totalEntradaSaidaProdutos
+      .filter(item => item.tipo == 0)
+      .map(item => item.total);
+
+    const NUMBER_CFG_Saidas = {
+      count: totalSaidas,
+      min: 0,
+      max: 100,
+      from: itemsSaida,
       decimals: 0,
       continuity: 0
     };
@@ -63,13 +111,13 @@ export class HomeComponent implements OnInit {
       datasets: [
         {
           label: 'Entradas',
-          data: Utils.numbers(NUMBER_CFG),
+          data: Utils.numbers(NUMBER_CFG_Entradas),
           borderColor: Utils.CHART_COLORS.green,
           backgroundColor: Utils.transparentize(Utils.CHART_COLORS.green, 0.5),
         },
         {
           label: 'Saídas',
-          data: Utils.numbers(NUMBER_CFG),
+          data: Utils.numbers(NUMBER_CFG_Saidas),
           borderColor: Utils.CHART_COLORS.red,
           backgroundColor: Utils.transparentize(Utils.CHART_COLORS.red, 0.5),
         }
@@ -79,7 +127,7 @@ export class HomeComponent implements OnInit {
 
     this.linesChart = new Chart('canvas-lines-chart', {
       type: 'line',
-      data: dataForPie,
+      data: dataForLines,
       options: {
         responsive: true,
         maintainAspectRatio: false,
@@ -94,5 +142,9 @@ export class HomeComponent implements OnInit {
         }
       }
     });
+  }
+
+  ngOnInit() {
+    this.obterDadosReports();
   }
 }

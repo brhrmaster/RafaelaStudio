@@ -20,7 +20,6 @@ import { LoadingComponent } from "../../componentes/loading/loading.component";
 export class FornecedorListaComponent extends BaseTelaListagemComponent {
   fornecedorFiltro: string = '';
   errorMessage: string = '';
-  serverResponse: string = '';
   @Output() alterarPaginaAtual = new EventEmitter<string>();
   @Output() showLoading = new EventEmitter<boolean>();
   isLoadingVisible: boolean = false;

@@ -41,7 +41,7 @@
   background: rgba(231, 242, 255, 0.60);
 }
 
-.table tr:hover {
+.table tr:not(:first-child):hover {
   background: rgba(249, 252, 255, 0.7);
 }
 

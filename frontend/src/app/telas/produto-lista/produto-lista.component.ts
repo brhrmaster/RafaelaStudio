@@ -1,10 +1,13 @@
-import { Component, EventEmitter, Output } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, EventEmitter, Output, DEFAULT_CURRENCY_CODE, LOCALE_ID } from '@angular/core';
+import { CommonModule, formatDate, formatCurrency, registerLocaleData  } from '@angular/common';
+import ptBr from '@angular/common/locales/pt';
 import { catchError } from 'rxjs';
 import { BaseTelaListagemComponent } from '../../componentes/BaseTelaListagemComponent';
 import { ProdutoService } from '../../services/produto.service';
 import { Produto } from '../../models/models.component';
 import { LoadingComponent } from "../../componentes/loading/loading.component";
+
+registerLocaleData(ptBr);
 
 @Component({
   selector: 'app-produto-lista',
@@ -13,7 +16,14 @@ import { LoadingComponent } from "../../componentes/loading/loading.component";
     LoadingComponent
   ],
   templateUrl: './produto-lista.component.html',
-  styles: ''
+  styleUrls: [
+    '../../styles/tela-lista-registros.css'
+  ],
+  providers:    [
+    // ************************************
+    { provide: LOCALE_ID, useValue: 'pt' },
+    // ************************************
+  ],
 })
 export class ProdutoListaComponent extends BaseTelaListagemComponent {
   produtoFiltro: string = '';
@@ -81,5 +91,10 @@ export class ProdutoListaComponent extends BaseTelaListagemComponent {
 
   getListaProdutos() : Produto[] {
     return <Produto[]> this.paginacao.listaModelsPaginados;
+  }
+
+
+  getFormattedDate(datetime: Date) {
+    return datetime ? formatDate(datetime, 'dd/MM/yyyy', 'pt-BR') : '';
   }
 }

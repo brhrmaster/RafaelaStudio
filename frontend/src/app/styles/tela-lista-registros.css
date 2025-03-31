@@ -1,0 +1,82 @@
+.error-message {
+  background-color: #ff4a4a;
+  color: #FFF;
+  font-weight: 600;
+  text-align: center;
+  padding: 10px;
+}
+
+.inner-page-header {
+  background-color: #f5d5f9;
+  font-size: 24pt;
+  font-weight: 400;
+  border-radius: 0px 0px 5px 5px;
+}
+
+.inner-page-header button {
+  float: right;
+  margin-top: 6px;
+}
+
+.list-page-search-holder {
+  padding: 10px 0px;
+}
+
+.list-page-search-holder input {
+  background-image: url(https://upload.wikimedia.org/wikipedia/commons/5/55/Magnifying_glass_icon.svg);
+  background-size: 20px;
+  background-repeat: no-repeat;
+  background-position: 10px;
+  padding-left: 40px;
+  padding-top: 3px;
+}
+
+.items-table-holder {
+  padding: 0px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.table tr:nth-child(odd) {
+  background: rgba(231, 242, 255, 0.60);
+}
+
+.table tr:hover {
+  background: rgba(249, 252, 255, 0.7);
+}
+
+.table a {
+  background: unset;
+  padding: 0px;
+  margin: 0px;
+}
+
+.table .table-icons a.icon {
+  background: unset;
+  display: inline-block;
+  padding: 0px;
+  margin: 0px;
+  color: #4a4a4a;
+}
+
+.table th {
+  background: unset;
+}
+
+.table tr {
+  background: unset;
+}
+
+.table td:not(:last-child) {
+  padding-left: .5rem;
+}
+
+.table .table-icons {
+  text-align: right;
+  padding-right: 10px;
+  width: 95px;
+}
+
+.table .whatsapp-icon {
+  width: 20px;
+}

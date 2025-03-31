@@ -1,44 +1,47 @@
-{{errorMessage}}
+<div class="error-message" *ngIf="errorMessage !== ''">{{errorMessage}}</div>
 
 <div class="container">
-  <div class="row page-header">
+  <div class="row page-header inner-page-header">
     <div class="col-sm-6">
       <h1>Fornecedores</h1>
     </div>
     <div class="col-sm-6">
-      <button class="align-right"><strong>INCLUIR</strong></button>
+      <button class="btn btn-success">INCLUIR</button>
     </div>
   </div>
   <div class="page-content">
     <div class="row">
-      <div class="col-sm-6">
+      <div class="col-sm-8">
         &nbsp;
       </div>
-      <div class="col-sm-6">
-        <input class="form-control btn-localizar align-right" type="text" placeholder="Localizar fornecedor.."
-          aria-label="Localizar fornecedor..">
+      <div class="col-sm-4 list-page-search-holder">
+        <div class="input-group">
+          <input type="text" class="form-control" placeholder="Buscar fornecedor.." aria-label="Buscar fornecedor..">
+        </div>
       </div>
     </div>
     <div class="row">
-      <div class="col-sm-12">
-        <table>
-          <tr class="table-header">
-            <td>Empresa</td>
-            <td>Representante</td>
-            <td>Telefone</td>
-            <td>&nbsp;</td>
-          </tr>
-          <tr class="table-row" *ngFor="let fornecedor of getListaFornecedores()">
-            <td>{{fornecedor.empresa}}</td>
+      <div class="col-sm-12" class="items-table-holder">
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">Empresa</th>
+              <th scope="col">Representante</th>
+              <th scope="col">Telefone</th>
+              <th scope="col">&nbsp;</th>
+            </tr>
+          </thead>
+          <tr *ngFor="let fornecedor of getListaFornecedores()">
+            <td scope="row">{{fornecedor.empresa}}</td>
             <td>{{fornecedor.nomeRepresentante}}</td>
-            <td>{{fornecedor.telefone}}</td>
+            <td><a href="https://wa.me/{{formatPhoneForWhatsapp(fornecedor.telefone)}}" target="_blank"><img class="whatsapp-icon" src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg"/>{{fornecedor.telefone}}</a></td>
             <td class="table-icons">
-              <button type="button" class="btn btn-link" (click)="atualizarFornecedor(fornecedor.id)" data-bs-toggle="modal" data-bs-target="#editStockModal">
-                <i class="bi bi-pencil-square"></i>
-              </button>
-              <button type="button" class="btn btn-link" (click)="deletarFornecedor(fornecedor.id)" data-bs-toggle="modal" data-bs-target="#deleteModal">
-                <i class="bi bi-trash"></i>
-              </button>
+              <a class="icon" title="Alterar informações" (click)="atualizarFornecedor(fornecedor.id)">
+                <i class="fa-solid fa-pen-to-square"></i>
+              </a>
+              <a class="icon" title="Excluir" (click)="deletarFornecedor(fornecedor.id)">
+                <i class="fa-solid fa-trash-can"></i>
+              </a>
             </td>
           </tr>
         </table>
@@ -46,9 +49,11 @@
     </div>
     <div class="row">
       <div class="col-sm-12 text-center table-footer">
-        <a (click)="paginaAnterior()" *ngIf="paginacao.paginaAtual > 1"><<</a>
+        <a (click)="paginaAnterior()" data-toggle="tooltip" data-placement="top" title="Página anterior" *ngIf="paginacao.paginaAtual > 1"><i class="fa-solid fa-backward"></i>&nbsp;</a>
         <i class="bi bi-arrow-left-circle"></i> {{paginacao.paginaAtual}} / {{paginacao.totalPaginas}} <i class="bi bi-arrow-right-circle"></i>
-        <a (click)="proximaPagina()" *ngIf="paginacao.paginaAtual < paginacao.totalPaginas">>></a>
+        <a (click)="proximaPagina()" data-toggle="tooltip" data-placement="top" title="Próxima página" *ngIf="paginacao.paginaAtual < paginacao.totalPaginas">&nbsp;<i class="fa-solid fa-forward"></i></a>
       </div>
     </div>
   </div>
+
+<app-loading *ngIf="isLoadingVisible"></app-loading>

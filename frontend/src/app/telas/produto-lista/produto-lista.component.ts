@@ -4,11 +4,13 @@ import { catchError } from 'rxjs';
 import { BaseTelaListagemComponent } from '../../componentes/BaseTelaListagemComponent';
 import { ProdutoService } from '../../services/produto.service';
 import { Produto } from '../../models/models.component';
+import { LoadingComponent } from "../../componentes/loading/loading.component";
 
 @Component({
   selector: 'app-produto-lista',
   imports: [
-    CommonModule
+    CommonModule,
+    LoadingComponent
   ],
   templateUrl: './produto-lista.component.html',
   styles: ''
@@ -17,6 +19,7 @@ export class ProdutoListaComponent extends BaseTelaListagemComponent {
   produtoFiltro: string = '';
   errorMessage: string = '';
   serverResponse: string = '';
+  isLoadingVisible: boolean = false;
   @Output() alterarPaginaAtual = new EventEmitter<string>();
   @Output() showLoading = new EventEmitter<boolean>();
 
@@ -26,10 +29,8 @@ export class ProdutoListaComponent extends BaseTelaListagemComponent {
   }
 
   private showLoadingComponent(show: boolean) {
-    console.log('enviando para o pai: ' + show);
-    this.showLoading.emit(show);
+    this.isLoadingVisible = show;
   }
-
 
   obterProdutos() {
     this.showLoadingComponent(true);

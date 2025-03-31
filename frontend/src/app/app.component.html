@@ -1,4 +1,4 @@
-<app-login *ngIf="paginaAtual === 'LOGIN'" (alterarPaginaAtual)="alterarPaginaAtual($event)" (showLoading)="showLoading($event)"></app-login>
+<app-login *ngIf="paginaAtual === 'LOGIN'" (alterarPaginaAtual)="alterarPaginaAtual($event)"></app-login>
 
 <app-menu-lateral *ngIf="paginaAtual !== 'LOGIN'" (alterarPaginaAtual)="alterarPaginaAtual($event)"></app-menu-lateral>
 
@@ -6,16 +6,16 @@
   <!-- header pagina -->
   <app-header-pagina [titulo]="titulo"></app-header-pagina>
 
-  <app-home *ngIf="paginaAtual === 'HOME'" (alterarPaginaAtual)="alterarPaginaAtual($event)" (showLoading)="showLoading($event)"></app-home>
+  <app-home *ngIf="paginaAtual === 'HOME'" (alterarPaginaAtual)="alterarPaginaAtual($event)"></app-home>
 
-  <app-produto-lista *ngIf="paginaAtual === 'PRODUTO-LISTA'" (alterarPaginaAtual)="alterarPaginaAtual($event)" (showLoading)="showLoading($event)"></app-produto-lista>
-  <app-produto-form *ngIf="paginaAtual === 'PRODUTO-FORM'" (alterarPaginaAtual)="alterarPaginaAtual($event)" (showLoading)="showLoading($event)"></app-produto-form>
+  <app-produto-lista *ngIf="paginaAtual === 'PRODUTO-LISTA'" (alterarPaginaAtual)="alterarPaginaAtual($event)"></app-produto-lista>
+  <app-produto-form *ngIf="paginaAtual === 'PRODUTO-FORM'" (alterarPaginaAtual)="alterarPaginaAtual($event)"></app-produto-form>
 
-  <app-fornecedor-lista *ngIf="paginaAtual === 'FORNECEDOR-LISTA'" (alterarPaginaAtual)="alterarPaginaAtual($event)" (showLoading)="showLoading($event)"></app-fornecedor-lista>
-  <app-fornecedor-form *ngIf="paginaAtual === 'FORNECEDOR-FORM'" (alterarPaginaAtual)="alterarPaginaAtual($event)" (showLoading)="showLoading($event)"></app-fornecedor-form>
+  <app-fornecedor-lista *ngIf="paginaAtual === 'FORNECEDOR-LISTA'" (alterarPaginaAtual)="alterarPaginaAtual($event)"></app-fornecedor-lista>
+  <app-fornecedor-form *ngIf="paginaAtual === 'FORNECEDOR-FORM'" (alterarPaginaAtual)="alterarPaginaAtual($event)"></app-fornecedor-form>
 
-  <app-usuario-lista *ngIf="paginaAtual === 'USUARIO-LISTA'" (alterarPaginaAtual)="alterarPaginaAtual($event)" (showLoading)="showLoading($event)"></app-usuario-lista>
-  <app-usuario-form *ngIf="paginaAtual === 'USUARIO-FORM'" (alterarPaginaAtual)="alterarPaginaAtual($event)" (showLoading)="showLoading($event)"></app-usuario-form>
+  <app-usuario-lista *ngIf="paginaAtual === 'USUARIO-LISTA'" (alterarPaginaAtual)="alterarPaginaAtual($event)"></app-usuario-lista>
+  <app-usuario-form *ngIf="paginaAtual === 'USUARIO-FORM'" (alterarPaginaAtual)="alterarPaginaAtual($event)"></app-usuario-form>
 
   <footer class="main-footer w-100 position-absolute bottom-0 start-0 py-2" style="background: #222">
     <div class="container-fluid">
@@ -41,5 +41,3 @@
   </div>
 
 </div>
-
-<app-loading *ngIf="isLoadingVisible"></app-loading>

@@ -4,11 +4,12 @@ import { UsuarioService } from '../../services/usuario.service';
 import { FormsModule } from '@angular/forms';
 import { catchError } from 'rxjs';
 import { CommonModule } from '@angular/common';
+import { LoadingComponent } from "../../componentes/loading/loading.component";
 
 
 @Component({
   selector: 'app-login',
-  imports: [FormsModule, CommonModule],
+  imports: [FormsModule, CommonModule, LoadingComponent],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
@@ -18,6 +19,7 @@ export class LoginComponent {
   login: string = '';
   password: string = '';
   errorMessage: string = '';
+  isLoadingVisible: boolean = false;
 
   @Output() alterarPaginaAtual = new EventEmitter<string>();
   @Output() showLoading = new EventEmitter<boolean>();
@@ -32,7 +34,7 @@ export class LoginComponent {
   }
 
   private showLoadingComponent(show: boolean) {
-    this.showLoading.emit(show);
+    this.isLoadingVisible = show;
   }
 
   efetuarLogin() {

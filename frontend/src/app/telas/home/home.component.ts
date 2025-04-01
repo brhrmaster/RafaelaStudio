@@ -1,6 +1,6 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { LoadingComponent } from "../../componentes/loading/loading.component";
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import Chart from 'chart.js/auto';
 import Utils from '../../componentes/utils';
 import { ReportsService } from '../../services/reports.service';
@@ -13,13 +13,18 @@ import { GetReportsData } from '../../models/models.component';
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent {
 
   errorMessage: string = '';
   isLoadingVisible: boolean = false;
   pieChart: any = [];
   linesChart: any = [];
-  reportsData!: GetReportsData;
+  reportsData: GetReportsData = {
+    totalFornecedoresRecentementeCriados: 0,
+    totalProdutosRecentementeCriados: 0,
+    totalProdutosPorFornecedor: [],
+    totalEntradaSaidaProdutos: []
+  };
   @Output() alterarPaginaAtual = new EventEmitter<string>();
   @Output() showLoading = new EventEmitter<boolean>();
 
@@ -42,29 +47,28 @@ export class HomeComponent implements OnInit {
     .subscribe((getReportsResponse) => {
       if (getReportsResponse) {
         this.reportsData = getReportsResponse;
-        this.setupPieChart();
-        this.setupLineChart();
+        this.setupGraficoEntradasSaidas();
+        this.setupGraficoFornecedores();
         this.showLoadingComponent(false);
       }
     });
   }
 
 
-  setupPieChart() {
+  setupGraficoFornecedores() {
+    const totalProdutosPorFornecedor: number[] = [];
+    const xlabels: string[] = [];
+
+    this.reportsData.totalProdutosPorFornecedor.forEach(fornecedor => {
+      totalProdutosPorFornecedor.push(fornecedor.totalProdutos);
+      xlabels.push(fornecedor.empresa);
+    });
+
     const dataForPie = {
-      labels: [
-        'Red',
-        'Blue',
-        'Yellow'
-      ],
+      labels: xlabels,
       datasets: [{
-        label: 'My First Dataset',
-        data: [300, 50, 100],
-        backgroundColor: [
-          'rgb(255, 99, 132)',
-          'rgb(54, 162, 235)',
-          'rgb(255, 205, 86)'
-        ],
+        label: 'Produtos fornecidos',
+        data: totalProdutosPorFornecedor,
         hoverOffset: 4
       }]
     };
@@ -75,39 +79,59 @@ export class HomeComponent implements OnInit {
     });
   }
 
-  setupLineChart() {
-    const totalEntradas = this.reportsData.totalEntradaSaidaProdutos.filter(item => item.tipo == 1).length;
-    const totalSaidas = this.reportsData.totalEntradaSaidaProdutos.filter(item => item.tipo == 0).length;
+  setupGraficoEntradasSaidas() {
+    const datePipe = new DatePipe('pt');
+    interface ValoresGrafico {
+      entrada: number,
+      saida: number,
+    };
 
-    const itemsEntrada = this.reportsData.totalEntradaSaidaProdutos
-      .filter(item => item.tipo == 1)
-      .map(item => item.total);
+    const entradasSaidas: ValoresGrafico[] = [];
+    const xlabels: string[] = [];
+    let maxEntrada = 0;
+    let maxSaida = 0;
+
+    this.reportsData.totalEntradaSaidaProdutos.forEach(item => {
+      const isEntrada = item.tipo == 1;
+
+      if (isEntrada) {
+        entradasSaidas.push({
+          entrada: item.total,
+          saida: 0
+        });
+      } else {
+        entradasSaidas.push({
+          entrada: 0,
+          saida: item.total
+        });
+      }
+
+      if (!xlabels.includes(item.dayOfMonth)) xlabels.push("" + datePipe.transform(item.dayOfMonth, 'dd/MM/yyyy'));
+    });
+
+    const itemsEntradas = entradasSaidas.map(item => item.entrada);
+    const itemsSaidas = entradasSaidas.map(item => item.saida);
 
     const NUMBER_CFG_Entradas = {
-      count: totalEntradas,
+      count: itemsEntradas.length,
       min: 0,
-      max: 100,
-      from: itemsEntrada,
+      max: maxEntrada,
+      from: itemsEntradas,
       decimals: 0,
       continuity: 0
     };
-
-    const itemsSaida = this.reportsData.totalEntradaSaidaProdutos
-      .filter(item => item.tipo == 0)
-      .map(item => item.total);
 
     const NUMBER_CFG_Saidas = {
-      count: totalSaidas,
+      count: itemsSaidas.length,
       min: 0,
-      max: 100,
-      from: itemsSaida,
+      max: maxSaida,
+      from: itemsSaidas,
       decimals: 0,
       continuity: 0
     };
 
-    const labels = Utils.months({count: 7, section: 0});
     const dataForLines = {
-      labels: labels,
+      labels: xlabels,
       datasets: [
         {
           label: 'Entradas',

@@ -87,8 +87,14 @@ export interface TotalEntradaSaidaProdutoReport {
   total: number
 }
 
+export interface TotalProdutosPorFornecedor {
+  empresa: string,
+  totalProdutos: number,
+}
+
 export interface GetReportsData {
   totalFornecedoresRecentementeCriados: number,
   totalProdutosRecentementeCriados: number,
+  totalProdutosPorFornecedor: TotalProdutosPorFornecedor[],
   totalEntradaSaidaProdutos: TotalEntradaSaidaProdutoReport[]
 }

@@ -5,9 +5,21 @@ module.exports = (app, db, helpers) => {
     // API endpoints
     const getReports = async (req, res) => {
         await helpers.waitForABit(1000);
-        try {
+        try {            
+            // Fornecedores e o total de produtos relacionados
+            const queryTotalProdutosPorFornecedor = `
+                SELECT 
+                    f.empresa,
+                    (SELECT COUNT(0) FROM tbl_produto_fornecedor WHERE fornecedor_id = f.id) AS totalProdutos
+                FROM tbl_fornecedores f
+                WHERE (SELECT COUNT(0) FROM tbl_produto_fornecedor WHERE fornecedor_id = f.id) > 0
+                ORDER BY (SELECT COUNT(0) FROM tbl_produto_fornecedor WHERE fornecedor_id = f.id) DESC
+            `;
 
-            // 
+            const [totalProdutosPorFornecedor = results] = await db.query(queryTotalProdutosPorFornecedor);
+
+
+            // Total fornecedores cadastrados no ultimo mes
             const queryFornecedoresRecentementeCriados = `
                 SELECT COUNT(0) AS total
                 FROM tbl_fornecedores f
@@ -16,7 +28,8 @@ module.exports = (app, db, helpers) => {
 
             const [totalFornecedoresRecentementeCriados = results] = await db.query(queryFornecedoresRecentementeCriados);
 
-            
+
+            // Total produtos cadastrados no ultimo mes
             const queryProdutosRecentementeCriados = `
                 SELECT COUNT(0) as total
                 FROM tbl_produtos f
@@ -25,6 +38,8 @@ module.exports = (app, db, helpers) => {
 
             const [totalProdutosRecentementeCriados = results] = await db.query(queryProdutosRecentementeCriados);
 
+
+            // Entradas e saídas de estoque
             const queryEntradaSaidaProdutos = `
                 SELECT 
                     DATE_FORMAT(created_at, "%Y-%m-%d") AS dayOfMonth,
@@ -41,6 +56,7 @@ module.exports = (app, db, helpers) => {
             return res.status(200).json({
                 totalFornecedoresRecentementeCriados: totalFornecedoresRecentementeCriados[0].total,
                 totalProdutosRecentementeCriados: totalProdutosRecentementeCriados[0].total,
+                totalProdutosPorFornecedor,
                 totalEntradaSaidaProdutos,
             });
         } catch (e) {

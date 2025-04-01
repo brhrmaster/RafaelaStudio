@@ -98,3 +98,20 @@ export interface GetReportsData {
   totalProdutosPorFornecedor: TotalProdutosPorFornecedor[],
   totalEntradaSaidaProdutos: TotalEntradaSaidaProdutoReport[]
 }
+
+export interface AtividadeEstoque {
+  tipo: number,
+  tipoNome: string,
+  total: number,
+  validade: Date,
+  qtdClientes: number,
+  qtdCursos: number,
+  produtoId: number,
+  produtoNome: string,
+  isValidadeDefinida: boolean,
+  createdAt: Date
+}
+
+export interface GetAtividadesEstoque {
+  atividadesEstoque: AtividadeEstoque[]
+}

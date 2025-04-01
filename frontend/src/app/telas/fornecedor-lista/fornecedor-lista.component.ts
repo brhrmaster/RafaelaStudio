@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Output, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FornecedorService } from '../../services/fornecedor.service';
 import { Fornecedor } from '../../models/models.component';
@@ -20,9 +20,10 @@ import { LoadingComponent } from "../../componentes/loading/loading.component";
 export class FornecedorListaComponent extends BaseTelaListagemComponent {
   fornecedorFiltro: string = '';
   errorMessage: string = '';
+  isLoadingVisible: boolean = false;
   @Output() alterarPaginaAtual = new EventEmitter<string>();
   @Output() showLoading = new EventEmitter<boolean>();
-  isLoadingVisible: boolean = false;
+  @ViewChild('txtbusca') txtBusca!: ElementRef;
 
   constructor(private fornecedorService: FornecedorService) {
     super(5);
@@ -33,10 +34,10 @@ export class FornecedorListaComponent extends BaseTelaListagemComponent {
     this.isLoadingVisible = show;
   }
 
-  obterFornecedores() {
+  obterFornecedores(busca: string = '') {
     this.showLoadingComponent(true);
 
-    this.fornecedorService.getAll('')
+    this.fornecedorService.getAll(busca.trim())
     .pipe(catchError(async (error) => {
       if (error.status == 0) {
         this.errorMessage = 'Falha na comunicação com o servidor';
@@ -83,5 +84,12 @@ export class FornecedorListaComponent extends BaseTelaListagemComponent {
 
   formatPhoneForWhatsapp(phone: string) {
     return '+55' + phone.trim().replace(/[^0-9]/g,'')
+  }
+
+  executarBusca(event: KeyboardEvent) {
+    if (event.key === 'Enter') {
+      const input = <HTMLInputElement>event.target;
+      this.obterFornecedores(input.value);
+    }
   }
 }

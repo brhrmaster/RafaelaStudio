@@ -16,7 +16,7 @@
       </div>
       <div class="col-sm-4 list-page-search-holder">
         <div class="input-group">
-          <input type="text" class="form-control" placeholder="Buscar produto.." aria-label="Buscar produto..">
+          <input type="text" class="form-control" placeholder="Buscar produto.." #txtbusca  (keyup)="executarBusca($event)" aria-label="Buscar produto..">
         </div>
       </div>
     </div>

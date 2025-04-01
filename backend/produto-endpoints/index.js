@@ -310,6 +310,7 @@ module.exports = (app, db, helpers) => {
             let query = `
                 SELECT
                     pe.tipo,
+                    IF(tipo = 1, 'Entrada', 'Saída') AS tipoNome,
                     pe.total,
                     pe.validade,
                     pe.qtd_clientes AS qtdClientes,
@@ -338,9 +339,7 @@ module.exports = (app, db, helpers) => {
                 }
             }
 
-            console.log(consulta);
-
-            console.log(query);
+            query += "ORDER BY pe.created_at DESC";
 
             const [results] = await db.query(query, filtros);
             return res.status(200).json({ atividadesEstoque: results });

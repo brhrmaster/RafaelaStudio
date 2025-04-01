@@ -11,6 +11,7 @@ import { UsuarioListaComponent } from "./telas/usuario-lista/usuario-lista.compo
 import { UsuarioFormComponent } from "./telas/usuario-form/usuario-form.component";
 import { LoginComponent } from "./telas/login/login.component";
 import { Usuario } from './models/models.component';
+import { EntradaSaidaListaComponent } from './telas/entradas-saidas-lista/entradas-saidas-lista.component';
 
 interface IPagina {
   [key: string]: string;
@@ -24,10 +25,11 @@ interface IPagina {
     MenuLateralComponent,
     HomeComponent,
     ProdutoListaComponent,
-    ProdutoFormComponent,
     FornecedorListaComponent,
-    FornecedorFormComponent,
     UsuarioListaComponent,
+    EntradaSaidaListaComponent,
+    ProdutoFormComponent,
+    FornecedorFormComponent,
     UsuarioFormComponent,
     LoginComponent
   ],
@@ -43,7 +45,8 @@ export class AppComponent {
     'FORNECEDOR-FORM': 'Cadastro de Fornecedores',
     'USUARIO-LISTA': 'Lista de Usuários',
     'USUARIO-FORM': 'Cadastro de Usuários',
-    'LOGIN': 'Acesso Restrito'
+    'LOGIN': 'Acesso Restrito',
+    'ENTRADA_SAIDA': 'Entradas e Saídas - Histórico'
   };
 
   paginaAtual: string = 'LOGIN';

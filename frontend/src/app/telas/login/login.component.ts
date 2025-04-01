@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, Output, ViewChild, OnInit } from '@angular/core';
 import { UserLogin } from '../../models/models.component';
 import { UsuarioService } from '../../services/usuario.service';
 import { FormsModule } from '@angular/forms';
@@ -15,14 +15,17 @@ import { LoadingComponent } from "../../componentes/loading/loading.component";
 })
 export class LoginComponent {
 
-  user!: UserLogin;
-  login: string = '';
-  password: string = '';
-  errorMessage: string = '';
-  isLoadingVisible: boolean = false;
+  protected user!: UserLogin;
+  protected login: string = '';
+  protected password: string = '';
+  protected errorMessage: string = '';
+  protected isLoadingVisible: boolean = false;
 
   @Output() alterarPaginaAtual = new EventEmitter<string>();
   @Output() showLoading = new EventEmitter<boolean>();
+
+  @ViewChild('txtusuario') txtUsuario!: ElementRef;
+  @ViewChild('txtpassword') txtPassword!: ElementRef;
 
   constructor(private usuarioService: UsuarioService) {
     const currentUser = localStorage.getItem('currentUser');
@@ -31,6 +34,10 @@ export class LoginComponent {
       this.user = JSON.parse(currentUser);
       this.alterarPaginaAtual.emit('HOME');
     }
+  }
+
+  ngAfterViewInit() {
+    this.txtUsuario.nativeElement.focus();
   }
 
   private showLoadingComponent(show: boolean) {
@@ -65,5 +72,13 @@ export class LoginComponent {
         this.alterarPaginaAtual.emit('HOME');
       }
     });
+  }
+
+  prepareSendingLogin(event: KeyboardEvent) {
+    if (event.key === 'Enter') {
+      const input = <HTMLInputElement>event.target;
+      if (input.name === 'usuario') this.txtPassword.nativeElement.focus();
+      if (input.name === 'password' || input.name === 'btnLogin') this.efetuarLogin();
+    }
   }
 }

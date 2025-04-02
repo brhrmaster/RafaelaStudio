@@ -1,0 +1,13 @@
+.page-footer {
+  height: 66px;
+  padding: 13px 0px;
+  margin-top: 10px;
+}
+
+.page-footer .col-sm-12 {
+  padding: 0px;
+}
+
+.page-footer button {
+  margin-left: 10px;
+}

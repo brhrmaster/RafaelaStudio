@@ -11,3 +11,23 @@ body{
 .page {
   background-image: url("/img/background-style2.jpg");
 }
+
+.error-message {
+  background-color: #ff4a4a;
+  color: #FFF;
+  font-weight: 600;
+  text-align: center;
+  padding: 10px;
+}
+
+.inner-page-header {
+  background-color: #f5d5f9;
+  font-size: 24pt;
+  font-weight: 400;
+  border-radius: 0px 0px 5px 5px;
+}
+
+.inner-page-header button {
+  float: right;
+  margin-top: 8px;
+}

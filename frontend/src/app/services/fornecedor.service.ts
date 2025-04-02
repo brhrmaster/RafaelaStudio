@@ -18,6 +18,10 @@ export class FornecedorService {
     return this.http.get<GetFornecedoresResponse>(this.getUrlWithPath('fornecedores?filtro=' + filtro));
   }
 
+  getAllSimples(): Observable<GetFornecedoresResponse> {
+    return this.http.get<GetFornecedoresResponse>(this.getUrlWithPath('fornecedores-simples'));
+  }
+
   createNew(fornecedor: Fornecedor): Observable<ResponseData> {
     console.log('Indo até a API para cadastrar novo produto...');
     return this.http.post<ResponseData>(this.getUrlWithPath('fornecedor'), fornecedor);

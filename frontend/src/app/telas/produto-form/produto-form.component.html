@@ -57,11 +57,9 @@
             <label for="state1" class="form-label">Fornecedor:</label>
         </div>
         <div class="col-sm-8">
-            <select id="state1" name="state1" class="form-select">
+            <select class="form-select">
                 <option value="0" selected="selected">Selecione...</option>
-                <option value="Bell's Hair">Bell's Hair</option>
-                <option value="Almeida cosméticos">Almeida cosméticos</option>
-                <option value="Vienna hair">Vienna hair</option>
+                <option [value]="fornecedor.id" *ngFor="let fornecedor of fornecedoresDisponiveis">{{fornecedor.empresa}}</option>
             </select>
         </div>
     </div>

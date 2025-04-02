@@ -44,6 +44,25 @@ module.exports = (app, db, helpers) => {
         }
     };
 
+    const getFornecedoresSimples = async (req, res) => {
+        try {
+
+            const query = `
+                SELECT 
+                    f.id,
+                    f.empresa
+                FROM tbl_fornecedores f
+                ORDER BY f.empresa ASC
+            `;
+
+            const [results] = await db.query(query);
+            return res.status(200).json({ fornecedores: results });
+        } catch (e) {
+            if (!e.statusCode) e.statusCode = 400;
+            return res.status(e.statusCode).json({ error: e.message });
+        }
+    };
+
     const insertFornecedor = async (req, res) => {
         await helpers.waitForABit(3000);
         const fornecedor = req.body;
@@ -157,6 +176,8 @@ module.exports = (app, db, helpers) => {
     };
 
     app.get('/api/fornecedores', getFornecedores);
+
+    app.get('/api/fornecedores-simples', getFornecedoresSimples);
 
     app.post('/api/fornecedor', insertFornecedor);
 

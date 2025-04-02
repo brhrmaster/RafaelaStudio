@@ -34,17 +34,14 @@
             </tr>
           </thead>
           <tr *ngFor="let produto of getListaProdutos()">
-            <td><a class="product-details-link">{{produto.nome}}<div></div></a></td>
+            <td>{{produto.nome}}</td>
             <td>{{produto.preco | currency : 'BRL'}}</td>
             <td>{{getFormattedDate(produto.validade)}}</td>
             <td>{{produto.formatoNome}}</td>
             <td>{{produto.estoqueClientes}} CL : {{produto.estoqueCursos}} CS de {{produto.estoqueTotal}}</td>
             <td class="table-icons">
               <a class="icon" title="Gerenciar Estoque" (click)="atualizarProduto(produto.id)">
-                <div class="arrow-up-arrow-down"></div>
-              </a>
-              <a class="icon" title="Fornecedores" (click)="atualizarProduto(produto.id)">
-                <div class="person-dolly"></div>
+                <i class="fa-solid arrow-up-arrow-down"></i>
               </a>
               <a class="icon" title="Alterar informações" (click)="atualizarProduto(produto.id)">
                 <i class="fa-solid fa-pen-to-square"></i>

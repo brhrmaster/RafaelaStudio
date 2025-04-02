@@ -46,7 +46,7 @@ export class AppComponent {
     'USUARIO-LISTA': 'Lista de Usuários',
     'USUARIO-FORM': 'Cadastro de Usuários',
     'LOGIN': 'Acesso Restrito',
-    'ENTRADA_SAIDA': 'Entradas e Saídas - Histórico'
+    'ENTRADA_SAIDA': 'Histórico de Entradas e Saídas'
   };
 
   paginaAtual: string = 'LOGIN';

@@ -15580,7 +15580,7 @@ nav.navbar .dropdown-menu.show {
   /* submenu item active */
 }
 .sidebar-item li a {
-  padding-left: 2.5rem;
+  padding-left: 2rem;
   background: #292929;
 }
 .sidebar-item.active > .sidebar-link {

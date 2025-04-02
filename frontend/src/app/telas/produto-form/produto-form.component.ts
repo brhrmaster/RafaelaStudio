@@ -15,9 +15,9 @@ import { LoadingComponent } from "../../componentes/loading/loading.component";
 })
 export class ProdutoFormComponent {
 
+  errorMessage: string = '';
   produtoSelecionado!: Produto;
   @Output() alterarPaginaAtual = new EventEmitter<string>();
-  @Output() showLoading = new EventEmitter<boolean>();
   isLoadingVisible: boolean = false;
 
   constructor(private produtoService: ProdutoService) {
@@ -25,7 +25,7 @@ export class ProdutoFormComponent {
   }
 
   private showLoadingComponent(show: boolean) {
-    this.showLoading.emit(show);
+    this.isLoadingVisible = show;
   }
 
   cadastrar() {

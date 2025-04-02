@@ -22,7 +22,6 @@ export class FornecedorListaComponent extends BaseTelaListagemComponent {
   errorMessage: string = '';
   isLoadingVisible: boolean = false;
   @Output() alterarPaginaAtual = new EventEmitter<string>();
-  @Output() showLoading = new EventEmitter<boolean>();
   @ViewChild('txtbusca') txtBusca!: ElementRef;
 
   constructor(private fornecedorService: FornecedorService) {

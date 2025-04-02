@@ -27,13 +27,15 @@ module.exports = (app, db, helpers) => {
                     p.estoque_total AS estoqueTotal,
                     p.estoque_cursos AS estoqueCursos,
                     p.estoque_clientes AS estoqueClientes,
-            	    pe.validade
+                    pe.validade
                 FROM tbl_produtos p
                 LEFT JOIN tbl_produto_formatos pf ON p.formato_id = pf.id
                 LEFT JOIN tbl_produto_estoque pe ON pe.produto_id = p.id
-                    and pe.created_at = (select max(created_at)
-                                        from tbl_produto_estoque pe2
-                                        where pe2.produto_id = p.id)
+                    and pe.id = (select pe2.id
+                                    from tbl_produto_estoque pe2
+                                    where pe2.produto_id = p.id AND pe2.tipo = 1
+                                    ORDER BY pe2.created_at DESC
+                                    LIMIT 1)
                 WHERE p.nome LIKE ?
             `;
 

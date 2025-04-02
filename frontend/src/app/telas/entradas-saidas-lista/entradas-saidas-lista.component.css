@@ -1,0 +1,29 @@
+table tr:nth-child(odd).linha-entrada {
+  background-color: rgba(213, 249, 239, 0.7);
+}
+table tr:nth-child(even).linha-entrada {
+  background-color: rgba(168, 234, 216, 0.7);
+}
+
+table tr:nth-child(odd).linha-entrada:hover {
+  background-color: rgba(222, 248, 241, 0.7);
+}
+table tr:nth-child(even).linha-entrada:hover {
+  background-color: rgba(201, 231, 223, 0.7);
+}
+
+
+
+table tr:nth-child(odd).linha-saida {
+  background-color: rgba(248, 178, 200, 0.7);
+}
+table tr:nth-child(even).linha-saida {
+  background-color: rgba(240, 139, 170, 0.7);
+}
+
+table tr:nth-child(odd).linha-saida:hover {
+  background-color: rgba(243, 198, 212, 0.7);
+}
+table tr:nth-child(even).linha-saida:hover {
+  background-color: rgba(236, 177, 195, 0.7);
+}

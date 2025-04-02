@@ -2,11 +2,8 @@
 
 <div class="container">
   <div class="row page-header inner-page-header">
-    <div class="col-sm-6">
-      <h1>Produtos</h1>
-    </div>
-    <div class="col-sm-6">
-      <button class="btn btn-success">INCLUIR</button>
+    <div class="col-sm-12">
+      <h1>Produtos - Hist&oacute;rico de Entradas e Sa&iacute;das</h1>
     </div>
   </div>
   <div class="page-content">
@@ -25,34 +22,19 @@
         <table class="table">
           <thead>
             <tr>
+              <th scope="col">Data/Hora</th>
               <th scope="col">Produto</th>
-              <th scope="col">Pre&ccedil;o</th>
+              <th scope="col">Tipo</th>
+              <th scope="col">Distribui&ccedil;&atilde;o</th>
               <th scope="col">Validade</th>
-              <th scope="col">Formato</th>
-              <th scope="col">Estoque</th>
-              <th scope="col">&nbsp;</th>
             </tr>
           </thead>
-          <tr *ngFor="let produto of getListaProdutos()">
-            <td><a class="product-details-link">{{produto.nome}}<div></div></a></td>
-            <td>{{produto.preco | currency : 'BRL'}}</td>
-            <td>{{getFormattedDate(produto.validade)}}</td>
-            <td>{{produto.formatoNome}}</td>
-            <td>{{produto.estoqueClientes}} CL : {{produto.estoqueCursos}} CS de {{produto.estoqueTotal}}</td>
-            <td class="table-icons">
-              <a class="icon" title="Gerenciar Estoque" (click)="atualizarProduto(produto.id)">
-                <div class="arrow-up-arrow-down"></div>
-              </a>
-              <a class="icon" title="Fornecedores" (click)="atualizarProduto(produto.id)">
-                <div class="person-dolly"></div>
-              </a>
-              <a class="icon" title="Alterar informações" (click)="atualizarProduto(produto.id)">
-                <i class="fa-solid fa-pen-to-square"></i>
-              </a>
-              <a class="icon" title="Excluir" (click)="deletarProduto(produto.id)">
-                <i class="fa-solid fa-trash-can"></i>
-              </a>
-            </td>
+          <tr [ngClass]="{'linha-entrada': entradaSaida.tipo == 1, 'linha-saida': entradaSaida.tipo != 1}" *ngFor="let entradaSaida of getListaEntradasSaidas()">
+            <td>{{getFormattedDate(entradaSaida.createdAt, 'dd/MM/yyyy HH:mm')}}</td>
+            <td>{{entradaSaida.produtoNome}}</td>
+            <td>{{entradaSaida.tipoNome}}</td>
+            <td>{{entradaSaida.qtdClientes}} CL : {{entradaSaida.qtdCursos}} CS de {{entradaSaida.total}}</td>
+            <td>{{entradaSaida.isValidadeDefinida ? getFormattedDate(entradaSaida.validade, 'dd/MM/yyyy') : 'Indefinida'}}</td>
           </tr>
         </table>
       </div>

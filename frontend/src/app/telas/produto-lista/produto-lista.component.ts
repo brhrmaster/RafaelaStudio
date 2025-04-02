@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output, DEFAULT_CURRENCY_CODE, LOCALE_ID } from '@angular/core';
+import { Component, EventEmitter, Output, DEFAULT_CURRENCY_CODE, LOCALE_ID, ElementRef, ViewChild } from '@angular/core';
 import { CommonModule, formatDate, formatCurrency, registerLocaleData  } from '@angular/common';
 import ptBr from '@angular/common/locales/pt';
 import { catchError } from 'rxjs';
@@ -20,9 +20,10 @@ registerLocaleData(ptBr);
     '../../styles/tela-lista-registros.css'
   ],
   providers:    [
-    // ************************************
-    { provide: LOCALE_ID, useValue: 'pt' },
-    // ************************************
+    {
+      provide: LOCALE_ID,
+      useValue: 'pt'
+    },
   ],
 })
 export class ProdutoListaComponent extends BaseTelaListagemComponent {
@@ -32,6 +33,7 @@ export class ProdutoListaComponent extends BaseTelaListagemComponent {
   isLoadingVisible: boolean = false;
   @Output() alterarPaginaAtual = new EventEmitter<string>();
   @Output() showLoading = new EventEmitter<boolean>();
+  @ViewChild('txtbusca') txtBusca!: ElementRef;
 
   constructor(private produtoService: ProdutoService) {
     super();
@@ -42,10 +44,10 @@ export class ProdutoListaComponent extends BaseTelaListagemComponent {
     this.isLoadingVisible = show;
   }
 
-  obterProdutos() {
+  obterProdutos(busca: string = '') {
     this.showLoadingComponent(true);
 
-    this.produtoService.getAll('')
+    this.produtoService.getAll(busca.trim())
     .pipe(catchError(async (error) => {
       if (error.status == 0) {
         this.errorMessage = 'Falha na comunicação com o servidor';
@@ -96,5 +98,12 @@ export class ProdutoListaComponent extends BaseTelaListagemComponent {
 
   getFormattedDate(datetime: Date) {
     return datetime ? formatDate(datetime, 'dd/MM/yyyy', 'pt-BR') : '';
+  }
+
+  executarBusca(event: KeyboardEvent) {
+    if (event.key === 'Enter') {
+      const input = <HTMLInputElement>event.target;
+      this.obterProdutos(input.value);
+    }
   }
 }

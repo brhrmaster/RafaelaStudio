@@ -6,18 +6,18 @@
   <div id="bloco-login"> <!--Bloco login-->
     <div>
       <label>Usu&aacute;rio <br/>
-      <input class="input-form" type="text" name="usuario" [(ngModel)]="login" autocomplete="off" required />
+      <input class="input-form" type="text" #txtusuario name="usuario" (keyup)="prepareSendingLogin($event)" [(ngModel)]="login" autocomplete="off" required />
       </label>
     </div>
 
     <div>
       <label> Senha <br/>
-      <input class="input-form" type="password" name="password"  [(ngModel)]="password" required />
+      <input class="input-form" type="password" #txtpassword name="password" (keyup)="prepareSendingLogin($event)" [(ngModel)]="password" required />
       </label>
     </div>
     <div>
       <p *ngIf="errorMessage !== ''" style="text-align:center">{{errorMessage}}</p>
-      <button type="button" (click)="efetuarLogin()"><strong>ENTRAR</strong></button>
+      <button type="button"name="btnLogin" (click)="efetuarLogin()" (keyup)="prepareSendingLogin($event)"><strong>ENTRAR</strong></button>
     </div>
   </div>
 </div>

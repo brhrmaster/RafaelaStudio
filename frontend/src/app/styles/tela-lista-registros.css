@@ -15,7 +15,7 @@
 
 .inner-page-header button {
   float: right;
-  margin-top: 6px;
+  margin-top: 8px;
 }
 
 .list-page-search-holder {
@@ -29,6 +29,20 @@
   background-position: 10px;
   padding-left: 40px;
   padding-top: 3px;
+}
+
+.table a.product-details-link div {
+  display: inline-block;
+  width: 20px;
+  height: 15px;
+  margin-left: 10px;
+}
+
+.table a.product-details-link:hover div {
+  background-image: url(https://upload.wikimedia.org/wikipedia/commons/5/55/Magnifying_glass_icon.svg);
+  background-size: 10px;
+  background-repeat: no-repeat;
+  background-position: 2px 4px;
 }
 
 .items-table-holder {
@@ -53,10 +67,29 @@
 
 .table .table-icons a.icon {
   background: unset;
-  display: inline-block;
-  padding: 0px;
-  margin: 0px;
   color: #4a4a4a;
+  width: 20px;
+  height: 20px;
+  float: left;
+  margin-left: 7px;
+}
+
+.table .table-icons a.icon .arrow-up-arrow-down {
+  width: 20px;
+  height: 18px;
+  background-color: #4a4a4a;
+  mask: url('/img/up-down-arrows-icon.svg') no-repeat center;
+  -webkit-mask: url('/img/up-down-arrows-icon.svg') no-repeat center;
+  mask-size: 16px;
+}
+
+.table .table-icons a.icon .person-dolly {
+  width: 20px;
+  height: 18px;
+  background-color: #4a4a4a;
+  mask: url('/img/dolly-icon.svg') no-repeat center;
+  -webkit-mask: url('/img/dolly-icon.svg') no-repeat center;
+  mask-size: 18px;
 }
 
 .table th {
@@ -74,7 +107,7 @@
 .table .table-icons {
   text-align: right;
   padding-right: 10px;
-  width: 95px;
+  width: 119px;
 }
 
 .table .whatsapp-icon {

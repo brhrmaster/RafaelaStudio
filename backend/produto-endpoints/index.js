@@ -351,6 +351,25 @@ module.exports = (app, db, helpers) => {
         }
     };
 
+    const getProdutoFormatos = async (req, res) => {
+        try {
+            const query = `
+                SELECT 
+                    id,
+                    nome
+                FROM tbl_produto_formatos
+                ORDER BY nome ASC
+            `;
+
+            const [results] = await db.query(query);
+            return res.status(200).json({ produtoFormatos: results });
+        } catch (e) {
+            if (!e.statusCode) e.statusCode = 400;
+            return res.status(e.statusCode).json({ error: e.message });
+        }
+    };
+
     app.get('/api/produto/estoque', getProdutoStock);
     app.post('/api/produto/estoque/:id', insertProdutoStock);
+    app.get('/api/produto/formatos', getProdutoFormatos);
 }

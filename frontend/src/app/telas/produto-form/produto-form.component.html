@@ -38,10 +38,7 @@
         <div class="col-sm-10">
             <select id="formato" name="formato" class="form-select" required>
                 <option value="0" selected="selected">Selecione...</option>
-                <option value="Unitário">Unitário</option>
-                <option value="Peça">Peça</option>
-                <option value="Caixa">Caixa</option>
-                <option value="Outro">Outro</option>
+                <option [value]="formato.id" *ngFor="let formato of produtoFormatos">{{formato.nome}}</option>
             </select>
         </div>
     </div>

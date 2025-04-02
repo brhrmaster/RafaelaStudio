@@ -68,6 +68,15 @@ export interface GetProdutosResponse {
   produtos: Produto[]
 };
 
+export interface ProdutoFormato {
+  id: number,
+  nome: string
+}
+
+export interface GetProdutoFormatosResponse {
+  produtoFormatos: ProdutoFormato[]
+};
+
 export interface GetUsuariosResponse {
   users: Usuario[]
 };

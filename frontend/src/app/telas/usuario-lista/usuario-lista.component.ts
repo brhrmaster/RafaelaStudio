@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, inject, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { BaseTelaListagemComponent } from '../../componentes/BaseTelaListagemComponent';
 import { UsuarioService } from '../../services/usuario.service';
@@ -21,9 +21,9 @@ export class UsuarioListaComponent extends BaseTelaListagemComponent {
   errorMessage!: string;
   isLoadingVisible: boolean = false;
   @Output() alterarPaginaAtual = new EventEmitter<string>();
-  @Output() showLoading = new EventEmitter<boolean>();
+  usuarioService: UsuarioService = inject(UsuarioService);
 
-  constructor(private usuarioService: UsuarioService) {
+  constructor() {
     super();
   }
 

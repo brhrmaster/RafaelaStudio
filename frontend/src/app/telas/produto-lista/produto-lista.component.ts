@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output, DEFAULT_CURRENCY_CODE, LOCALE_ID, ElementRef, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Output, DEFAULT_CURRENCY_CODE, LOCALE_ID, ElementRef, ViewChild, inject } from '@angular/core';
 import { CommonModule, formatDate, formatCurrency, registerLocaleData  } from '@angular/common';
 import ptBr from '@angular/common/locales/pt';
 import { catchError } from 'rxjs';
@@ -34,8 +34,9 @@ export class ProdutoListaComponent extends BaseTelaListagemComponent {
   @Output() alterarPaginaAtual = new EventEmitter<string>();
   @Output() showLoading = new EventEmitter<boolean>();
   @ViewChild('txtbusca') txtBusca!: ElementRef;
+  produtoService: ProdutoService = inject(ProdutoService);
 
-  constructor(private produtoService: ProdutoService) {
+  constructor() {
     super();
     this.obterProdutos();
   }

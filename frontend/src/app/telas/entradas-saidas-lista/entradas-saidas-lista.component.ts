@@ -1,4 +1,4 @@
-import { Component, ElementRef, EventEmitter, Output, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, inject, Output, ViewChild } from '@angular/core';
 import { CommonModule, formatDate  } from '@angular/common';
 import { catchError } from 'rxjs';
 import { BaseTelaListagemComponent } from '../../componentes/BaseTelaListagemComponent';
@@ -25,8 +25,9 @@ export class EntradaSaidaListaComponent extends BaseTelaListagemComponent {
   isLoadingVisible: boolean = false;
   @Output() alterarPaginaAtual = new EventEmitter<string>();
   @ViewChild('txtbusca') txtBusca!: ElementRef;
+  estoqueService: EstoqueService = inject(EstoqueService);
 
-  constructor(private estoqueService: EstoqueService) {
+  constructor() {
     super();
     this.obterEntradasSaidas();
   }

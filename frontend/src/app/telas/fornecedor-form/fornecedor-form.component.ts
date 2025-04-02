@@ -14,7 +14,6 @@ import { LoadingComponent } from "../../componentes/loading/loading.component";
 export class FornecedorFormComponent {
   fornecedorSelecionado = {};
   isLoadingVisible: boolean = false;
-  @Output() showLoading = new EventEmitter<boolean>();
   @Output() alterarPaginaAtual = new EventEmitter<string>();
 
   private showLoadingComponent(show: boolean) {

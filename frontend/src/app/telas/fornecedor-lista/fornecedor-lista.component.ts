@@ -1,4 +1,4 @@
-import { Component, ElementRef, EventEmitter, Output, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, inject, Output, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FornecedorService } from '../../services/fornecedor.service';
 import { Fornecedor } from '../../models/models.component';
@@ -23,8 +23,9 @@ export class FornecedorListaComponent extends BaseTelaListagemComponent {
   isLoadingVisible: boolean = false;
   @Output() alterarPaginaAtual = new EventEmitter<string>();
   @ViewChild('txtbusca') txtBusca!: ElementRef;
+  fornecedorService: FornecedorService = inject(FornecedorService);
 
-  constructor(private fornecedorService: FornecedorService) {
+  constructor() {
     super(5);
     this.obterFornecedores();
   }

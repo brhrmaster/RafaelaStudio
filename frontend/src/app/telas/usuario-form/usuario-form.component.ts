@@ -15,7 +15,6 @@ export class UsuarioFormComponent {
   usuarioSelecionado = {};
   isLoadingVisible: boolean = false;
   @Output() alterarPaginaAtual = new EventEmitter<string>();
-  @Output() showLoading = new EventEmitter<boolean>();
 
   private showLoadingComponent(show: boolean) {
     this.isLoadingVisible = show;

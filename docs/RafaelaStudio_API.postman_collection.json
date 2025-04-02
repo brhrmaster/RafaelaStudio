@@ -296,28 +296,6 @@
 					"response": []
 				},
 				{
-					"name": "GET Formatos de Produto",
-					"request": {
-						"auth": {
-							"type": "noauth"
-						},
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "localhost:3000/api/produtos",
-							"host": [
-								"localhost"
-							],
-							"port": "3000",
-							"path": [
-								"api",
-								"produtos"
-							]
-						}
-					},
-					"response": []
-				},
-				{
 					"name": "Get Produto Stock History",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
@@ -470,6 +448,28 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "GET fornecedores Simples",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/api/fornecedores-simples",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"fornecedores-simples"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
@@ -514,6 +514,98 @@
 							"path": [
 								"api",
 								"reports"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Formato de Produtos",
+			"item": [
+				{
+					"name": "GET Formatos de Produto",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/api/produtos",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"produtos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Formato",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nome\": \"Caixa\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/api/produto/formato/1",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"produto",
+								"formato",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Insert Formato",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nome\": \"Caixa\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/api/produto/formato",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"produto",
+								"formato"
 							]
 						}
 					},

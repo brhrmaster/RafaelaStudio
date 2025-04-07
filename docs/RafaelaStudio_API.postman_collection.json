@@ -533,14 +533,15 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "localhost:3000/api/produtos",
+							"raw": "localhost:3000/api/produto/formatos",
 							"host": [
 								"localhost"
 							],
 							"port": "3000",
 							"path": [
 								"api",
-								"produtos"
+								"produto",
+								"formatos"
 							]
 						}
 					},
@@ -606,6 +607,50 @@
 								"api",
 								"produto",
 								"formato"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "localidades",
+			"item": [
+				{
+					"name": "Get Estados",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/api/estados",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"estados"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET Cidades By UF ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/api/cidades/26",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"cidades",
+								"26"
 							]
 						}
 					},

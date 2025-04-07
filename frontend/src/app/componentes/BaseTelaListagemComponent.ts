@@ -1,8 +1,9 @@
+import { signal } from "@angular/core";
 import { Model } from "../models/models.component";
 
 export class Paginacao {
-    listaModels!: Model[];
-    listaModelsPaginados!: Model[];
+    listaModels = signal<Model[]>([]);
+    listaModelsPaginados = signal<Model[]>([]);
     modelSelecionado!: Model;
     paginaAtual: number = 1;
     totalPaginas: number = 1;
@@ -21,12 +22,12 @@ export abstract class BaseTelaListagemComponent {
   protected fatiarListaModels() {
     const startIndex = (this.paginacao.paginaAtual - 1) * this.paginacao.totalPorPagina;
     const endIndex = startIndex + this.paginacao.totalPorPagina;
-    this.paginacao.listaModelsPaginados = this.paginacao.listaModels.slice(startIndex, endIndex);
+    this.paginacao.listaModelsPaginados.update(() => this.paginacao.listaModels().slice(startIndex, endIndex));
   }
 
   protected setupPaginacao() {
-    if (this.paginacao.listaModels) {
-      this.paginacao.totalRegistros = this.paginacao.listaModels.length;
+    if (this.paginacao.listaModels()) {
+      this.paginacao.totalRegistros = this.paginacao.listaModels().length;
       this.paginacao.totalPaginas = Math.ceil(this.paginacao.totalRegistros / this.paginacao.totalPorPagina);
       this.fatiarListaModels();
     }

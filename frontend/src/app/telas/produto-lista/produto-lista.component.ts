@@ -4,8 +4,10 @@ import ptBr from '@angular/common/locales/pt';
 import { catchError } from 'rxjs';
 import { BaseTelaListagemComponent } from '../../componentes/BaseTelaListagemComponent';
 import { ProdutoService } from '../../services/produto.service';
-import { Produto } from '../../models/models.component';
+import { GenericResponse, GetProdutosResponse, ModalContent, Produto } from '../../models/models.component';
 import { LoadingComponent } from "../../componentes/loading/loading.component";
+import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { ModalComponent } from '../../componentes/modal/modal-generic/modal-generic.component';
 
 registerLocaleData(ptBr);
 
@@ -33,8 +35,10 @@ export class ProdutoListaComponent extends BaseTelaListagemComponent {
   isLoadingVisible: boolean = false;
   @Output() alterarPaginaAtual = new EventEmitter<string>();
   @Output() showLoading = new EventEmitter<boolean>();
-  @ViewChild('txtbusca') txtBusca!: ElementRef;
+  private modalService = inject(NgbModal);
+  private currentModal!: NgbModalRef;
   produtoService: ProdutoService = inject(ProdutoService);
+  produtoSelecionado!: Produto;
 
   constructor() {
     super();
@@ -45,25 +49,25 @@ export class ProdutoListaComponent extends BaseTelaListagemComponent {
     this.isLoadingVisible = show;
   }
 
-  obterProdutos(busca: string = '') {
+  async obterProdutos(busca: string = '') {
     this.showLoadingComponent(true);
 
-    this.produtoService.getAll(busca.trim())
-    .pipe(catchError(async (error) => {
-      if (error.status == 0) {
-        this.errorMessage = 'Falha na comunicação com o servidor';
-        this.showLoadingComponent(false);
-      }
-    }))
-    .subscribe((getProdutosResponse) => {
-      if (getProdutosResponse) {
-        this.paginacao.listaModels = getProdutosResponse.produtos;
+    try {
+      const getProdutosResponse: GetProdutosResponse = await this.produtoService.getAll(busca.trim());
 
-        console.log(this.paginacao.listaModels);
+      if (getProdutosResponse) {
+        this.paginacao.listaModels.update(() => getProdutosResponse.produtos);
+        this.paginacao.paginaAtual = 1;
         this.setupPaginacao();
         this.showLoadingComponent(false);
       }
-    });
+    } catch (error: any) {
+      console.log(error);
+      if (error && error.status == 0) {
+        this.errorMessage = 'Falha na comunicação com o servidor';
+        this.showLoadingComponent(false);
+      }
+    }
   }
 
   atualizarProduto(id: number) {
@@ -74,37 +78,82 @@ export class ProdutoListaComponent extends BaseTelaListagemComponent {
     console.log('abrir tela produto-form com o id ' + id);
   }
 
-  deletarProduto(id: number) {
-
-    this.showLoadingComponent(true);
-
-    this.produtoService.deleteById(id)
-    .pipe(catchError(async (error) => {
-      if (error.status == 0) {
-        this.errorMessage = 'Falha na comunicação com o servidor';
-        this.showLoadingComponent(false);
-      }
-    }))
-    .subscribe((genericResponse) => {
-      console.log(genericResponse);
-      this.obterProdutos();
-      this.showLoadingComponent(false);
+  confirmarRemocaoProduto(produto: Produto) {
+    this.produtoSelecionado = produto;
+    this.openModal({
+      title: 'AVISO',
+      message: 'Deseja realmente remover o produto '+this.produtoSelecionado.nome+'?',
+      cancelButtonText: 'Não',
+      cancelButtonClass: 'btn-primary',
+      buttons: [
+        {
+          text: 'Sim',
+          action: 'confirm-remove',
+          cssClass: 'btn-danger'
+        }
+      ]
     });
   }
 
-  getListaProdutos() : Produto[] {
-    return <Produto[]> this.paginacao.listaModelsPaginados;
+  openModal(modalContent: ModalContent) {
+    this.currentModal = this.modalService.open(ModalComponent);
+    this.currentModal.componentInstance.modalContent = modalContent;
+    this.currentModal.componentInstance.onModalAction.subscribe(async (action:string) => await this.modalAction(action));
   }
 
+  async modalAction(action: string) {
+    this.currentModal.close();
+
+    if (action === 'confirm-remove') {
+      this.remocaoProdutoConfirmada();
+    }
+  }
+
+  async remocaoProdutoConfirmada() {
+    this.showLoadingComponent(true);
+
+    try {
+      const genericResponse: GenericResponse = await this.produtoService.deleteById(this.produtoSelecionado.id);
+
+      if (genericResponse) {
+        this.obterProdutos();
+        this.showLoadingComponent(false);
+
+        this.openModal({
+          title: 'Produto Removido',
+          message: 'Produto '+this.produtoSelecionado.nome+' removido com sucesso!',
+          cancelButtonText: 'OK',
+          cancelButtonClass: 'btn-success'
+        });
+      }
+    } catch (error: any) {
+      console.log(error);
+      if (error && error.status == 0) {
+        this.errorMessage = 'Falha na comunicação com o servidor';
+        this.showLoadingComponent(false);
+      }
+    }
+  }
+
+  getListaProdutos() : Produto[] {
+    return <Produto[]> this.paginacao.listaModelsPaginados();
+  }
 
   getFormattedDate(datetime: Date) {
     return datetime ? formatDate(datetime, 'dd/MM/yyyy', 'pt-BR') : '';
   }
 
-  executarBusca(event: KeyboardEvent) {
+  executarBuscaOnKeyboard(event: KeyboardEvent) {
     if (event.key === 'Enter') {
       const input = <HTMLInputElement>event.target;
-      this.obterProdutos(input.value);
+      const value = input.value.trim();
+      this.obterProdutos(value);
     }
+  }
+
+  executarBuscaOnBlur(event: Event) {
+    const input = <HTMLInputElement>event.target;
+    const value = input.value.trim();
+    this.obterProdutos(value);
   }
 }

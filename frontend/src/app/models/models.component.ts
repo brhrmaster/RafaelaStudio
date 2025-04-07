@@ -85,9 +85,18 @@ export interface GenericResponse {
   message: string
 };
 
+export interface ModalButton {
+  text: string,
+  action: string,
+  cssClass: string
+}
+
 export interface ModalContent {
   title: string,
-  message: string
+  message: string,
+  cancelButtonText: string,
+  cancelButtonClass: string,
+  buttons?: ModalButton[]
 }
 
 export interface TotalEntradaSaidaProdutoReport {

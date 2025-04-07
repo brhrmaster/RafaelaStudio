@@ -1,32 +1,36 @@
 import { Component, ElementRef, EventEmitter, inject, Output, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FornecedorService } from '../../services/fornecedor.service';
-import { Fornecedor } from '../../models/models.component';
+import { Fornecedor, GenericResponse, GetFornecedoresResponse, ModalContent } from '../../models/models.component';
 import { catchError } from 'rxjs';
 import { BaseTelaListagemComponent } from '../../componentes/BaseTelaListagemComponent';
 import { LoadingComponent } from "../../componentes/loading/loading.component";
+import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { ModalComponent } from '../../componentes/modal/modal-generic/modal-generic.component';
 
 @Component({
   selector: 'app-fornecedor-lista',
   imports: [
     CommonModule,
     LoadingComponent
-],
+  ],
+  providers: [NgbModal],
   templateUrl: './fornecedor-lista.component.html',
   styleUrls: [
     '../../styles/tela-lista-registros.css'
   ]
 })
 export class FornecedorListaComponent extends BaseTelaListagemComponent {
-  fornecedorFiltro: string = '';
   errorMessage: string = '';
   isLoadingVisible: boolean = false;
   @Output() alterarPaginaAtual = new EventEmitter<string>();
-  @ViewChild('txtbusca') txtBusca!: ElementRef;
-  fornecedorService: FornecedorService = inject(FornecedorService);
+  private modalService = inject(NgbModal);
+  private currentModal!: NgbModalRef;
+  private fornecedorService: FornecedorService = inject(FornecedorService);
+  fornecedorSelecionado!: Fornecedor;
 
   constructor() {
-    super(5);
+    super();
     this.obterFornecedores();
   }
 
@@ -34,25 +38,25 @@ export class FornecedorListaComponent extends BaseTelaListagemComponent {
     this.isLoadingVisible = show;
   }
 
-  obterFornecedores(busca: string = '') {
+  async obterFornecedores(busca: string = '') {
     this.showLoadingComponent(true);
 
-    this.fornecedorService.getAll(busca.trim())
-    .pipe(catchError(async (error) => {
-      if (error.status == 0) {
-        this.errorMessage = 'Falha na comunicação com o servidor';
-        this.showLoadingComponent(false);
-      }
-    }))
-    .subscribe((getFornecedoresResponse) => {
-      if (getFornecedoresResponse) {
-        this.paginacao.listaModels = getFornecedoresResponse.fornecedores;
+    try {
+      const fornecedoresResponse: GetFornecedoresResponse = await this.fornecedorService.getAll(busca.trim());
 
-        console.log(this.paginacao.listaModels);
+      if (fornecedoresResponse) {
+        this.paginacao.listaModels.update(() => fornecedoresResponse.fornecedores);
+        this.paginacao.paginaAtual = 1;
         this.setupPaginacao();
         this.showLoadingComponent(false);
       }
-    });
+    } catch (error: any) {
+      console.log(error);
+      if (error && error.status == 0) {
+        this.errorMessage = 'Falha na comunicação com o servidor';
+        this.showLoadingComponent(false);
+      }
+    }
   }
 
   atualizarFornecedor(id: number) {
@@ -61,35 +65,83 @@ export class FornecedorListaComponent extends BaseTelaListagemComponent {
     console.log('abrir tela fornecedor-form com o id ' + id);
   }
 
-  deletarFornecedor(id: number) {
-    this.showLoadingComponent(true);
-
-    this.fornecedorService.deleteById(id)
-    .pipe(catchError(async (error) => {
-      if (error.status == 0) {
-        this.errorMessage = 'Falha na comunicação com o servidor';
-        this.showLoadingComponent(false);
-      }
-    }))
-    .subscribe((genericResponse) => {
-      console.log(genericResponse);
-      this.obterFornecedores();
-      this.showLoadingComponent(false);
+  confirmarRemocaoFornecedor(fornecedor: Fornecedor) {
+    this.fornecedorSelecionado = fornecedor;
+    this.openModal({
+      title: 'AVISO',
+      message: 'Deseja realmente remover o fornecedor '+this.fornecedorSelecionado.empresa+'?',
+      cancelButtonText: 'Não',
+      cancelButtonClass: 'btn-primary',
+      buttons: [
+        {
+          text: 'Sim',
+          action: 'confirm-remove',
+          cssClass: 'btn-danger'
+        }
+      ]
     });
   }
 
+  openModal(modalContent: ModalContent) {
+    this.currentModal = this.modalService.open(ModalComponent);
+    this.currentModal.componentInstance.modalContent = modalContent;
+    this.currentModal.componentInstance.onModalAction.subscribe(async (action:string) => await this.modalAction(action));
+  }
+
+  async modalAction(action: string) {
+    this.currentModal.close();
+
+    if (action === 'confirm-remove') {
+      this.remocaoFornecedorConfirmada();
+    }
+  }
+
+  async remocaoFornecedorConfirmada() {
+    this.showLoadingComponent(true);
+
+    try {
+      const genericResponse: GenericResponse = await this.fornecedorService.deleteById(this.fornecedorSelecionado.id);
+
+      if (genericResponse) {
+        this.obterFornecedores();
+        this.showLoadingComponent(false);
+
+        this.openModal({
+          title: 'Fornecedor Removido',
+          message: 'Fornecedor '+this.fornecedorSelecionado.empresa+' removido com sucesso!',
+          cancelButtonText: 'OK',
+          cancelButtonClass: 'btn-success'
+        });
+      }
+    } catch (error: any) {
+      console.log(error);
+      if (error && error.status == 0) {
+        this.errorMessage = 'Falha na comunicação com o servidor';
+        this.showLoadingComponent(false);
+      }
+    }
+  }
+
   getListaFornecedores() : Fornecedor[] {
-    return <Fornecedor[]> this.paginacao.listaModelsPaginados;
+    return <Fornecedor[]> this.paginacao.listaModelsPaginados();
   }
 
   formatPhoneForWhatsapp(phone: string) {
     return '+55' + phone.trim().replace(/[^0-9]/g,'')
   }
 
-  executarBusca(event: KeyboardEvent) {
+  executarBuscaOnKeyboard(event: KeyboardEvent) {
     if (event.key === 'Enter') {
       const input = <HTMLInputElement>event.target;
-      this.obterFornecedores(input.value);
+      const value = input.value.trim();
+      this.obterFornecedores(value);
     }
   }
+
+  executarBuscaOnBlur(event: Event) {
+    const input = <HTMLInputElement>event.target;
+    const value = input.value.trim();
+    this.obterFornecedores(value);
+  }
+
 }

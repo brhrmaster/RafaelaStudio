@@ -1,6 +1,6 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { firstValueFrom } from 'rxjs';
 import { Fornecedor, GenericResponse, GetFornecedoresResponse, ResponseData } from '../models/models.component';
 import { environment } from '../../environments/environment';
 
@@ -9,26 +9,22 @@ import { environment } from '../../environments/environment';
 })
 export class FornecedorService {
   private serviceUrl = environment.apiDomain;
+  private http: HttpClient = inject(HttpClient);
 
-  constructor(private http: HttpClient) {
-
+  async getAll(filtro: string): Promise<GetFornecedoresResponse> {
+    return firstValueFrom(this.http.get<GetFornecedoresResponse>(this.getUrlWithPath('fornecedores?filtro=' + filtro)));
   }
 
-  getAll(filtro: string): Observable<GetFornecedoresResponse> {
-    return this.http.get<GetFornecedoresResponse>(this.getUrlWithPath('fornecedores?filtro=' + filtro));
+  async getAllSimples(): Promise<GetFornecedoresResponse> {
+    return firstValueFrom(this.http.get<GetFornecedoresResponse>(this.getUrlWithPath('fornecedores-simples')));
   }
 
-  getAllSimples(): Observable<GetFornecedoresResponse> {
-    return this.http.get<GetFornecedoresResponse>(this.getUrlWithPath('fornecedores-simples'));
+  async createNew(fornecedor: Fornecedor): Promise<ResponseData> {
+    return firstValueFrom(this.http.post<ResponseData>(this.getUrlWithPath('fornecedor'), fornecedor));
   }
 
-  createNew(fornecedor: Fornecedor): Observable<ResponseData> {
-    console.log('Indo até a API para cadastrar novo produto...');
-    return this.http.post<ResponseData>(this.getUrlWithPath('fornecedor'), fornecedor);
-  }
-
-  deleteById(id: number): Observable<GenericResponse> {
-    return this.http.delete<GenericResponse>(this.getUrlWithPath('fornecedor/' + id));
+  async deleteById(id: number): Promise<GenericResponse> {
+    return firstValueFrom(this.http.delete<GenericResponse>(this.getUrlWithPath('fornecedor/' + id)));
   }
 
   getUrlWithPath(path: string): string {

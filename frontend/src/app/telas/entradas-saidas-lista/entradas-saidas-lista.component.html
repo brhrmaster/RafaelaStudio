@@ -13,7 +13,7 @@
       </div>
       <div class="col-sm-4 list-page-search-holder">
         <div class="input-group">
-          <input type="text" class="form-control" placeholder="Buscar produto.." #txtbusca  (keyup)="executarBusca($event)" aria-label="Buscar produto..">
+          <input type="text" class="form-control" placeholder="Buscar produto.." (keyup)="executarBuscaOnKeyboard($event)" (blur)="executarBuscaOnBlur($event)" aria-label="Buscar produto..">
         </div>
       </div>
     </div>
@@ -29,6 +29,9 @@
               <th scope="col">Validade</th>
             </tr>
           </thead>
+          <tr *ngIf="getListaEntradasSaidas().length == 0">
+            <td class="list-items-not-found" colspan="4" scope="row">Nenhum hist&oacute;rico dispon&iacute;vel no momento.</td>
+          </tr>
           <tr [ngClass]="{'linha-entrada': entradaSaida.tipo == 1, 'linha-saida': entradaSaida.tipo != 1}" *ngFor="let entradaSaida of getListaEntradasSaidas()">
             <td>{{getFormattedDate(entradaSaida.createdAt, 'dd/MM/yyyy HH:mm')}}</td>
             <td>{{entradaSaida.produtoNome}}</td>

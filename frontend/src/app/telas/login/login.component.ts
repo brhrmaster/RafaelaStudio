@@ -1,5 +1,5 @@
-import { Component, ElementRef, EventEmitter, Input, Output, ViewChild, OnInit } from '@angular/core';
-import { UserLogin } from '../../models/models.component';
+import { Component, ElementRef, EventEmitter, Output, ViewChild, OnInit, inject } from '@angular/core';
+import { LoginResponseData, UserLogin } from '../../models/models.component';
 import { UsuarioService } from '../../services/usuario.service';
 import { FormsModule } from '@angular/forms';
 import { catchError } from 'rxjs';
@@ -27,7 +27,9 @@ export class LoginComponent {
   @ViewChild('txtusuario') txtUsuario!: ElementRef;
   @ViewChild('txtpassword') txtPassword!: ElementRef;
 
-  constructor(private usuarioService: UsuarioService) {
+  private usuarioService: UsuarioService = inject(UsuarioService);
+
+  OnInit() {
     const currentUser = localStorage.getItem('currentUser');
     console.log(currentUser);
     if(currentUser) {
@@ -44,7 +46,7 @@ export class LoginComponent {
     this.isLoadingVisible = show;
   }
 
-  efetuarLogin() {
+  async efetuarLogin() {
     this.errorMessage = '';
 
     this.user = {
@@ -54,9 +56,16 @@ export class LoginComponent {
 
     this.showLoadingComponent(true);
 
-    this.usuarioService.efetuarLogin(this.user)
-    .pipe(catchError(async (error) => {
-      if (error.status == 0) {
+    try {
+      const loginSuccessData: LoginResponseData = await this.usuarioService.efetuarLogin(this.user);
+
+      if (loginSuccessData) {
+        localStorage.setItem('currentUser', JSON.stringify(loginSuccessData));
+        this.showLoadingComponent(false);
+        this.alterarPaginaAtual.emit('HOME');
+      }
+    } catch (error: any) {
+      if (error && error.status == 0) {
         this.errorMessage = 'Falha na comunicação com o servidor';
         this.showLoadingComponent(false);
       }
@@ -64,14 +73,7 @@ export class LoginComponent {
         this.errorMessage = 'LOGIN INCORRETO';
         this.showLoadingComponent(false);
       }
-    }))
-    .subscribe((loginSuccessData) => {
-      if (loginSuccessData) {
-        localStorage.setItem('currentUser', JSON.stringify(loginSuccessData));
-        this.showLoadingComponent(false);
-        this.alterarPaginaAtual.emit('HOME');
-      }
-    });
+    }
   }
 
   prepareSendingLogin(event: KeyboardEvent) {

@@ -1,0 +1,19 @@
+<div class="modal-header">
+  <h4 class="modal-title">{{modalContent.title}}</h4>
+  <button type="button" class="btn-close" aria-label="Fechar" (click)="buttonPressed('close')"></button>
+</div>
+<div class="modal-body">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <div class="model-desc">{{modalContent.message}}</div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn" [ngClass]="modalContent.cancelButtonClass" (click)="buttonPressed('close')">{{modalContent.cancelButtonText}}</button>
+  <span *ngFor="let botao of modalContent.buttons">
+    <button type="button" class="btn" [ngClass]="botao.cssClass" (click)="buttonPressed(botao.action)">{{botao.text}}</button>
+  </span>
+</div>

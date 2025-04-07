@@ -3,7 +3,7 @@ import { CommonModule, formatDate  } from '@angular/common';
 import { catchError } from 'rxjs';
 import { BaseTelaListagemComponent } from '../../componentes/BaseTelaListagemComponent';
 import { EstoqueService } from '../../services/estoque.service';
-import { AtividadeEstoque } from '../../models/models.component';
+import { AtividadeEstoque, GetAtividadesEstoque } from '../../models/models.component';
 import { LoadingComponent } from "../../componentes/loading/loading.component";
 
 @Component({
@@ -24,7 +24,6 @@ export class EntradaSaidaListaComponent extends BaseTelaListagemComponent {
   serverResponse: string = '';
   isLoadingVisible: boolean = false;
   @Output() alterarPaginaAtual = new EventEmitter<string>();
-  @ViewChild('txtbusca') txtBusca!: ElementRef;
   estoqueService: EstoqueService = inject(EstoqueService);
 
   constructor() {
@@ -36,39 +35,46 @@ export class EntradaSaidaListaComponent extends BaseTelaListagemComponent {
     this.isLoadingVisible = show;
   }
 
-  obterEntradasSaidas(busca: string = '') {
+  async obterEntradasSaidas(busca: string = '') {
     this.showLoadingComponent(true);
 
-    this.estoqueService.getAll(busca.trim())
-    .pipe(catchError(async (error) => {
-      if (error.status == 0) {
-        this.errorMessage = 'Falha na comunicação com o servidor';
-        this.showLoadingComponent(false);
-      }
-    }))
-    .subscribe((getEstoqueResponse) => {
-      if (getEstoqueResponse) {
-        this.paginacao.listaModels = getEstoqueResponse.atividadesEstoque;
+    try {
+      const getAtividadesEstoque: GetAtividadesEstoque = await this.estoqueService.getAll(busca.trim());
 
-        console.log(this.paginacao.listaModels);
+      if (getAtividadesEstoque) {
+        this.paginacao.listaModels.update(() => getAtividadesEstoque.atividadesEstoque);
+        this.paginacao.paginaAtual = 1;
         this.setupPaginacao();
         this.showLoadingComponent(false);
       }
-    });
+    } catch (error: any) {
+      console.log(error);
+      if (error && error.status == 0) {
+        this.errorMessage = 'Falha na comunicação com o servidor';
+        this.showLoadingComponent(false);
+      }
+    }
   }
 
   getListaEntradasSaidas() : AtividadeEstoque[] {
-    return <AtividadeEstoque[]> this.paginacao.listaModelsPaginados;
+    return <AtividadeEstoque[]> this.paginacao.listaModelsPaginados();
   }
 
   getFormattedDate(datetime: Date, format: string) {
     return datetime ? formatDate(datetime, format, 'pt-BR') : '';
   }
 
-  executarBusca(event: KeyboardEvent) {
+  executarBuscaOnKeyboard(event: KeyboardEvent) {
     if (event.key === 'Enter') {
       const input = <HTMLInputElement>event.target;
-      this.obterEntradasSaidas(input.value);
+      const value = input.value.trim();
+      this.obterEntradasSaidas(value);
     }
+  }
+
+  executarBuscaOnBlur(event: Event) {
+    const input = <HTMLInputElement>event.target;
+    const value = input.value.trim();
+    this.obterEntradasSaidas(value);
   }
 }

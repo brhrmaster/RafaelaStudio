@@ -93,3 +93,8 @@
 .table .whatsapp-icon {
   width: 20px;
 }
+
+.table .list-items-not-found {
+  padding: 10px;
+  color: #ab00ff;
+}

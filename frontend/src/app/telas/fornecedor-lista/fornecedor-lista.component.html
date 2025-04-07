@@ -1,4 +1,4 @@
-  <div class="error-message" *ngIf="errorMessage !== ''">{{errorMessage}}</div>
+<div class="error-message" *ngIf="errorMessage !== ''">{{errorMessage}}</div>
 
 <div class="container">
   <div class="row page-header inner-page-header">
@@ -16,7 +16,7 @@
       </div>
       <div class="col-sm-4 list-page-search-holder">
         <div class="input-group">
-          <input type="text" class="form-control" placeholder="Buscar fornecedor.." #txtbusca  (keyup)="executarBusca($event)" aria-label="Buscar fornecedor..">
+          <input type="text" class="form-control" placeholder="Buscar fornecedor.." (keyup)="executarBuscaOnKeyboard($event)" (blur)="executarBuscaOnBlur($event)" aria-label="Buscar fornecedor..">
         </div>
       </div>
     </div>
@@ -31,6 +31,9 @@
               <th scope="col">&nbsp;</th>
             </tr>
           </thead>
+          <tr *ngIf="getListaFornecedores().length == 0">
+            <td class="list-items-not-found" colspan="4" scope="row">Nenhum fornecedor dispon&iacute;vel no momento.</td>
+          </tr>
           <tr *ngFor="let fornecedor of getListaFornecedores()">
             <td scope="row">{{fornecedor.empresa}}</td>
             <td>{{fornecedor.nomeRepresentante}}</td>
@@ -39,7 +42,7 @@
               <a class="icon" title="Alterar informações" (click)="atualizarFornecedor(fornecedor.id)">
                 <i class="fa-solid fa-pen-to-square"></i>
               </a>
-              <a class="icon" title="Excluir" (click)="deletarFornecedor(fornecedor.id)">
+              <a class="icon" title="Excluir" (click)="confirmarRemocaoFornecedor(fornecedor)">
                 <i class="fa-solid fa-trash-can"></i>
               </a>
             </td>
@@ -55,5 +58,6 @@
       </div>
     </div>
   </div>
+</div>
 
 <app-loading *ngIf="isLoadingVisible"></app-loading>

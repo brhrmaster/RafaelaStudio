@@ -1,10 +1,9 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, inject, Output, signal } from '@angular/core';
 import { LoadingComponent } from "../../componentes/loading/loading.component";
 import { CommonModule, DatePipe } from '@angular/common';
 import Chart from 'chart.js/auto';
 import Utils from '../../componentes/utils';
 import { ReportsService } from '../../services/reports.service';
-import { catchError } from 'rxjs';
 import { GetReportsData } from '../../models/models.component';
 
 @Component({
@@ -19,47 +18,50 @@ export class HomeComponent {
   isLoadingVisible: boolean = false;
   pieChart: any = [];
   linesChart: any = [];
-  reportsData: GetReportsData = {
+  reportsData = signal<GetReportsData>({
     totalFornecedoresRecentementeCriados: 0,
     totalProdutosRecentementeCriados: 0,
     totalProdutosPorFornecedor: [],
     totalEntradaSaidaProdutos: []
-  };
+  });
   @Output() alterarPaginaAtual = new EventEmitter<string>();
   @Output() showLoading = new EventEmitter<boolean>();
-
-  constructor(private reportsService: ReportsService) {}
+  private reportsService: ReportsService = inject(ReportsService);
 
   private showLoadingComponent(show: boolean) {
     this.isLoadingVisible = show;
   }
 
-  obterDadosReports() {
+  ngOnInit() {
+    this.obterDadosReports();
+  }
+
+  async obterDadosReports() {
     this.showLoadingComponent(true);
 
-    this.reportsService.getReports()
-    .pipe(catchError(async (error) => {
-      if (error.status == 0) {
-        this.errorMessage = 'Falha na comunicação com o servidor';
-        this.showLoadingComponent(false);
-      }
-    }))
-    .subscribe((getReportsResponse) => {
-      if (getReportsResponse) {
-        this.reportsData = getReportsResponse;
+    try {
+      const reportsData: GetReportsData = await this.reportsService.getReports();
+
+      if (reportsData) {
+        this.reportsData.update(() => reportsData);
         this.setupGraficoEntradasSaidas();
         this.setupGraficoFornecedores();
         this.showLoadingComponent(false);
       }
-    });
+    } catch (error: any) {
+      console.log(error);
+      if (error && error.status == 0) {
+        this.errorMessage = 'Falha na comunicação com o servidor';
+        this.showLoadingComponent(false);
+      }
+    }
   }
-
 
   setupGraficoFornecedores() {
     const totalProdutosPorFornecedor: number[] = [];
     const xlabels: string[] = [];
 
-    this.reportsData.totalProdutosPorFornecedor.forEach(fornecedor => {
+    this.reportsData().totalProdutosPorFornecedor.forEach(fornecedor => {
       totalProdutosPorFornecedor.push(fornecedor.totalProdutos);
       xlabels.push(fornecedor.empresa);
     });
@@ -91,7 +93,7 @@ export class HomeComponent {
     let maxEntrada = 0;
     let maxSaida = 0;
 
-    this.reportsData.totalEntradaSaidaProdutos.forEach(item => {
+    this.reportsData().totalEntradaSaidaProdutos.forEach(item => {
       const isEntrada = item.tipo == 1;
 
       if (isEntrada) {
@@ -167,8 +169,5 @@ export class HomeComponent {
       }
     });
   }
-
-  ngOnInit() {
-    this.obterDadosReports();
-  }
 }
+

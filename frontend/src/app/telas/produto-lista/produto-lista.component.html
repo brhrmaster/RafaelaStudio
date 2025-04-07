@@ -16,7 +16,7 @@
       </div>
       <div class="col-sm-4 list-page-search-holder">
         <div class="input-group">
-          <input type="text" class="form-control" placeholder="Buscar produto.." #txtbusca  (keyup)="executarBusca($event)" aria-label="Buscar produto..">
+          <input type="text" class="form-control" placeholder="Buscar produto.." (keyup)="executarBuscaOnKeyboard($event)" (blur)="executarBuscaOnBlur($event)" aria-label="Buscar produto..">
         </div>
       </div>
     </div>
@@ -33,6 +33,9 @@
               <th scope="col">&nbsp;</th>
             </tr>
           </thead>
+          <tr *ngIf="getListaProdutos().length == 0">
+            <td class="list-items-not-found" colspan="4" scope="row">Nenhum produto dispon&iacute;vel no momento.</td>
+          </tr>
           <tr *ngFor="let produto of getListaProdutos()">
             <td><a class="product-details-link">{{produto.nome}}<div></div></a></td>
             <td>{{produto.preco | currency : 'BRL'}}</td>
@@ -49,7 +52,7 @@
               <a class="icon" title="Alterar informações" (click)="atualizarProduto(produto.id)">
                 <i class="fa-solid fa-pen-to-square"></i>
               </a>
-              <a class="icon" title="Excluir" (click)="deletarProduto(produto.id)">
+              <a class="icon" title="Excluir" (click)="confirmarRemocaoProduto(produto)">
                 <i class="fa-solid fa-trash-can"></i>
               </a>
             </td>

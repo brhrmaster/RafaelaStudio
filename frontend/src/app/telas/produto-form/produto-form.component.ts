@@ -1,6 +1,6 @@
 import { valueOrDefault } from 'chart.js/helpers';
-import { Fornecedor, GetProdutoFormatosResponse } from './../../models/models.component';
-import { Component, EventEmitter, inject, Output, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Fornecedor, GetFornecedoresResponse, GetProdutoFormatosResponse } from './../../models/models.component';
+import { Component, EventEmitter, inject, Output, OnInit, ViewChild, ElementRef, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ProdutoService } from '../../services/produto.service';
 import { Produto, ProdutoFormato } from '../../models/models.component';
@@ -28,9 +28,9 @@ export class ProdutoFormComponent {
   isLoadingVisible: boolean = false;
   productService: ProdutoService = inject(ProdutoService);
   fornecedorService: FornecedorService = inject(FornecedorService);
-  produtoFormatos!: ProdutoFormato[];
-  fornecedoresDisponiveis!: Fornecedor[];
-  fornecedoresSelecionados: Fornecedor[] = [];
+  produtoFormatos = signal<ProdutoFormato[]>([]);
+  fornecedoresDisponiveis = signal<Fornecedor[]>([]);
+  fornecedoresSelecionados = signal<Fornecedor[]>([]);
   @ViewChild('comboFornecedoresDisponiveis') comboFornecedoresDisponiveis!: ElementRef;
 
   // TODO: aplicar mascara para valor: https://stackoverflow.com/questions/64364646/creating-directive-in-angular-that-formats-the-value-entered-on-keypress
@@ -47,59 +47,66 @@ export class ProdutoFormComponent {
   incluirFornecedorSelecionado() {
     const fornecedorId = this.comboFornecedoresDisponiveis.nativeElement.value;
 
-    for (let i=0; i < this.fornecedoresDisponiveis.length; i++) {
-      if (this.fornecedoresDisponiveis[i].id == fornecedorId) {
-        this.fornecedoresSelecionados.push(this.fornecedoresDisponiveis[i]);
-        this.fornecedoresDisponiveis.splice(i, 1);
+    for (let i=0; i < this.fornecedoresDisponiveis().length; i++) {
+      if (this.fornecedoresDisponiveis()[i].id == fornecedorId) {
+        this.fornecedoresSelecionados.update(fornecedores => {
+          fornecedores.push(this.fornecedoresDisponiveis()[i]);
+          return fornecedores;
+        });
+        this.fornecedoresDisponiveis.update(fornecedores => fornecedores.splice(i, 1));
         break;
       }
     }
   }
 
   removerFornecedorSelecionado(fornecedor: Fornecedor) {
-    for (let i=0; i < this.fornecedoresSelecionados.length; i++) {
-      if (this.fornecedoresSelecionados[i].id == fornecedor.id) {
-        this.fornecedoresDisponiveis.push(this.fornecedoresSelecionados[i]);
-        this.fornecedoresSelecionados.splice(i, 1);
+    for (let i=0; i < this.fornecedoresSelecionados().length; i++) {
+      if (this.fornecedoresSelecionados()[i].id == fornecedor.id) {
+        this.fornecedoresDisponiveis.update(fornecedores => {
+          fornecedores.push(this.fornecedoresSelecionados()[i]);
+          return fornecedores;
+        });
+        this.fornecedoresSelecionados.update(fornecedores => fornecedores.splice(i, 1));
         break;
       }
     }
   }
 
-  obterFormatos() {
+  async obterFormatos() {
     this.showLoadingComponent(true);
+    try {
+      const getProdutoFormatosResponse: GetProdutoFormatosResponse = await this.productService.getFormatos();
 
-    this.productService.getFormatos()
-    .pipe(catchError(async (error) => {
-      if (error.status == 0) {
+      if (getProdutoFormatosResponse) {
+        this.produtoFormatos.update(() => getProdutoFormatosResponse.produtoFormatos);
+        this.showLoadingComponent(false);
+      }
+    } catch (error: any) {
+      console.log(error);
+      if (error && error.status == 0) {
         this.errorMessage = 'Falha na comunicação com o servidor';
         this.showLoadingComponent(false);
       }
-    }))
-    .subscribe((getProdutoFormatosResponse) => {
-      if (getProdutoFormatosResponse) {
-        this.produtoFormatos = getProdutoFormatosResponse.produtoFormatos;
-        this.showLoadingComponent(false);
-      }
-    });
+    }
   }
 
-  obterFornecedores() {
+  async obterFornecedores() {
     this.showLoadingComponent(true);
 
-    this.fornecedorService.getAllSimples()
-    .pipe(catchError(async (error) => {
-      if (error.status == 0) {
+    try {
+      const getFornecedoresResponse: GetFornecedoresResponse = await this.fornecedorService.getAllSimples();
+
+      if (getFornecedoresResponse) {
+        this.fornecedoresDisponiveis.update(() => getFornecedoresResponse.fornecedores);
+        this.showLoadingComponent(false);
+      }
+    } catch (error: any) {
+      console.log(error);
+      if (error && error.status == 0) {
         this.errorMessage = 'Falha na comunicação com o servidor';
         this.showLoadingComponent(false);
       }
-    }))
-    .subscribe((getFornecedoresResponse) => {
-      if (getFornecedoresResponse) {
-        this.fornecedoresDisponiveis = getFornecedoresResponse.fornecedores;
-        this.showLoadingComponent(false);
-      }
-    });
+    }
   }
 
   cadastrar() {

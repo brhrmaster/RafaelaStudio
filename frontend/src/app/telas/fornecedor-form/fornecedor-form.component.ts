@@ -1,10 +1,10 @@
-import { Component, EventEmitter, inject, Output, signal, OnInit } from '@angular/core';
+import { Component, EventEmitter, inject, Output, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { LoadingComponent } from "../../componentes/loading/loading.component";
 import { Cidade, CidadeResponse, Estado, EstadoResponse, Fornecedor, ModalContent, ResponseData } from '../../models/models.component';
 import { FornecedorService } from '../../services/fornecedor.service';
 import { LocalidadeService } from '../../services/localidade.service';
-import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { ModalComponent } from '../../componentes/modal/modal-generic/modal-generic.component';
 import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
@@ -30,14 +30,14 @@ export class FornecedorFormComponent {
   errorMessage: string = '';
   fornecedorSelecionado: Fornecedor = {};
   isLoadingVisible: boolean = false;
-  private currentModal!: NgbModalRef;
-  private modalService = inject(NgbModal);
-  @Output() alterarPaginaAtual = new EventEmitter<string>();
-  private fornecedorService: FornecedorService = inject(FornecedorService);
-  private localidadeService: LocalidadeService = inject(LocalidadeService);
   cidades = signal<Cidade[]>([]);
   estados = signal<Estado[]>([]);
   private isCadastroFinished = false;
+  private currentModal!: NgbModalRef;
+  private modalService = inject(NgbModal);
+  private fornecedorService: FornecedorService = inject(FornecedorService);
+  private localidadeService: LocalidadeService = inject(LocalidadeService);
+  @Output() alterarPaginaAtual = new EventEmitter<string>();
 
   protected fornecedorForm = new FormGroup({
     empresa: new FormControl('', Validators.required),
@@ -122,7 +122,7 @@ export class FornecedorFormComponent {
         this.isCadastroFinished = true;
         this.openModal({
           title: 'Sucesso!',
-          message: 'Fornecedor '+this.fornecedorSelecionado.empresa+' cadastrado com sucesso!',
+          message: 'Fornecedor <b>'+this.fornecedorSelecionado.empresa+'</b> cadastrado com sucesso!',
           cancelButtonText: 'OK',
           cancelButtonClass: 'btn-success'
         });
@@ -156,7 +156,7 @@ export class FornecedorFormComponent {
   confirmarCancelar() {
     this.openModal({
       title: 'AVISO',
-      message: 'Deseja realmente descartar este cadastro?',
+      message: 'Deseja realmente <b>descartar</b> este cadastro?',
       cancelButtonText: 'Não',
       cancelButtonClass: 'btn-primary',
       buttons: [

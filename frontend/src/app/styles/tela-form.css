@@ -15,3 +15,11 @@
 input.ng-dirty.ng-invalid {
   border: 1px solid #f86161
 }
+
+label {
+  padding-top: 7px;
+}
+
+.form-switch input {
+  margin-top: 11px;
+}

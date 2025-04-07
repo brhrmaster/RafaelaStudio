@@ -1,16 +1,6 @@
 export interface Model {
 }
 
-export interface Produto extends Model {
-  id: number,
-  categoryId: number,
-  imageLink: string,
-  description: string,
-  price: number,
-  promo: number,
-  qtd: number
-};
-
 export interface Usuario extends Model {
   id: number,
   nome: string,
@@ -47,12 +37,16 @@ export interface Fornecedor extends Model {
   site?: string
 };
 
-export interface Produto extends Model {
+export interface ProdutoInsert extends Model {
+  nome?: string,
+  preco?: number,
+  isValidadeDefinida?: boolean,
+  formatoId?: number,
+  fornecedores: number[]
+};
+
+export interface Produto extends ProdutoInsert {
   id: number,
-  nome: string,
-  preco: number,
-  isValidadeDefinida: boolean,
-  formatoId: number,
   formatoNome: string,
   estoqueTotal: number,
   estoqueCursos: number,

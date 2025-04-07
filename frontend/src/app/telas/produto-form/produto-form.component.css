@@ -10,6 +10,10 @@
   margin-bottom: 10px;
 }
 
+#fornecedores-selecionados span {
+  padding: 10px;
+  color: #747474
+}
 
 .fornecedor-selecionado {
   padding: 5px;

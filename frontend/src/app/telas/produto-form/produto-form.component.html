@@ -1,6 +1,7 @@
 <div class="error-message" *ngIf="errorMessage !== ''">{{errorMessage}}</div>
 
-<div class="container">
+<form [formGroup]="produtoForm" (ngSubmit)="onSubmitForm()">
+  <div class="container">
     <div class="row page-header inner-page-header">
         <div class="col-sm-12">
             <h1>Novo Produto</h1>
@@ -14,71 +15,76 @@
     </div>
 
     <div class="row mb-3">
-        <div class="col-sm-2">
+        <div class="col-sm-1">
             <label for="produto" class="form-label">Produto:</label>
         </div>
-        <div class="col-sm-10">
-            <input type="text" id="produto" name="produto" class="form-control" required>
+        <div class="col-sm-11">
+            <input type="text" id="produto" name="produto" formControlName="nome" placeholder="Nome do produto..." class="form-control" required>
         </div>
     </div>
 
     <div class="row mb-3">
-        <div class="col-sm-2">
-            <label for="preco" class="form-label">Preço:</label>
+        <div class="col-sm-1">
+            <label for="preco" class="form-label">Pre&ccedil;o:</label>
         </div>
-        <div class="col-sm-10">
-            <input type="text" id="preço" name="preco" class="form-control" required>
+        <div class="col-sm-3">
+            <input type="text" currencyMask id="preco" name="preco" inputmode="number" formControlName="preco" class="form-control" required>
         </div>
-    </div>
-
-    <div class="row mb-3">
-        <div class="col-sm-2">
+        <div class="col-sm-1">
             <label for="formato" class="form-label">Formato:</label>
         </div>
-        <div class="col-sm-10">
-            <select id="formato" name="formato" class="form-select" required>
+        <div class="col-sm-3">
+            <select id="formato" name="formato" formControlName="formatoId" class="form-select" required>
                 <option value="0" selected="selected">Selecione...</option>
                 <option [value]="formato.id" *ngFor="let formato of produtoFormatos()">{{formato.nome}}</option>
             </select>
         </div>
+        <div class="col-sm-4">
+          <div class="form-check form-switch">
+            <input class="form-check-input" type="checkbox" role="switch" id="validadeDefinida" formControlName="isValidadeDefinida">
+            <label class="form-check-label" for="validadeDefinida">Produto com validade definida</label>
+          </div>
+        </div>
     </div>
 
     <div class="row mb-3">
-        <div class="col-sm-2">
-            <label for="state1" class="form-label">Fornecedores:</label>
-        </div>
-        <div class="col-sm-10">
-          <div class="row">
-            <div class="col">
-              <div id="fornecedores-selecionados">
-                <div class="fornecedor-selecionado" *ngFor="let fornecedorSelecionado of fornecedoresSelecionados()">
-                  {{fornecedorSelecionado.empresa}}
-                  <a class="remover-fornecedor-selecionado" (click)="removerFornecedorSelecionado(fornecedorSelecionado)" alt="Remover">
-                    <i class="fa-solid fa-circle-xmark"></i>
-                  </a>
-                </div>
+      <div class="col-sm-1">
+          <label for="state1" class="form-label">Fornecedores:</label>
+      </div>
+      <div class="col-sm-11">
+        <div class="row">
+          <div class="col">
+            <div id="fornecedores-selecionados">
+              <span *ngIf="fornecedoresSelecionados().length == 0">Adicione os fornecedores deste produto aqui</span>
+              <div class="fornecedor-selecionado" *ngFor="let fornecedorSelecionado of fornecedoresSelecionados()">
+                {{fornecedorSelecionado.empresa}}
+                <a class="remover-fornecedor-selecionado" (click)="removerFornecedorSelecionado(fornecedorSelecionado)" alt="Remover">
+                  <i class="fa-solid fa-circle-xmark"></i>
+                </a>
               </div>
             </div>
           </div>
-          <div class="row">
-            <div class="col-sm-8">
-              <select class="form-select" #comboFornecedoresDisponiveis>
-                  <option value="0" selected="selected">Selecione...</option>
-                  <option [value]="fornecedor.id" *ngFor="let fornecedor of fornecedoresDisponiveis()">{{fornecedor.empresa}}</option>
-              </select>
-            </div>
-            <div class="col-sm-4">
-              <button type="button" class="btn btn-success" [disabled]="fornecedoresDisponiveis().length == 0" (click)="incluirFornecedorSelecionado()"><strong>Incluir</strong></button>
-            </div>
         </div>
+        <div class="row">
+          <div class="col-sm-8">
+            <select class="form-select" #comboFornecedoresDisponiveis>
+                <option value="0" selected="selected">Selecione o fornecedor...</option>
+                <option [value]="fornecedor.id" *ngFor="let fornecedor of fornecedoresDisponiveis()">{{fornecedor.empresa}}</option>
+            </select>
+          </div>
+          <div class="col-sm-4">
+            <button type="button" class="btn btn-success" [disabled]="fornecedoresDisponiveis().length == 0" (click)="incluirFornecedorSelecionado()"><strong>Adicionar</strong></button>
+          </div>
+        </div>
+      </div>
     </div>
 
     <div class="row page-footer">
         <div class="col-sm-12 text-end">
-            <button type="button" class="btn btn-danger"><strong>CANCELAR</strong></button>
-            <button type="button" class="btn btn-success"><strong>SALVAR</strong></button>
+          <button type="button" class="btn btn-danger" (click)="confirmarCancelar()">CANCELAR</button>&nbsp;
+          <input type="submit" [disabled]="!produtoForm.valid" class="btn btn-success" value="SALVAR">
         </div>
     </div>
-</div>
-
+  </div>
+</form>
 <app-loading *ngIf="isLoadingVisible"></app-loading>

@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { firstValueFrom } from 'rxjs';
-import { GenericResponse, GetProdutoFormatosResponse, GetProdutosResponse, Produto, ResponseData } from '../models/models.component';
+import { GenericResponse, GetProdutoFormatosResponse, GetProdutosResponse, Produto, ProdutoInsert, ResponseData } from '../models/models.component';
 import { environment } from '../../environments/environment';
 
 @Injectable({
@@ -20,8 +20,7 @@ export class ProdutoService {
     return firstValueFrom(this.http.delete<GenericResponse>(this.getUrlWithPath('produto/' + id)));
   }
 
-  async createNew(produto: Produto): Promise<ResponseData> {
-    console.log('Indo até a API para cadastrar novo produto...');
+  async createNew(produto: ProdutoInsert): Promise<ResponseData> {
     return firstValueFrom(this.http.post<ResponseData>(this.getUrlWithPath('produto'), produto));
   }
 

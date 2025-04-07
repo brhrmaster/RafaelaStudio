@@ -1,18 +1,35 @@
-import { valueOrDefault } from 'chart.js/helpers';
-import { Fornecedor, GetFornecedoresResponse, GetProdutoFormatosResponse } from './../../models/models.component';
-import { Component, EventEmitter, inject, Output, OnInit, ViewChild, ElementRef, signal } from '@angular/core';
+import { Fornecedor, GetFornecedoresResponse, GetProdutoFormatosResponse, ModalContent, ProdutoInsert, ResponseData } from './../../models/models.component';
+import { Component, EventEmitter, inject, Output, ViewChild, ElementRef, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ProdutoService } from '../../services/produto.service';
-import { Produto, ProdutoFormato } from '../../models/models.component';
+import { ProdutoFormato } from '../../models/models.component';
 import { LoadingComponent } from "../../componentes/loading/loading.component";
-import { catchError } from 'rxjs';
 import { FornecedorService } from '../../services/fornecedor.service';
+import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { ModalComponent } from '../../componentes/modal/modal-generic/modal-generic.component';
+import { CURRENCY_MASK_CONFIG, CurrencyMaskConfig, CurrencyMaskModule } from "ng2-currency-mask";
+
+export const CustomCurrencyMaskConfig: CurrencyMaskConfig = {
+  align: "left",
+  allowNegative: false,
+  decimal: ",",
+  precision: 2,
+  prefix: "R$ ",
+  suffix: "",
+  thousands: "."
+};
 
 @Component({
   selector: 'app-produto-form',
   imports: [
     CommonModule,
-    LoadingComponent
+    LoadingComponent,
+    ReactiveFormsModule,
+    CurrencyMaskModule
+  ],
+  providers: [
+      { provide: CURRENCY_MASK_CONFIG, useValue: CustomCurrencyMaskConfig }
   ],
   templateUrl: './produto-form.component.html',
   styleUrls: [
@@ -23,15 +40,25 @@ import { FornecedorService } from '../../services/fornecedor.service';
 export class ProdutoFormComponent {
 
   errorMessage: string = '';
-  produtoSelecionado!: Produto;
-  @Output() alterarPaginaAtual = new EventEmitter<string>();
   isLoadingVisible: boolean = false;
-  productService: ProdutoService = inject(ProdutoService);
-  fornecedorService: FornecedorService = inject(FornecedorService);
   produtoFormatos = signal<ProdutoFormato[]>([]);
   fornecedoresDisponiveis = signal<Fornecedor[]>([]);
   fornecedoresSelecionados = signal<Fornecedor[]>([]);
+  produtoSelecionado: ProdutoInsert = { fornecedores: [] };
+  private isCadastroFinished = false;
+  private currentModal!: NgbModalRef;
+  private modalService = inject(NgbModal);
+  private produtoService: ProdutoService = inject(ProdutoService);
+  private fornecedorService: FornecedorService = inject(FornecedorService);
   @ViewChild('comboFornecedoresDisponiveis') comboFornecedoresDisponiveis!: ElementRef;
+  @Output() alterarPaginaAtual = new EventEmitter<string>();
+
+  protected produtoForm = new FormGroup({
+    nome: new FormControl('', Validators.required),
+    preco: new FormControl(0, Validators.required),
+    isValidadeDefinida: new FormControl(false, Validators.required),
+    formatoId: new FormControl(0, Validators.required)
+  });
 
   // TODO: aplicar mascara para valor: https://stackoverflow.com/questions/64364646/creating-directive-in-angular-that-formats-the-value-entered-on-keypress
 
@@ -81,7 +108,7 @@ export class ProdutoFormComponent {
   async obterFormatos() {
     this.showLoadingComponent(true);
     try {
-      const getProdutoFormatosResponse: GetProdutoFormatosResponse = await this.productService.getFormatos();
+      const getProdutoFormatosResponse: GetProdutoFormatosResponse = await this.produtoService.getFormatos();
 
       if (getProdutoFormatosResponse) {
         this.produtoFormatos.update(() => getProdutoFormatosResponse.produtoFormatos);
@@ -113,6 +140,72 @@ export class ProdutoFormComponent {
         this.showLoadingComponent(false);
       }
     }
+  }
+
+  async onSubmitForm() {
+    this.showLoadingComponent(true);
+    this.produtoSelecionado = <ProdutoInsert>this.produtoForm.value;
+    this.produtoSelecionado.fornecedores = this.fornecedoresSelecionados().map(fornecedor => fornecedor.id!);
+
+    console.log(this.produtoSelecionado);
+
+    try {
+      const genericResponse: ResponseData = await this.produtoService.createNew(this.produtoSelecionado);
+
+      if (genericResponse) {
+        this.showLoadingComponent(false);
+        this.isCadastroFinished = true;
+        this.openModal({
+          title: 'Sucesso!',
+          message: 'Produto <b>'+this.produtoSelecionado.nome+'</b> cadastrado com sucesso!',
+          cancelButtonText: 'OK',
+          cancelButtonClass: 'btn-success'
+        });
+      }
+    } catch (error: any) {
+      if (error && error.status == 0) {
+        this.errorMessage = 'Falha na comunicação com o servidor';
+        this.showLoadingComponent(false);
+      }
+      if (error && error.status == 400) {
+        this.errorMessage = error.message;
+        this.showLoadingComponent(false);
+      }
+    }
+  }
+
+  async modalAction(action: string) {
+    this.currentModal.close();
+
+    if (this.isCadastroFinished && action === 'close') {
+      this.alterarPaginaAtual.emit('PRODUTO-LISTA');
+    }
+
+    if (action === 'confirm-cancel') {
+      this.alterarPaginaAtual.emit('PRODUTO-LISTA');
+    }
+  }
+
+  openModal(modalContent: ModalContent) {
+    this.currentModal = this.modalService.open(ModalComponent);
+    this.currentModal.componentInstance.modalContent = modalContent;
+    this.currentModal.componentInstance.onModalAction.subscribe(async (action:string) => await this.modalAction(action));
+  }
+
+  confirmarCancelar() {
+    this.openModal({
+      title: 'AVISO',
+      message: 'Deseja realmente <b>descartar</b> este cadastro?',
+      cancelButtonText: 'Não',
+      cancelButtonClass: 'btn-primary',
+      buttons: [
+        {
+          text: 'Sim',
+          action: 'confirm-cancel',
+          cssClass: 'btn-danger'
+        }
+      ]
+    });
   }
 
   cadastrar() {

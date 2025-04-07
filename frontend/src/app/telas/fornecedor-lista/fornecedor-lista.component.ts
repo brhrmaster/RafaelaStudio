@@ -59,6 +59,13 @@ export class FornecedorListaComponent extends BaseTelaListagemComponent {
 
   atualizarFornecedor(id?: number) {
 
+    this.openModal({
+      title: 'AGUARDE',
+      message: `Recurso em desenvolvimento.`,
+      cancelButtonText: 'OK',
+      cancelButtonClass: 'btn-primary'
+    });
+
     // chamar tela fornecedor-form para atualizar com base no ID
     console.log('abrir tela fornecedor-form com o id ' + id);
   }

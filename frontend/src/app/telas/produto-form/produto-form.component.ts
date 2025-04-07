@@ -60,8 +60,6 @@ export class ProdutoFormComponent {
     formatoId: new FormControl(0, Validators.required)
   });
 
-  // TODO: aplicar mascara para valor: https://stackoverflow.com/questions/64364646/creating-directive-in-angular-that-formats-the-value-entered-on-keypress
-
   constructor() {
     this.obterFormatos();
     this.obterFornecedores();

@@ -63,6 +63,26 @@ module.exports = (app, db, helpers) => {
         }
     };
 
+    const getFornecedoresSimplesPorProduto = async (req, res) => {
+        try {
+            const { produtoId } = req.params;
+            const query = `
+                SELECT 
+                    f.id,
+                    f.empresa
+                FROM tbl_fornecedores f
+                INNER JOIN tbl_produto_fornecedor pf ON pf.fornecedor_id = f.id AND pf.produto_id = ?
+                ORDER BY f.empresa ASC
+            `;
+
+            const [results] = await db.query(query, [produtoId]);
+            return res.status(200).json({ fornecedores: results });
+        } catch (e) {
+            if (!e.statusCode) e.statusCode = 400;
+            return res.status(e.statusCode).json({ error: e.message });
+        }
+    };
+
     const insertFornecedor = async (req, res) => {
         await helpers.waitForABit(3000);
         const fornecedor = req.body;
@@ -178,6 +198,8 @@ module.exports = (app, db, helpers) => {
     app.get('/api/fornecedores', getFornecedores);
 
     app.get('/api/fornecedores-simples', getFornecedoresSimples);
+
+    app.get('/api/fornecedores-simples/:produtoId', getFornecedoresSimplesPorProduto);
 
     app.post('/api/fornecedor', insertFornecedor);
 

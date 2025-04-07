@@ -15,8 +15,8 @@ export class FornecedorService {
     return firstValueFrom(this.http.get<GetFornecedoresResponse>(this.getUrlWithPath('fornecedores?filtro=' + filtro)));
   }
 
-  async getAllSimples(): Promise<GetFornecedoresResponse> {
-    return firstValueFrom(this.http.get<GetFornecedoresResponse>(this.getUrlWithPath('fornecedores-simples')));
+  async getAllSimples(produtoId?: number): Promise<GetFornecedoresResponse> {
+    return firstValueFrom(this.http.get<GetFornecedoresResponse>(this.getUrlWithPath('fornecedores-simples' + (produtoId ? '/'+produtoId : ''))));
   }
 
   async createNew(fornecedor: Fornecedor): Promise<ResponseData> {

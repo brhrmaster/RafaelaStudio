@@ -470,6 +470,29 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "GET fornecedores Simples By Produto ID",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/api/fornecedores-simples/2",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"fornecedores-simples",
+								"2"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},

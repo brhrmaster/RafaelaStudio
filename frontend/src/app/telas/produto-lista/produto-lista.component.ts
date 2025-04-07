@@ -1,13 +1,13 @@
-import { Component, EventEmitter, Output, DEFAULT_CURRENCY_CODE, LOCALE_ID, ElementRef, ViewChild, inject } from '@angular/core';
-import { CommonModule, formatDate, formatCurrency, registerLocaleData  } from '@angular/common';
+import { Component, EventEmitter, Output, LOCALE_ID, inject } from '@angular/core';
+import { CommonModule, formatDate, registerLocaleData  } from '@angular/common';
 import ptBr from '@angular/common/locales/pt';
-import { catchError } from 'rxjs';
 import { BaseTelaListagemComponent } from '../../componentes/BaseTelaListagemComponent';
 import { ProdutoService } from '../../services/produto.service';
-import { GenericResponse, GetProdutosResponse, ModalContent, Produto } from '../../models/models.component';
+import { Fornecedor, GenericResponse, GetFornecedoresResponse, GetProdutosResponse, ModalContent, Produto } from '../../models/models.component';
 import { LoadingComponent } from "../../componentes/loading/loading.component";
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { ModalComponent } from '../../componentes/modal/modal-generic/modal-generic.component';
+import { FornecedorService } from '../../services/fornecedor.service';
 
 registerLocaleData(ptBr);
 
@@ -37,7 +37,8 @@ export class ProdutoListaComponent extends BaseTelaListagemComponent {
   @Output() showLoading = new EventEmitter<boolean>();
   private modalService = inject(NgbModal);
   private currentModal!: NgbModalRef;
-  produtoService: ProdutoService = inject(ProdutoService);
+  private produtoService: ProdutoService = inject(ProdutoService);
+  private fornecedorService: FornecedorService = inject(FornecedorService);
   produtoSelecionado!: Produto;
 
   constructor() {
@@ -76,7 +77,12 @@ export class ProdutoListaComponent extends BaseTelaListagemComponent {
 
   atualizarProduto(id: number) {
 
-    this.showLoadingComponent(true);
+    this.openModal({
+      title: 'AGUARDE',
+      message: `Recurso em desenvolvimento.`,
+      cancelButtonText: 'OK',
+      cancelButtonClass: 'btn-primary'
+    });
 
     // chamar tela fornecedor-form para atualizar com base no ID
     console.log('abrir tela produto-form com o id ' + id);
@@ -136,10 +142,23 @@ export class ProdutoListaComponent extends BaseTelaListagemComponent {
 
     if (action === 'op-estoque-entrada') {
       console.log('navegar para o registro de estoque - entrada');
+
+      this.openModal({
+        title: 'AGUARDE',
+        message: `Em breve será possível registrar <b>entradas</b> de estoque.`,
+        cancelButtonText: 'OK',
+        cancelButtonClass: 'btn-primary'
+      });
     }
 
     if (action === 'op-estoque-saida') {
       console.log('navegar para o registro de estoque - saída');
+      this.openModal({
+        title: 'AGUARDE',
+        message: `Em breve será possível registrar <b>sa&iacute;das</b> de estoque.`,
+        cancelButtonText: 'OK',
+        cancelButtonClass: 'btn-primary'
+      });
     }
   }
 
@@ -159,6 +178,47 @@ export class ProdutoListaComponent extends BaseTelaListagemComponent {
           cancelButtonText: 'OK',
           cancelButtonClass: 'btn-success'
         });
+      }
+    } catch (error: any) {
+      console.log(error);
+      if (error && error.status == 0) {
+        this.errorMessage = 'Falha na comunicação com o servidor';
+        this.showLoadingComponent(false);
+      }
+    }
+  }
+
+  async visualizarFornecedores(produto: Produto) {
+    this.showLoadingComponent(true);
+
+    try {
+      const fornecedoresResponse: GetFornecedoresResponse = await this.fornecedorService.getAllSimples(produto.id);
+      this.showLoadingComponent(false);
+
+      if (fornecedoresResponse) {
+        const listaFornecedores = fornecedoresResponse.fornecedores;
+
+        let listaFornecedoresHtml = '<div class="fornecedores-selecionados">';
+
+        if (listaFornecedores.length > 0) {
+          listaFornecedores.forEach(fornecedor => {
+            listaFornecedoresHtml += `<div class="fornecedor-selecionado">${fornecedor.empresa}</div>`;
+          });
+        } else {
+          listaFornecedoresHtml += `<span>Este produto ainda n&atilde;o possui fornecedor vinculado</span>`;
+        }
+
+        listaFornecedoresHtml += '</div>';
+
+        console.log(listaFornecedoresHtml);
+
+        this.openModal({
+          title: 'Fornecedores do Produto',
+          message: `Produto: <b>${produto.nome}</b> <br/><br/> ${listaFornecedoresHtml}`,
+          cancelButtonText: 'FECHAR',
+          cancelButtonClass: 'btn-primary'
+        });
+
       }
     } catch (error: any) {
       console.log(error);

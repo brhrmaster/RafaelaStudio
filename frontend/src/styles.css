@@ -40,3 +40,30 @@ body{
 .modal-content {
   width: 110% !important;
 }
+
+.fornecedores-selecionados {
+  display: block;
+  width: 100%;
+  height: 150px;
+  border: 1px #ccc solid;
+  border-radius: 5px;
+  padding: 5px;
+  overflow: overlay;
+  background-color: #fff;
+  margin-bottom: 10px;
+}
+
+.fornecedores-selecionados span {
+  padding: 10px;
+  color: #747474
+}
+
+.fornecedor-selecionado {
+  padding: 5px;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #f1f1f1;
+  margin-right: 5px;
+  margin-bottom: 5px;
+}

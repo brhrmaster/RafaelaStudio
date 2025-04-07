@@ -54,7 +54,7 @@
       <div class="col-sm-11">
         <div class="row">
           <div class="col">
-            <div id="fornecedores-selecionados">
+            <div class="fornecedores-selecionados">
               <span *ngIf="fornecedoresSelecionados().length == 0">Adicione os fornecedores deste produto aqui</span>
               <div class="fornecedor-selecionado" *ngFor="let fornecedorSelecionado of fornecedoresSelecionados()">
                 {{fornecedorSelecionado.empresa}}

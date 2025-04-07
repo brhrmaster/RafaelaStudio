@@ -11,3 +11,7 @@
 .page-footer button {
   margin-left: 10px;
 }
+
+input.ng-dirty.ng-invalid {
+  border: 1px solid #f86161
+}

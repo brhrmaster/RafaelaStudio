@@ -53,7 +53,10 @@ export class ProdutoFormComponent {
           fornecedores.push(this.fornecedoresDisponiveis()[i]);
           return fornecedores;
         });
-        this.fornecedoresDisponiveis.update(fornecedores => fornecedores.splice(i, 1));
+        this.fornecedoresDisponiveis.update(fornecedores => {
+          fornecedores.splice(i, 1);
+          return fornecedores;
+        });
         break;
       }
     }
@@ -66,7 +69,10 @@ export class ProdutoFormComponent {
           fornecedores.push(this.fornecedoresSelecionados()[i]);
           return fornecedores;
         });
-        this.fornecedoresSelecionados.update(fornecedores => fornecedores.splice(i, 1));
+        this.fornecedoresSelecionados.update(fornecedores => {
+          fornecedores.splice(i, 1);
+          return fornecedores;
+        });
         break;
       }
     }

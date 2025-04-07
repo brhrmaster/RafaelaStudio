@@ -45,6 +45,10 @@ export class ProdutoListaComponent extends BaseTelaListagemComponent {
     this.obterProdutos();
   }
 
+  gotoCadastro() {
+    this.alterarPaginaAtual.emit('PRODUTO-FORM');
+  }
+
   private showLoadingComponent(show: boolean) {
     this.isLoadingVisible = show;
   }
@@ -78,11 +82,33 @@ export class ProdutoListaComponent extends BaseTelaListagemComponent {
     console.log('abrir tela produto-form com o id ' + id);
   }
 
+  gerenciarEstoque(produto: Produto) {
+    this.produtoSelecionado = produto;
+    this.openModal({
+      title: 'Gerenciar Estoque',
+      message: 'Atualizar estoque do produto: <b>'+this.produtoSelecionado.nome+'</b><br/><br/><b>Qual a operação desejada?</b>',
+      cancelButtonText: 'Cancelar',
+      cancelButtonClass: 'btn-danger',
+      buttons: [
+        {
+          text: 'Registrar Entrada',
+          action: 'op-estoque-entrada',
+          cssClass: 'btn-primary'
+        },
+        {
+          text: 'Registrar Saída',
+          action: 'op-estoque-saida',
+          cssClass: 'btn-success'
+        }
+      ]
+    });
+  }
+
   confirmarRemocaoProduto(produto: Produto) {
     this.produtoSelecionado = produto;
     this.openModal({
       title: 'AVISO',
-      message: 'Deseja realmente remover o produto '+this.produtoSelecionado.nome+'?',
+      message: 'Deseja realmente remover este produto? <p><center><b>'+this.produtoSelecionado.nome+'</b></center></p>',
       cancelButtonText: 'Não',
       cancelButtonClass: 'btn-primary',
       buttons: [
@@ -107,6 +133,14 @@ export class ProdutoListaComponent extends BaseTelaListagemComponent {
     if (action === 'confirm-remove') {
       this.remocaoProdutoConfirmada();
     }
+
+    if (action === 'op-estoque-entrada') {
+      console.log('navegar para o registro de estoque - entrada');
+    }
+
+    if (action === 'op-estoque-saida') {
+      console.log('navegar para o registro de estoque - saída');
+    }
   }
 
   async remocaoProdutoConfirmada() {
@@ -121,7 +155,7 @@ export class ProdutoListaComponent extends BaseTelaListagemComponent {
 
         this.openModal({
           title: 'Produto Removido',
-          message: 'Produto '+this.produtoSelecionado.nome+' removido com sucesso!',
+          message: 'Produto <b>'+this.produtoSelecionado.nome+'</b> removido com sucesso!',
           cancelButtonText: 'OK',
           cancelButtonClass: 'btn-success'
         });

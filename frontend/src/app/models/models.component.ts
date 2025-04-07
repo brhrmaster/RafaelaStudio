@@ -31,20 +31,20 @@ export interface LoginResponseData {
 };
 
 export interface Fornecedor extends Model {
-  id: number,
-  empresa: string,
-  nomeRepresentante: string,
-  telefone: string,
-  email: string,
-  endereco: string,
-  numero: string,
-  cidadeId: number,
-  cidadeNome: string,
-  estadoNome: string,
-  estadoUF: string,
-  estadoId: number,
-  cep: string,
-  site: string
+  id?: number,
+  empresa?: string,
+  nomeRepresentante?: string,
+  telefone?: string,
+  email?: string,
+  endereco?: string,
+  numero?: string,
+  cidadeId?: number,
+  cidadeNome?: string,
+  estadoNome?: string,
+  estadoUF?: string,
+  estadoId?: number,
+  cep?: string,
+  site?: string
 };
 
 export interface Produto extends Model {
@@ -132,4 +132,25 @@ export interface AtividadeEstoque {
 
 export interface GetAtividadesEstoque {
   atividadesEstoque: AtividadeEstoque[]
+}
+
+
+export interface Estado {
+  id: number,
+  nome: string,
+  uf: string
+}
+
+export interface EstadoResponse {
+  estados: Estado[]
+}
+
+export interface Cidade {
+  id: number,
+  nome: string,
+  estado_id: number
+}
+
+export interface CidadeResponse {
+  cidades: Cidade[]
 }

@@ -6,7 +6,7 @@
       <h1>Produtos</h1>
     </div>
     <div class="col-sm-6">
-      <button class="btn btn-success">INCLUIR</button>
+      <button class="btn btn-success" (click)="gotoCadastro()">INCLUIR</button>
     </div>
   </div>
   <div class="page-content">
@@ -43,7 +43,7 @@
             <td>{{produto.formatoNome}}</td>
             <td>{{produto.estoqueClientes}} CL : {{produto.estoqueCursos}} CS de {{produto.estoqueTotal}}</td>
             <td class="table-icons">
-              <a class="icon" title="Gerenciar Estoque" (click)="atualizarProduto(produto.id)">
+              <a class="icon" title="Gerenciar Estoque" (click)="gerenciarEstoque(produto)">
                 <div class="arrow-up-arrow-down"></div>
               </a>
               <a class="icon" title="Fornecedores" (click)="atualizarProduto(produto.id)">

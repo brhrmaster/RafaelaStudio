@@ -23,7 +23,7 @@ export class FornecedorService {
     return firstValueFrom(this.http.post<ResponseData>(this.getUrlWithPath('fornecedor'), fornecedor));
   }
 
-  async deleteById(id: number): Promise<GenericResponse> {
+  async deleteById(id?: number): Promise<GenericResponse> {
     return firstValueFrom(this.http.delete<GenericResponse>(this.getUrlWithPath('fornecedor/' + id)));
   }
 

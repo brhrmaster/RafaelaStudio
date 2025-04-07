@@ -2,7 +2,6 @@ import { Component, ElementRef, EventEmitter, inject, Output, ViewChild } from '
 import { CommonModule } from '@angular/common';
 import { FornecedorService } from '../../services/fornecedor.service';
 import { Fornecedor, GenericResponse, GetFornecedoresResponse, ModalContent } from '../../models/models.component';
-import { catchError } from 'rxjs';
 import { BaseTelaListagemComponent } from '../../componentes/BaseTelaListagemComponent';
 import { LoadingComponent } from "../../componentes/loading/loading.component";
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
@@ -14,7 +13,6 @@ import { ModalComponent } from '../../componentes/modal/modal-generic/modal-gene
     CommonModule,
     LoadingComponent
   ],
-  providers: [NgbModal],
   templateUrl: './fornecedor-lista.component.html',
   styleUrls: [
     '../../styles/tela-lista-registros.css'
@@ -59,17 +57,21 @@ export class FornecedorListaComponent extends BaseTelaListagemComponent {
     }
   }
 
-  atualizarFornecedor(id: number) {
+  atualizarFornecedor(id?: number) {
 
     // chamar tela fornecedor-form para atualizar com base no ID
     console.log('abrir tela fornecedor-form com o id ' + id);
+  }
+
+  gotoCadastro() {
+    this.alterarPaginaAtual.emit('FORNECEDOR-FORM');
   }
 
   confirmarRemocaoFornecedor(fornecedor: Fornecedor) {
     this.fornecedorSelecionado = fornecedor;
     this.openModal({
       title: 'AVISO',
-      message: 'Deseja realmente remover o fornecedor '+this.fornecedorSelecionado.empresa+'?',
+      message: 'Deseja realmente remover este fornecedor? <p><center><b>'+this.fornecedorSelecionado.empresa+'</b></center></p>',
       cancelButtonText: 'Não',
       cancelButtonClass: 'btn-primary',
       buttons: [
@@ -108,7 +110,7 @@ export class FornecedorListaComponent extends BaseTelaListagemComponent {
 
         this.openModal({
           title: 'Fornecedor Removido',
-          message: 'Fornecedor '+this.fornecedorSelecionado.empresa+' removido com sucesso!',
+          message: 'Fornecedor <b>'+this.fornecedorSelecionado.empresa+'</b> removido com sucesso!',
           cancelButtonText: 'OK',
           cancelButtonClass: 'btn-success'
         });
@@ -126,8 +128,8 @@ export class FornecedorListaComponent extends BaseTelaListagemComponent {
     return <Fornecedor[]> this.paginacao.listaModelsPaginados();
   }
 
-  formatPhoneForWhatsapp(phone: string) {
-    return '+55' + phone.trim().replace(/[^0-9]/g,'')
+  formatPhoneForWhatsapp(phone?: string) {
+    return '+55' + phone?.trim().replace(/[^0-9]/g,'')
   }
 
   executarBuscaOnKeyboard(event: KeyboardEvent) {

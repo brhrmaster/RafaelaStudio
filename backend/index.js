@@ -10,6 +10,7 @@ const userEndpoints = require('./user-endpoints');
 const fornecedoresEndpoints = require('./fornecedores-endpoints');
 const reportsEndpoints = require('./reports-endpoints');
 const produtoFormatoEndpoints = require('./produto-formato-endpoints');
+const localidadeEndpoints = require('./localidade-endpoints');
 
 // Create Express app
 const app = express();
@@ -50,6 +51,8 @@ const startApp = async () => {
     fornecedoresEndpoints(app, db, helpers);
 
     reportsEndpoints(app, db, helpers);
+
+    localidadeEndpoints(app, db, helpers);
 
     // outrosEndpoints(app, db);
 

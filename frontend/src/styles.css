@@ -31,3 +31,12 @@ body{
   float: right;
   margin-top: 8px;
 }
+
+.modal-header {
+  background-color: #F98888;
+  color: #fff;
+  font-weight: 600;
+}
+.modal-content {
+  width: 110% !important;
+}

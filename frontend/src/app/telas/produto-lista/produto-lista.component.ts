@@ -3,7 +3,7 @@ import { CommonModule, formatDate, registerLocaleData  } from '@angular/common';
 import ptBr from '@angular/common/locales/pt';
 import { BaseTelaListagemComponent } from '../../componentes/BaseTelaListagemComponent';
 import { ProdutoService } from '../../services/produto.service';
-import { Fornecedor, GenericResponse, GetFornecedoresResponse, GetProdutosResponse, ModalContent, Produto } from '../../models/models.component';
+import { Fornecedor, GenericResponse, GetFornecedoresResponse, GetProdutosResponse, ModalContent, NavegacaoApp, Produto } from '../../models/models.component';
 import { LoadingComponent } from "../../componentes/loading/loading.component";
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { ModalComponent } from '../../componentes/modal/modal-generic/modal-generic.component';
@@ -33,7 +33,7 @@ export class ProdutoListaComponent extends BaseTelaListagemComponent {
   errorMessage: string = '';
   serverResponse: string = '';
   isLoadingVisible: boolean = false;
-  @Output() alterarPaginaAtual = new EventEmitter<string>();
+  @Output() alterarPaginaAtual = new EventEmitter<NavegacaoApp>();
   @Output() showLoading = new EventEmitter<boolean>();
   private modalService = inject(NgbModal);
   private currentModal!: NgbModalRef;
@@ -47,7 +47,7 @@ export class ProdutoListaComponent extends BaseTelaListagemComponent {
   }
 
   gotoCadastro() {
-    this.alterarPaginaAtual.emit('PRODUTO-FORM');
+    this.alterarPaginaAtual.emit({ nomePagina: 'PRODUTO-FORM', itemId: 0});
   }
 
   private showLoadingComponent(show: boolean) {
@@ -76,16 +76,7 @@ export class ProdutoListaComponent extends BaseTelaListagemComponent {
   }
 
   atualizarProduto(id: number) {
-
-    this.openModal({
-      title: 'AGUARDE',
-      message: `Recurso em desenvolvimento.`,
-      cancelButtonText: 'OK',
-      cancelButtonClass: 'btn-primary'
-    });
-
-    // chamar tela fornecedor-form para atualizar com base no ID
-    console.log('abrir tela produto-form com o id ' + id);
+    this.alterarPaginaAtual.emit({ nomePagina: 'PRODUTO-FORM', itemId: id });
   }
 
   gerenciarEstoque(produto: Produto) {

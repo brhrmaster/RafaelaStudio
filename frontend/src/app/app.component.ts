@@ -10,7 +10,7 @@ import { FornecedorFormComponent } from "./telas/fornecedor-form/fornecedor-form
 import { UsuarioListaComponent } from "./telas/usuario-lista/usuario-lista.component";
 import { UsuarioFormComponent } from "./telas/usuario-form/usuario-form.component";
 import { LoginComponent } from "./telas/login/login.component";
-import { Usuario } from './models/models.component';
+import { NavegacaoApp, Usuario } from './models/models.component';
 import { EntradaSaidaListaComponent } from './telas/entradas-saidas-lista/entradas-saidas-lista.component';
 
 interface IPagina {
@@ -50,6 +50,7 @@ export class AppComponent {
   };
 
   paginaAtual: string = 'LOGIN';
+  itemIdAtual: number = 0;
   titulo: string = this.titulos[this.paginaAtual];
   usuarioLogado!: Usuario;
 
@@ -57,9 +58,10 @@ export class AppComponent {
     this.checkLoggedUser();
   }
 
-  alterarPaginaAtual(pagina: string) {
-    this.paginaAtual = pagina;
-    this.titulo = this.titulos[pagina];
+  alterarPaginaAtual(navegacaoApp: NavegacaoApp) {
+    this.paginaAtual = navegacaoApp.nomePagina;
+    this.titulo = this.titulos[navegacaoApp.nomePagina];
+    this.itemIdAtual = navegacaoApp.itemId;
   }
 
   checkLoggedUser() {

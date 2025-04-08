@@ -16,6 +16,10 @@ export class ProdutoService {
     return firstValueFrom(this.http.get<GetProdutosResponse>(this.getUrlWithPath('produtos?filtro=' + filtro)));
   }
 
+  async getById(id: number): Promise<ProdutoInsert> {
+    return firstValueFrom(this.http.get<ProdutoInsert>(this.getUrlWithPath('produto/' + id)));
+  }
+
   async deleteById(id: number): Promise<GenericResponse> {
     return firstValueFrom(this.http.delete<GenericResponse>(this.getUrlWithPath('produto/' + id)));
   }
@@ -24,11 +28,15 @@ export class ProdutoService {
     return firstValueFrom(this.http.post<ResponseData>(this.getUrlWithPath('produto'), produto));
   }
 
-  async getFormatos() {
-    return firstValueFrom(this.http.get<GetProdutoFormatosResponse>(this.getUrlWithPath('produto/formatos')));
+  async update(produto: ProdutoInsert): Promise<ResponseData> {
+    return firstValueFrom(this.http.put<ResponseData>(this.getUrlWithPath('produto/' + produto.id), produto));
   }
 
-  getUrlWithPath(path: string): string {
+  async getFormatos() {
+    return firstValueFrom(this.http.get<GetProdutoFormatosResponse>(this.getUrlWithPath('produto-formatos')));
+  }
+
+  private getUrlWithPath(path: string): string {
     return this.serviceUrl + path;
   }
 }

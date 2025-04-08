@@ -3,7 +3,7 @@ import { CommonModule, formatDate  } from '@angular/common';
 import { catchError } from 'rxjs';
 import { BaseTelaListagemComponent } from '../../componentes/BaseTelaListagemComponent';
 import { EstoqueService } from '../../services/estoque.service';
-import { AtividadeEstoque, GetAtividadesEstoque } from '../../models/models.component';
+import { AtividadeEstoque, GetAtividadesEstoque, NavegacaoApp } from '../../models/models.component';
 import { LoadingComponent } from "../../componentes/loading/loading.component";
 
 @Component({
@@ -23,7 +23,7 @@ export class EntradaSaidaListaComponent extends BaseTelaListagemComponent {
   errorMessage: string = '';
   serverResponse: string = '';
   isLoadingVisible: boolean = false;
-  @Output() alterarPaginaAtual = new EventEmitter<string>();
+  @Output() alterarPaginaAtual = new EventEmitter<NavegacaoApp>();
   estoqueService: EstoqueService = inject(EstoqueService);
 
   constructor() {

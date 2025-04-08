@@ -4,7 +4,7 @@ import { CommonModule, DatePipe } from '@angular/common';
 import Chart from 'chart.js/auto';
 import Utils from '../../componentes/utils';
 import { ReportsService } from '../../services/reports.service';
-import { GetReportsData } from '../../models/models.component';
+import { GetReportsData, NavegacaoApp } from '../../models/models.component';
 
 @Component({
   selector: 'app-home',
@@ -24,7 +24,7 @@ export class HomeComponent {
     totalProdutosPorFornecedor: [],
     totalEntradaSaidaProdutos: []
   });
-  @Output() alterarPaginaAtual = new EventEmitter<string>();
+  @Output() alterarPaginaAtual = new EventEmitter<NavegacaoApp>();
   @Output() showLoading = new EventEmitter<boolean>();
   private reportsService: ReportsService = inject(ReportsService);
 

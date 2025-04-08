@@ -4,7 +4,7 @@
   <div class="container">
     <div class="row page-header inner-page-header">
         <div class="col-sm-12">
-            <h1>Novo Produto</h1>
+            <h1>{{itemId > 0 ? 'Atualizar' : 'Cadastrar'}} Produto</h1>
         </div>
     </div>
 
@@ -19,7 +19,8 @@
             <label for="produto" class="form-label">Produto:</label>
         </div>
         <div class="col-sm-11">
-            <input type="text" id="produto" name="produto" formControlName="nome" placeholder="Nome do produto..." class="form-control" required>
+          <input type="hidden" id="produtoId" name="produtoId" formControlName="id">
+          <input type="text" id="produto" name="produto" formControlName="nome" placeholder="Nome do produto..." class="form-control" required>
         </div>
     </div>
 

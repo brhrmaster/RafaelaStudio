@@ -13,11 +13,11 @@ export class EstoqueService {
   private http: HttpClient = inject(HttpClient);
 
   async getAll(filtro: string): Promise<GetAtividadesEstoque> {
-    return firstValueFrom(this.http.get<GetAtividadesEstoque>(this.getUrlWithPath('produto/estoque?produto=' + filtro)));
+    return firstValueFrom(this.http.get<GetAtividadesEstoque>(this.getUrlWithPath('produto-estoque?produto=' + filtro)));
   }
 
   async getAllByProdutoId(produtoId: number): Promise<GetAtividadesEstoque> {
-    return firstValueFrom(this.http.get<GetAtividadesEstoque>(this.getUrlWithPath('produto/estoque?produtoId=' + produtoId)));
+    return firstValueFrom(this.http.get<GetAtividadesEstoque>(this.getUrlWithPath('produto-estoque?produtoId=' + produtoId)));
   }
 
   getUrlWithPath(path: string): string {

@@ -1,5 +1,5 @@
-import { Fornecedor, GetFornecedoresResponse, GetProdutoFormatosResponse, ModalContent, ProdutoInsert, ResponseData } from './../../models/models.component';
-import { Component, EventEmitter, inject, Output, ViewChild, ElementRef, signal } from '@angular/core';
+import { Fornecedor, GetFornecedoresResponse, GetProdutoFormatosResponse, ModalContent, NavegacaoApp, ProdutoInsert, ResponseData } from './../../models/models.component';
+import { Component, EventEmitter, inject, Output, ViewChild, ElementRef, signal, Input, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ProdutoService } from '../../services/produto.service';
 import { ProdutoFormato } from '../../models/models.component';
@@ -44,16 +44,18 @@ export class ProdutoFormComponent {
   produtoFormatos = signal<ProdutoFormato[]>([]);
   fornecedoresDisponiveis = signal<Fornecedor[]>([]);
   fornecedoresSelecionados = signal<Fornecedor[]>([]);
-  produtoSelecionado: ProdutoInsert = { fornecedores: [] };
+  produtoSelecionado: ProdutoInsert = { id: 0, fornecedores: [] };
   private isCadastroFinished = false;
   private currentModal!: NgbModalRef;
   private modalService = inject(NgbModal);
   private produtoService: ProdutoService = inject(ProdutoService);
   private fornecedorService: FornecedorService = inject(FornecedorService);
   @ViewChild('comboFornecedoresDisponiveis') comboFornecedoresDisponiveis!: ElementRef;
-  @Output() alterarPaginaAtual = new EventEmitter<string>();
+  @Output() alterarPaginaAtual = new EventEmitter<NavegacaoApp>();
+  @Input({ required: true }) itemId!: number;
 
   protected produtoForm = new FormGroup({
+    id: new FormControl(0),
     nome: new FormControl('', Validators.required),
     preco: new FormControl(0, Validators.required),
     isValidadeDefinida: new FormControl(false, Validators.required),
@@ -65,13 +67,70 @@ export class ProdutoFormComponent {
     this.obterFornecedores();
   }
 
+  async ngOnChanges() {
+    if (this.itemId && this.itemId > 0) {
+      this.prepararProdutoParaAtualizar();
+    }
+  }
+
+  async prepararProdutoParaAtualizar() {
+    this.showLoadingComponent(true);
+    try {
+      const produtoResponse: ProdutoInsert = await this.produtoService.getById(this.itemId);
+
+      if (produtoResponse) {
+        this.showLoadingComponent(false);
+
+        this.produtoForm.setValue( {
+          id: this.itemId,
+          formatoId: produtoResponse.formatoId!,
+          isValidadeDefinida: produtoResponse.isValidadeDefinida!,
+          nome: produtoResponse.nome!,
+          preco: produtoResponse.preco!
+        });
+
+        this.preencherFornecedoresSelecionados(produtoResponse.fornecedores);
+      }
+    } catch (error: any) {
+      if (error && error.status == 0) {
+        this.errorMessage = 'Falha na comunicação com o servidor';
+        this.showLoadingComponent(false);
+      }
+      if (error && error.status == 400) {
+        this.errorMessage = error.message;
+        this.showLoadingComponent(false);
+      }
+      if (error && error.statud == 404) {
+        this.isCadastroFinished = true;
+        this.openModal({
+          title: 'AVISO',
+          message: 'Produto indispon&iacute;vel!',
+          cancelButtonText: 'OK',
+          cancelButtonClass: 'btn-success'
+        });
+      }
+    }
+  }
+
+  preencherFornecedoresSelecionados(fornecedorIds: number[]) {
+    const tempFornecedores = [...this.fornecedoresDisponiveis()];
+    tempFornecedores.forEach(fornecedor => {
+      if (fornecedorIds.includes(fornecedor.id)) {
+        this.transferirFornecedorSelecionadoParaCaixa(fornecedor.id);
+      }
+    })
+  }
+
   private showLoadingComponent(show: boolean) {
     this.isLoadingVisible = show;
   }
 
   incluirFornecedorSelecionado() {
     const fornecedorId = this.comboFornecedoresDisponiveis.nativeElement.value;
+    this.transferirFornecedorSelecionadoParaCaixa(fornecedorId);
+  }
 
+  transferirFornecedorSelecionadoParaCaixa(fornecedorId: number) {
     for (let i=0; i < this.fornecedoresDisponiveis().length; i++) {
       if (this.fornecedoresDisponiveis()[i].id == fornecedorId) {
         this.fornecedoresSelecionados.update(fornecedores => {
@@ -145,21 +204,25 @@ export class ProdutoFormComponent {
     this.produtoSelecionado = <ProdutoInsert>this.produtoForm.value;
     this.produtoSelecionado.fornecedores = this.fornecedoresSelecionados().map(fornecedor => fornecedor.id!);
 
-    console.log(this.produtoSelecionado);
-
     try {
-      const genericResponse: ResponseData = await this.produtoService.createNew(this.produtoSelecionado);
+      let modo = '';
 
-      if (genericResponse) {
-        this.showLoadingComponent(false);
-        this.isCadastroFinished = true;
-        this.openModal({
-          title: 'Sucesso!',
-          message: 'Produto <b>'+this.produtoSelecionado.nome+'</b> cadastrado com sucesso!',
-          cancelButtonText: 'OK',
-          cancelButtonClass: 'btn-success'
-        });
+      if (this.itemId && this.itemId > 0) {
+        modo = 'atualizado';
+        await this.produtoService.update(this.produtoSelecionado);
+      } else {
+        modo = 'cadastrado';
+        await this.produtoService.createNew(this.produtoSelecionado);
       }
+
+      this.showLoadingComponent(false);
+      this.isCadastroFinished = true;
+      this.openModal({
+        title: 'Sucesso!',
+        message: `Produto <b>${this.produtoSelecionado.nome}</b> ${modo} com sucesso!`,
+        cancelButtonText: 'OK',
+        cancelButtonClass: 'btn-success'
+      });
     } catch (error: any) {
       if (error && error.status == 0) {
         this.errorMessage = 'Falha na comunicação com o servidor';
@@ -176,11 +239,11 @@ export class ProdutoFormComponent {
     this.currentModal.close();
 
     if (this.isCadastroFinished && action === 'close') {
-      this.alterarPaginaAtual.emit('PRODUTO-LISTA');
+      this.alterarPaginaAtual.emit({ nomePagina: 'PRODUTO-LISTA', itemId: 0});
     }
 
     if (action === 'confirm-cancel') {
-      this.alterarPaginaAtual.emit('PRODUTO-LISTA');
+      this.alterarPaginaAtual.emit({ nomePagina: 'PRODUTO-LISTA', itemId: 0});
     }
   }
 
@@ -204,11 +267,5 @@ export class ProdutoFormComponent {
         }
       ]
     });
-  }
-
-  cadastrar() {
-
-    // abrindo cortina (ABRIR MODAL)
-    console.log('produto cadastrado!');
   }
 }

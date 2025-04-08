@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { LoginResponseData } from '../../models/models.component';
+import { LoginResponseData, NavegacaoApp } from '../../models/models.component';
 
 @Component({
   selector: 'app-menu-lateral',
@@ -12,7 +12,7 @@ export class MenuLateralComponent {
 
   user!: LoginResponseData;
   paginaAtual: string = '';
-  @Output() alterarPaginaAtual = new EventEmitter<string>();
+  @Output() alterarPaginaAtual = new EventEmitter<NavegacaoApp>();
 
   constructor() {
     const currentUser = localStorage.getItem('currentUser');
@@ -23,7 +23,7 @@ export class MenuLateralComponent {
 
   public alterarPagina(pagina: string) {
     this.paginaAtual = pagina;
-    this.alterarPaginaAtual.emit(pagina);
+    this.alterarPaginaAtual.emit({ nomePagina: pagina, itemId: 0});
   }
 
   public loggout() {

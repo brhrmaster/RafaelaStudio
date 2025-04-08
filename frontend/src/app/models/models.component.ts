@@ -1,3 +1,8 @@
+export interface NavegacaoApp {
+  nomePagina: string,
+  itemId: number
+}
+
 export interface Model {
 }
 
@@ -21,7 +26,7 @@ export interface LoginResponseData {
 };
 
 export interface Fornecedor extends Model {
-  id?: number,
+  id: number,
   empresa?: string,
   nomeRepresentante?: string,
   telefone?: string,
@@ -38,6 +43,7 @@ export interface Fornecedor extends Model {
 };
 
 export interface ProdutoInsert extends Model {
+  id: number,
   nome?: string,
   preco?: number,
   isValidadeDefinida?: boolean,

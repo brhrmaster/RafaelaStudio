@@ -2,7 +2,7 @@ import { Component, EventEmitter, inject, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { BaseTelaListagemComponent } from '../../componentes/BaseTelaListagemComponent';
 import { UsuarioService } from '../../services/usuario.service';
-import { GenericResponse, GetUsuariosResponse, ModalContent, Usuario } from '../../models/models.component';
+import { GenericResponse, GetUsuariosResponse, ModalContent, NavegacaoApp, Usuario } from '../../models/models.component';
 import { LoadingComponent } from "../../componentes/loading/loading.component";
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { ModalComponent } from '../../componentes/modal/modal-generic/modal-generic.component';
@@ -21,7 +21,7 @@ import { ModalComponent } from '../../componentes/modal/modal-generic/modal-gene
 export class UsuarioListaComponent extends BaseTelaListagemComponent {
   errorMessage!: string;
   isLoadingVisible: boolean = false;
-  @Output() alterarPaginaAtual = new EventEmitter<string>();
+  @Output() alterarPaginaAtual = new EventEmitter<NavegacaoApp>();
   private modalService = inject(NgbModal);
   private currentModal!: NgbModalRef;
   private usuarioService: UsuarioService = inject(UsuarioService);

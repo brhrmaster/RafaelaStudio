@@ -1,7 +1,7 @@
 import { Component, ElementRef, EventEmitter, inject, Output, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FornecedorService } from '../../services/fornecedor.service';
-import { Fornecedor, GenericResponse, GetFornecedoresResponse, ModalContent } from '../../models/models.component';
+import { Fornecedor, GenericResponse, GetFornecedoresResponse, ModalContent, NavegacaoApp } from '../../models/models.component';
 import { BaseTelaListagemComponent } from '../../componentes/BaseTelaListagemComponent';
 import { LoadingComponent } from "../../componentes/loading/loading.component";
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
@@ -21,7 +21,7 @@ import { ModalComponent } from '../../componentes/modal/modal-generic/modal-gene
 export class FornecedorListaComponent extends BaseTelaListagemComponent {
   errorMessage: string = '';
   isLoadingVisible: boolean = false;
-  @Output() alterarPaginaAtual = new EventEmitter<string>();
+  @Output() alterarPaginaAtual = new EventEmitter<NavegacaoApp>();
   private modalService = inject(NgbModal);
   private currentModal!: NgbModalRef;
   private fornecedorService: FornecedorService = inject(FornecedorService);
@@ -57,21 +57,12 @@ export class FornecedorListaComponent extends BaseTelaListagemComponent {
     }
   }
 
-  atualizarFornecedor(id?: number) {
-
-    this.openModal({
-      title: 'AGUARDE',
-      message: `Recurso em desenvolvimento.`,
-      cancelButtonText: 'OK',
-      cancelButtonClass: 'btn-primary'
-    });
-
-    // chamar tela fornecedor-form para atualizar com base no ID
-    console.log('abrir tela fornecedor-form com o id ' + id);
+  atualizarFornecedor(id: number) {
+    this.alterarPaginaAtual.emit({ nomePagina: 'FORNECEDOR-FORM', itemId: id });
   }
 
   gotoCadastro() {
-    this.alterarPaginaAtual.emit('FORNECEDOR-FORM');
+    this.alterarPaginaAtual.emit({ nomePagina: 'FORNECEDOR-FORM', itemId: 0});
   }
 
   confirmarRemocaoFornecedor(fornecedor: Fornecedor) {

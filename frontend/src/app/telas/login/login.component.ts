@@ -1,5 +1,5 @@
 import { Component, ElementRef, EventEmitter, Output, ViewChild, OnInit, inject } from '@angular/core';
-import { LoginResponseData, UserLogin } from '../../models/models.component';
+import { LoginResponseData, NavegacaoApp, UserLogin } from '../../models/models.component';
 import { UsuarioService } from '../../services/usuario.service';
 import { FormsModule } from '@angular/forms';
 import { catchError } from 'rxjs';
@@ -21,7 +21,7 @@ export class LoginComponent {
   protected errorMessage: string = '';
   protected isLoadingVisible: boolean = false;
 
-  @Output() alterarPaginaAtual = new EventEmitter<string>();
+  @Output() alterarPaginaAtual = new EventEmitter<NavegacaoApp>();
   @Output() showLoading = new EventEmitter<boolean>();
 
   @ViewChild('txtusuario') txtUsuario!: ElementRef;
@@ -34,7 +34,7 @@ export class LoginComponent {
     console.log(currentUser);
     if(currentUser) {
       this.user = JSON.parse(currentUser);
-      this.alterarPaginaAtual.emit('HOME');
+      this.alterarPaginaAtual.emit({ nomePagina: 'HOME', itemId: 0});
     }
   }
 
@@ -62,7 +62,7 @@ export class LoginComponent {
       if (loginSuccessData) {
         localStorage.setItem('currentUser', JSON.stringify(loginSuccessData));
         this.showLoadingComponent(false);
-        this.alterarPaginaAtual.emit('HOME');
+        this.alterarPaginaAtual.emit({ nomePagina: 'HOME', itemId: 0});
       }
     } catch (error: any) {
       if (error && error.status == 0) {

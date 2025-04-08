@@ -1,7 +1,7 @@
-import { Component, EventEmitter, inject, Output, signal } from '@angular/core';
+import { Component, EventEmitter, inject, Input, Output, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { LoadingComponent } from "../../componentes/loading/loading.component";
-import { Cidade, CidadeResponse, Estado, EstadoResponse, Fornecedor, ModalContent, ResponseData } from '../../models/models.component';
+import { Cidade, CidadeResponse, Estado, EstadoResponse, Fornecedor, ModalContent, NavegacaoApp, ResponseData } from '../../models/models.component';
 import { FornecedorService } from '../../services/fornecedor.service';
 import { LocalidadeService } from '../../services/localidade.service';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -28,7 +28,7 @@ import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
 })
 export class FornecedorFormComponent {
   errorMessage: string = '';
-  fornecedorSelecionado: Fornecedor = {};
+  fornecedorSelecionado: Fornecedor = { id: 0 };
   isLoadingVisible: boolean = false;
   cidades = signal<Cidade[]>([]);
   estados = signal<Estado[]>([]);
@@ -37,7 +37,8 @@ export class FornecedorFormComponent {
   private modalService = inject(NgbModal);
   private fornecedorService: FornecedorService = inject(FornecedorService);
   private localidadeService: LocalidadeService = inject(LocalidadeService);
-  @Output() alterarPaginaAtual = new EventEmitter<string>();
+  @Output() alterarPaginaAtual = new EventEmitter<NavegacaoApp>();
+  @Input({ required: true }) itemId!: number;
 
   protected fornecedorForm = new FormGroup({
     empresa: new FormControl('', Validators.required),
@@ -139,11 +140,11 @@ export class FornecedorFormComponent {
     this.currentModal.close();
 
     if (this.isCadastroFinished && action === 'close') {
-      this.alterarPaginaAtual.emit('FORNECEDOR-LISTA');
+      this.alterarPaginaAtual.emit({ nomePagina: 'FORNECEDOR-LISTA', itemId: 0});
     }
 
     if (action === 'confirm-cancel') {
-      this.alterarPaginaAtual.emit('FORNECEDOR-LISTA');
+      this.alterarPaginaAtual.emit({ nomePagina: 'FORNECEDOR-LISTA', itemId: 0});
     }
   }
 

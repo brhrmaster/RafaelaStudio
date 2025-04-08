@@ -1,7 +1,7 @@
 const { throwError } = require('../commons/error');
 
 module.exports = (app, db, helpers) => {
-    
+
     // API endpoints
     const getProdutos = async (req, res) => {
 
@@ -47,6 +47,45 @@ module.exports = (app, db, helpers) => {
         }
     };
 
+    // API endpoints
+    const getProdutoById = async (req, res) => {
+
+        try {
+            const { id } = req.params;
+
+            const query = `
+                SELECT
+                    p.id,
+                    p.nome,
+                    p.preco,
+                    p.is_validade_definida=1 AS isValidadeDefinida,
+                    p.formato_id AS formatoId
+                FROM tbl_produtos p
+                WHERE p.id = ?
+            `;
+
+            const [response] = await db.query(query, [ id ]);
+
+            if (response.length > 0) {
+                // get IDs dos fornecedores vinculados
+                const query = `
+                    SELECT fornecedor_id AS id
+                    FROM tbl_produto_fornecedor
+                    WHERE produto_id = ?
+                `;
+
+                const [fornecedores] = await db.query(query, [ id ]);
+
+                return res.status(200).json({ ...response[0], fornecedores: fornecedores.map(f => f.id) });
+            } else
+                return res.status(404).json({ message: 'Produto indisponível' });
+
+        } catch (e) {
+            if (!e.statusCode) e.statusCode = 400;
+            return res.status(e.statusCode).json({ error: e.message });
+        }
+    };
+
     const insertProduto = async (req, res) => {
 
         await helpers.waitForABit(2000);
@@ -64,7 +103,7 @@ module.exports = (app, db, helpers) => {
             if (resVerifyExists.length > 0) {
                 throwError('Já existe um produto cadastrado com este nome', 203);
             }
-            
+
             const insertProdutoQuery = `
                 INSERT INTO tbl_produtos (
                     nome,
@@ -191,7 +230,7 @@ module.exports = (app, db, helpers) => {
             // deletando a relaçao de fornecedores do produto
             const queryDelFornecedores = 'DELETE FROM tbl_produto_fornecedor WHERE produto_id = ?';
             await db.query(queryDelFornecedores, [id]);
-            
+
             // deletando o historico de estoque
             const queryDelHistoricoEstoque = 'DELETE FROM tbl_produto_estoque WHERE produto_id = ?';
             await db.query(queryDelHistoricoEstoque, [id]);
@@ -208,14 +247,11 @@ module.exports = (app, db, helpers) => {
     };
 
     app.get('/api/produtos', getProdutos);
-
+    app.get('/api/produto/:id', getProdutoById);
     app.post('/api/produto', insertProduto);
-
     app.put('/api/produto/:id', updateProduto);
-
     app.delete('/api/produto/:id', deleteProduto);
 
-    
     // controle estoques
     const insertProdutoStock = async (req, res) => {
 
@@ -354,7 +390,7 @@ module.exports = (app, db, helpers) => {
     const getProdutoFormatos = async (req, res) => {
         try {
             const query = `
-                SELECT 
+                SELECT
                     id,
                     nome
                 FROM tbl_produto_formatos
@@ -409,7 +445,7 @@ module.exports = (app, db, helpers) => {
         try {
             const formato = req.body;
             const id = req.query;
-            
+
             if (!id || Number(id) == NaN) {
                 throwError("O 'id' é obrigatório", 203);
             }
@@ -433,9 +469,9 @@ module.exports = (app, db, helpers) => {
         }
     };
 
-    app.get('/api/produto/estoque', getProdutoStock);
-    app.post('/api/produto/estoque/:id', insertProdutoStock);
-    app.get('/api/produto/formatos', getProdutoFormatos);
-    app.post('/api/produto/formato', insertProdutoFormato);
-    app.put('/api/produto/formato/:id', updateProdutoFormato);
+    app.get('/api/produto-estoque', getProdutoStock);
+    app.post('/api/produto-estoque/:id', insertProdutoStock);
+    app.get('/api/produto-formatos', getProdutoFormatos);
+    app.post('/api/produto-formato', insertProdutoFormato);
+    app.put('/api/produto-formato/:id', updateProdutoFormato);
 }

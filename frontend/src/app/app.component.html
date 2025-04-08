@@ -9,15 +9,15 @@
   <app-home *ngIf="paginaAtual === 'HOME'" (alterarPaginaAtual)="alterarPaginaAtual($event)"></app-home>
 
   <app-produto-lista *ngIf="paginaAtual === 'PRODUTO-LISTA'" (alterarPaginaAtual)="alterarPaginaAtual($event)"></app-produto-lista>
-  <app-produto-form *ngIf="paginaAtual === 'PRODUTO-FORM'" (alterarPaginaAtual)="alterarPaginaAtual($event)"></app-produto-form>
+  <app-produto-form *ngIf="paginaAtual === 'PRODUTO-FORM'" (alterarPaginaAtual)="alterarPaginaAtual($event)" [itemId]="itemIdAtual"></app-produto-form>
 
   <app-entradas-saidas-lista *ngIf="paginaAtual === 'ENTRADA_SAIDA'" (alterarPaginaAtual)="alterarPaginaAtual($event)"></app-entradas-saidas-lista>
 
   <app-fornecedor-lista *ngIf="paginaAtual === 'FORNECEDOR-LISTA'" (alterarPaginaAtual)="alterarPaginaAtual($event)"></app-fornecedor-lista>
-  <app-fornecedor-form *ngIf="paginaAtual === 'FORNECEDOR-FORM'" (alterarPaginaAtual)="alterarPaginaAtual($event)"></app-fornecedor-form>
+  <app-fornecedor-form *ngIf="paginaAtual === 'FORNECEDOR-FORM'" (alterarPaginaAtual)="alterarPaginaAtual($event)" [itemId]="itemIdAtual"></app-fornecedor-form>
 
   <app-usuario-lista *ngIf="paginaAtual === 'USUARIO-LISTA'" (alterarPaginaAtual)="alterarPaginaAtual($event)"></app-usuario-lista>
-  <app-usuario-form *ngIf="paginaAtual === 'USUARIO-FORM'" (alterarPaginaAtual)="alterarPaginaAtual($event)"></app-usuario-form>
+  <app-usuario-form *ngIf="paginaAtual === 'USUARIO-FORM'" (alterarPaginaAtual)="alterarPaginaAtual($event)" [itemId]="itemIdAtual"></app-usuario-form>
 
   <footer class="main-footer w-100 position-absolute bottom-0 start-0 py-2" style="background: #222">
     <div class="container-fluid">

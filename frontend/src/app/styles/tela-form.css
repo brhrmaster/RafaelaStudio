@@ -12,7 +12,8 @@
   margin-left: 10px;
 }
 
-input.ng-dirty.ng-invalid {
+input.ng-touched.ng-invalid,
+select.ng-touched.ng-invalid {
   border: 1px solid #f86161
 }
 

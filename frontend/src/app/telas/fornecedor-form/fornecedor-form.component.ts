@@ -57,6 +57,59 @@ export class FornecedorFormComponent {
     this.obterEstados();
   }
 
+  async ngOnChanges() {
+    if (this.itemId && this.itemId > 0) {
+      this.prepararFornecedorParaAtualizar();
+    } else {
+      this.fornecedorForm.reset();
+      this.cidades.update(() => []);
+    }
+  }
+
+  async prepararFornecedorParaAtualizar() {
+    this.showLoadingComponent(true);
+    try {
+      const fornecedorResponse: Fornecedor = await this.fornecedorService.getById(this.itemId);
+
+      if (fornecedorResponse) {
+        this.showLoadingComponent(false);
+
+        await this.obterCidades(fornecedorResponse.estadoId!);
+
+        this.fornecedorForm.setValue({
+          empresa: fornecedorResponse.empresa!,
+          nomeRepresentante: fornecedorResponse.nomeRepresentante!,
+          telefone: fornecedorResponse.telefone!,
+          email: fornecedorResponse.email!,
+          endereco: fornecedorResponse.endereco!,
+          numero: fornecedorResponse.numero!,
+          cep: fornecedorResponse.cep!,
+          estadoId: fornecedorResponse.estadoId!,
+          cidadeId: fornecedorResponse.cidadeId!,
+          site: fornecedorResponse.site!,
+        });
+      }
+    } catch (error: any) {
+      if (error && error.status == 0) {
+        this.errorMessage = 'Falha na comunicação com o servidor';
+        this.showLoadingComponent(false);
+      }
+      if (error && error.status == 400) {
+        this.errorMessage = error.error;
+        this.showLoadingComponent(false);
+      }
+      if (error && error.statud == 404) {
+        this.isCadastroFinished = true;
+        this.openModal({
+          title: 'AVISO',
+          message: 'Produto indispon&iacute;vel!',
+          cancelButtonText: 'OK',
+          cancelButtonClass: 'btn-success'
+        });
+      }
+    }
+  }
+
   private showLoadingComponent(show: boolean) {
     this.isLoadingVisible = show;
   }
@@ -76,13 +129,14 @@ export class FornecedorFormComponent {
         this.showLoadingComponent(false);
       }
       if (error && error.status == 400) {
-        this.errorMessage = error.message;
+        this.errorMessage = error.error;
         this.showLoadingComponent(false);
       }
     }
   }
 
   async obterCidades(estadoId: number) {
+    if (estadoId <= 0) return;
     this.showLoadingComponent(true);
 
     try {
@@ -99,7 +153,7 @@ export class FornecedorFormComponent {
         this.showLoadingComponent(false);
       }
       if (error && error.status == 400) {
-        this.errorMessage = error.message;
+        this.errorMessage = error.error;
         this.showLoadingComponent(false);
       }
     }
@@ -116,21 +170,32 @@ export class FornecedorFormComponent {
     this.fornecedorSelecionado = <Fornecedor>this.fornecedorForm.value;
 
     try {
-      const genericResponse: ResponseData = await this.fornecedorService.createNew(this.fornecedorSelecionado);
+      let modo = '';
 
-      if (genericResponse) {
-        this.showLoadingComponent(false);
-        this.isCadastroFinished = true;
-        this.openModal({
-          title: 'Sucesso!',
-          message: 'Fornecedor <b>'+this.fornecedorSelecionado.empresa+'</b> cadastrado com sucesso!',
-          cancelButtonText: 'OK',
-          cancelButtonClass: 'btn-success'
-        });
+      if (this.itemId > 0) {
+        modo = 'atualizado';
+        this.fornecedorSelecionado.id = this.itemId;
+        await this.fornecedorService.update(this.fornecedorSelecionado);
+      } else {
+        modo = 'cadastrado';
+        await this.fornecedorService.createNew(this.fornecedorSelecionado);
       }
+
+      this.showLoadingComponent(false);
+      this.isCadastroFinished = true;
+      this.openModal({
+        title: 'Sucesso!',
+        message: `Fornecedor <b>${this.fornecedorSelecionado.empresa}</b> ${modo} com sucesso!`,
+        cancelButtonText: 'OK',
+        cancelButtonClass: 'btn-success'
+      });
     } catch (error: any) {
       if (error && error.status == 0) {
         this.errorMessage = 'Falha na comunicação com o servidor';
+        this.showLoadingComponent(false);
+      }
+      if (error && error.status == 400) {
+        this.errorMessage = error.error;
         this.showLoadingComponent(false);
       }
     }
@@ -157,7 +222,7 @@ export class FornecedorFormComponent {
   confirmarCancelar() {
     this.openModal({
       title: 'AVISO',
-      message: 'Deseja realmente <b>descartar</b> este cadastro?',
+      message: `Deseja realmente <b>descartar</b> ${this.itemId > 0 ? 'esta atualiza&ccedil;&atilde;o': 'este cadastro'}?`,
       cancelButtonText: 'Não',
       cancelButtonClass: 'btn-primary',
       buttons: [

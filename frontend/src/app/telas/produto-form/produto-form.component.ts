@@ -55,7 +55,6 @@ export class ProdutoFormComponent {
   @Input({ required: true }) itemId!: number;
 
   protected produtoForm = new FormGroup({
-    id: new FormControl(0),
     nome: new FormControl('', Validators.required),
     preco: new FormControl(0, Validators.required),
     isValidadeDefinida: new FormControl(false, Validators.required),
@@ -68,7 +67,7 @@ export class ProdutoFormComponent {
   }
 
   async ngOnChanges() {
-    if (this.itemId && this.itemId > 0) {
+    if (this.itemId > 0) {
       this.prepararProdutoParaAtualizar();
     } else {
       this.produtoForm.reset();
@@ -85,8 +84,7 @@ export class ProdutoFormComponent {
       if (produtoResponse) {
         this.showLoadingComponent(false);
 
-        this.produtoForm.setValue( {
-          id: this.itemId,
+        this.produtoForm.setValue({
           formatoId: produtoResponse.formatoId!,
           isValidadeDefinida: produtoResponse.isValidadeDefinida!,
           nome: produtoResponse.nome!,
@@ -101,7 +99,7 @@ export class ProdutoFormComponent {
         this.showLoadingComponent(false);
       }
       if (error && error.status == 400) {
-        this.errorMessage = error.message;
+        this.errorMessage = error.error;
         this.showLoadingComponent(false);
       }
       if (error && error.statud == 404) {
@@ -211,8 +209,9 @@ export class ProdutoFormComponent {
     try {
       let modo = '';
 
-      if (this.itemId && this.itemId > 0) {
+      if (this.itemId > 0) {
         modo = 'atualizado';
+        this.produtoSelecionado.id = this.itemId;
         await this.produtoService.update(this.produtoSelecionado);
       } else {
         modo = 'cadastrado';
@@ -233,7 +232,7 @@ export class ProdutoFormComponent {
         this.showLoadingComponent(false);
       }
       if (error && error.status == 400) {
-        this.errorMessage = error.message;
+        this.errorMessage = error.error;
         this.showLoadingComponent(false);
       }
     }
@@ -260,7 +259,7 @@ export class ProdutoFormComponent {
   confirmarCancelar() {
     this.openModal({
       title: 'AVISO',
-      message: 'Deseja realmente <b>descartar</b> este cadastro?',
+      message: `Deseja realmente <b>descartar</b> ${this.itemId > 0 ? 'esta atualiza&ccedil;&atilde;o': 'este cadastro'}?`,
       cancelButtonText: 'Não',
       cancelButtonClass: 'btn-primary',
       buttons: [

@@ -66,9 +66,9 @@
           <label for="uf" class="form-label">Estado:</label>
       </div>
       <div class="col-sm-3">
-          <select id="estadoId" formControlName="estadoId" min="1" name="estadoId" class="form-select" required (change)="estadoSelecionado($event)">
-            <option value="0" selected="selected">Selecione...</option>
-            <option [value]="estado.id" *ngFor="let estado of estados()">{{estado.uf}} - {{estado.nome}}</option>
+        <select id="estadoId" formControlName="estadoId" min="1" name="estadoId" class="form-select" required (change)="estadoSelecionado($event)">
+          <option value="0" selected="selected">Selecione...</option>
+          <option [value]="estado.id" *ngFor="let estado of estados()">{{estado.uf}} - {{estado.nome}}</option>
         </select>
       </div>
       <div class="col-sm-1">

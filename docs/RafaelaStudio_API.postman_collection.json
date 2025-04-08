@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "3aa434af-fed1-40d3-b52c-ab0b615093b0",
+		"_postman_id": "b51a5fec-bf72-424e-9c89-711461aff04c",
 		"name": "RafaelaStudio_API",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "1628639"
@@ -296,6 +296,29 @@
 					"response": []
 				},
 				{
+					"name": "GET Produto By ID",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/api/produto/2",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"produto",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "Get Produto Stock History",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
@@ -423,6 +446,34 @@
 				},
 				{
 					"name": "GET fornecedores",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/api/fornecedores?filtro=",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"fornecedores"
+							],
+							"query": [
+								{
+									"key": "filtro",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET fornecedor By ID",
 					"request": {
 						"auth": {
 							"type": "noauth"

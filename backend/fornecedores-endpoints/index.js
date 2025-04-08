@@ -44,6 +44,43 @@ module.exports = (app, db, helpers) => {
         }
     };
 
+    const getFornecedorById = async (req, res) => {
+
+        try {
+            const { id } = req.params;
+
+            const query = `
+                SELECT 
+                    f.id,
+                    f.empresa,
+                    f.nome_representante AS nomeRepresentante,
+                    f.telefone,
+                    f.email,
+                    f.endereco,
+                    f.numero,
+                    f.cidade_id AS cidadeId,
+                    est.id AS estadoId,
+                    f.cep,
+                    f.site
+                FROM tbl_fornecedores f
+                INNER JOIN tbl_cidades c ON c.id = f.cidade_id
+                INNER JOIN tbl_estados est ON est.id = c.estado_id
+                WHERE f.id = ?
+            `;
+
+            const [response] = await db.query(query, [ id ]);
+
+            if (response.length > 0) {
+                return res.status(200).json(response[0]);
+            } else
+                return res.status(404).json({ message: 'Fornecedor indisponível' });
+
+        } catch (e) {
+            if (!e.statusCode) e.statusCode = 400;
+            return res.status(e.statusCode).json({ error: e.message });
+        }
+    };
+
     const getFornecedoresSimples = async (req, res) => {
         try {
 
@@ -196,15 +233,10 @@ module.exports = (app, db, helpers) => {
     };
 
     app.get('/api/fornecedores', getFornecedores);
-
+    app.get('/api/fornecedor/:id', getFornecedorById);
     app.get('/api/fornecedores-simples', getFornecedoresSimples);
-
     app.get('/api/fornecedores-simples/:produtoId', getFornecedoresSimplesPorProduto);
-
     app.post('/api/fornecedor', insertFornecedor);
-
     app.put('/api/fornecedor/:id', updateFornecedor);
-
     app.delete('/api/fornecedor/:id', deleteFornecedor);
-
 }

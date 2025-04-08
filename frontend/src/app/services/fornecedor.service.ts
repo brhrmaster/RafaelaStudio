@@ -15,12 +15,20 @@ export class FornecedorService {
     return firstValueFrom(this.http.get<GetFornecedoresResponse>(this.getUrlWithPath('fornecedores?filtro=' + filtro)));
   }
 
+  async getById(id: number): Promise<Fornecedor> {
+    return firstValueFrom(this.http.get<Fornecedor>(this.getUrlWithPath('fornecedor/' + id)));
+  }
+
   async getAllSimples(produtoId?: number): Promise<GetFornecedoresResponse> {
     return firstValueFrom(this.http.get<GetFornecedoresResponse>(this.getUrlWithPath('fornecedores-simples' + (produtoId ? '/'+produtoId : ''))));
   }
 
   async createNew(fornecedor: Fornecedor): Promise<ResponseData> {
     return firstValueFrom(this.http.post<ResponseData>(this.getUrlWithPath('fornecedor'), fornecedor));
+  }
+
+  async update(fornecedor: Fornecedor): Promise<ResponseData> {
+    return firstValueFrom(this.http.put<ResponseData>(this.getUrlWithPath('fornecedor/' + fornecedor.id), fornecedor));
   }
 
   async deleteById(id?: number): Promise<GenericResponse> {

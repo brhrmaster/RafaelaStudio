@@ -201,8 +201,6 @@ export class ProdutoListaComponent extends BaseTelaListagemComponent {
 
         listaFornecedoresHtml += '</div>';
 
-        console.log(listaFornecedoresHtml);
-
         this.openModal({
           title: 'Fornecedores do Produto',
           message: `Produto: <b>${produto.nome}</b> <br/><br/> ${listaFornecedoresHtml}`,

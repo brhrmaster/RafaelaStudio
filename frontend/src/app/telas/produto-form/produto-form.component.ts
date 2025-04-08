@@ -70,6 +70,10 @@ export class ProdutoFormComponent {
   async ngOnChanges() {
     if (this.itemId && this.itemId > 0) {
       this.prepararProdutoParaAtualizar();
+    } else {
+      this.produtoForm.reset();
+      this.fornecedoresSelecionados.update(() => []);
+      this.obterFornecedores();
     }
   }
 

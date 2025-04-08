@@ -48,8 +48,8 @@ export class FornecedorFormComponent {
     endereco: new FormControl(''),
     numero: new FormControl(''),
     cep: new FormControl(''),
-    estadoId: new FormControl(0, Validators.required),
-    cidadeId: new FormControl(0, Validators.required),
+    estadoId: new FormControl(0, Validators.min(1)),
+    cidadeId: new FormControl(0, Validators.min(1)),
     site: new FormControl('')
   });
 

@@ -40,6 +40,7 @@ export class ProdutoListaComponent extends BaseTelaListagemComponent {
   private produtoService: ProdutoService = inject(ProdutoService);
   private fornecedorService: FornecedorService = inject(FornecedorService);
   produtoSelecionado!: Produto;
+  produtosDisponiveis!: Produto[];
 
   constructor() {
     super();
@@ -61,9 +62,8 @@ export class ProdutoListaComponent extends BaseTelaListagemComponent {
       const getProdutosResponse: GetProdutosResponse = await this.produtoService.getAll(busca.trim());
 
       if (getProdutosResponse) {
-        this.paginacao.listaModels.update(() => getProdutosResponse.produtos);
-        this.paginacao.paginaAtual = 1;
-        this.setupPaginacao();
+        this.produtosDisponiveis = getProdutosResponse.produtos;
+        this.atualizarListagem();
         this.showLoadingComponent(false);
       }
     } catch (error: any) {
@@ -73,6 +73,12 @@ export class ProdutoListaComponent extends BaseTelaListagemComponent {
         this.showLoadingComponent(false);
       }
     }
+  }
+
+  atualizarListagem() {
+    this.paginacao.listaModels.update(() => this.produtosDisponiveis);
+    this.paginacao.paginaAtual = 1;
+    this.setupPaginacao();
   }
 
   atualizarProduto(id: number) {
@@ -216,6 +222,11 @@ export class ProdutoListaComponent extends BaseTelaListagemComponent {
         this.showLoadingComponent(false);
       }
     }
+  }
+
+  ordenarTabela(colunaOrdenar: string, ordem: string) {
+    this.produtosDisponiveis.sort(this.compare<Produto>(colunaOrdenar, ordem));
+    this.atualizarListagem();
   }
 
   getListaProdutos() : Produto[] {

@@ -1,4 +1,4 @@
-import { Component, ElementRef, EventEmitter, inject, Output, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, inject, Output, Type, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FornecedorService } from '../../services/fornecedor.service';
 import { Fornecedor, GenericResponse, GetFornecedoresResponse, ModalContent, NavegacaoApp } from '../../models/models.component';
@@ -26,6 +26,7 @@ export class FornecedorListaComponent extends BaseTelaListagemComponent {
   private currentModal!: NgbModalRef;
   private fornecedorService: FornecedorService = inject(FornecedorService);
   fornecedorSelecionado!: Fornecedor;
+  fornecedoresDisponiveis!: Fornecedor[];
 
   constructor() {
     super();
@@ -43,9 +44,8 @@ export class FornecedorListaComponent extends BaseTelaListagemComponent {
       const fornecedoresResponse: GetFornecedoresResponse = await this.fornecedorService.getAll(busca.trim());
 
       if (fornecedoresResponse) {
-        this.paginacao.listaModels.update(() => fornecedoresResponse.fornecedores);
-        this.paginacao.paginaAtual = 1;
-        this.setupPaginacao();
+        this.fornecedoresDisponiveis = fornecedoresResponse.fornecedores;
+        this.atualizarListagem();
         this.showLoadingComponent(false);
       }
     } catch (error: any) {
@@ -55,6 +55,18 @@ export class FornecedorListaComponent extends BaseTelaListagemComponent {
         this.showLoadingComponent(false);
       }
     }
+  }
+
+  atualizarListagem() {
+    this.paginacao.listaModels.update(() => this.fornecedoresDisponiveis);
+    this.paginacao.paginaAtual = 1;
+    this.setupPaginacao();
+    this.showLoadingComponent(false);
+  }
+
+  ordenarTabela(colunaOrdenar: string, ordem: string) {
+    this.fornecedoresDisponiveis.sort(this.compare<Fornecedor>(colunaOrdenar, ordem));
+    this.atualizarListagem();
   }
 
   atualizarFornecedor(id: number) {

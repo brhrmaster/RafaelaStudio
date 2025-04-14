@@ -25,38 +25,40 @@
         <table class="table">
           <thead>
             <tr>
-              <th scope="col">Produto</th>
-              <th scope="col">Pre&ccedil;o</th>
-              <th scope="col">Validade</th>
+              <th scope="col"><a (click)="ordenarTabela('nome', 'ASC')">Produto</a></th>
+              <th scope="col"><a (click)="ordenarTabela('preco', 'ASC')">Pre&ccedil;o</a></th>
+              <th scope="col"><a (click)="ordenarTabela('validade', 'ASC')">Validade</a></th>
               <th scope="col">Formato</th>
-              <th scope="col">Estoque</th>
+              <th scope="col"><a (click)="ordenarTabela('estoqueTotal', 'ASC')">Estoque</a></th>
               <th scope="col">&nbsp;</th>
             </tr>
           </thead>
           <tr *ngIf="getListaProdutos().length == 0">
             <td class="list-items-not-found" colspan="4" scope="row">Nenhum produto dispon&iacute;vel no momento.</td>
           </tr>
-          <tr *ngFor="let produto of getListaProdutos()">
-            <td><a class="product-details-link">{{produto.nome}}<div></div></a></td>
-            <td>{{produto.preco | currency : 'BRL'}}</td>
-            <td>{{getFormattedDate(produto.validade)}}</td>
-            <td>{{produto.formatoNome}}</td>
-            <td>{{produto.estoqueClientes}} CL : {{produto.estoqueCursos}} CS de {{produto.estoqueTotal}}</td>
-            <td class="table-icons">
-              <a class="icon" title="Gerenciar Estoque" (click)="gerenciarEstoque(produto)">
-                <div class="arrow-up-arrow-down"></div>
-              </a>
-              <a class="icon" title="Ver Fornecedores" (click)="visualizarFornecedores(produto)">
-                <div class="person-dolly"></div>
-              </a>
-              <a class="icon" title="Alterar informações" (click)="atualizarProduto(produto.id)">
-                <i class="fa-solid fa-pen-to-square"></i>
-              </a>
-              <a class="icon" title="Excluir" (click)="confirmarRemocaoProduto(produto)">
-                <i class="fa-solid fa-trash-can"></i>
-              </a>
-            </td>
-          </tr>
+          @for (produto of getListaProdutos(); track $index) {
+            <tr>
+              <td><a class="product-details-link">{{produto.nome}}<div></div></a></td>
+              <td>{{produto.preco | currency : 'BRL'}}</td>
+              <td>{{getFormattedDate(produto.validade)}}</td>
+              <td>{{produto.formatoNome}}</td>
+              <td>{{produto.estoqueClientes}} CL : {{produto.estoqueCursos}} CS de {{produto.estoqueTotal}}</td>
+              <td class="table-icons">
+                <a class="icon" title="Gerenciar Estoque" (click)="gerenciarEstoque(produto)">
+                  <div class="arrow-up-arrow-down"></div>
+                </a>
+                <a class="icon" title="Ver Fornecedores" (click)="visualizarFornecedores(produto)">
+                  <div class="person-dolly"></div>
+                </a>
+                <a class="icon" title="Alterar informações" (click)="atualizarProduto(produto.id)">
+                  <i class="fa-solid fa-pen-to-square"></i>
+                </a>
+                <a class="icon" title="Excluir" (click)="confirmarRemocaoProduto(produto)">
+                  <i class="fa-solid fa-trash-can"></i>
+                </a>
+              </td>
+            </tr>
+          }
         </table>
       </div>
     </div>

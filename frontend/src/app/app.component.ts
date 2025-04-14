@@ -12,6 +12,7 @@ import { UsuarioFormComponent } from "./telas/usuario-form/usuario-form.componen
 import { LoginComponent } from "./telas/login/login.component";
 import { NavegacaoApp, Usuario } from './models/models.component';
 import { EntradaSaidaListaComponent } from './telas/entradas-saidas-lista/entradas-saidas-lista.component';
+import { EntradaSaidaFormComponent } from "./telas/entrada-saida-form/entrada-saida-form.component";
 
 interface IPagina {
   [key: string]: string;
@@ -31,8 +32,9 @@ interface IPagina {
     ProdutoFormComponent,
     FornecedorFormComponent,
     UsuarioFormComponent,
-    LoginComponent
-  ],
+    LoginComponent,
+    EntradaSaidaFormComponent
+],
   templateUrl: './app.component.html',
   styles: ''
 })
@@ -46,11 +48,13 @@ export class AppComponent {
     'USUARIO-LISTA': 'Lista de Usuários',
     'USUARIO-FORM': 'Cadastro de Usuários',
     'LOGIN': 'Acesso Restrito',
-    'ENTRADA_SAIDA': 'Histórico de Entradas e Saídas'
+    'ENTRADA_SAIDA': 'Histórico de Entradas e Saídas',
+    'ENTRADA_SAIDA-FORM': 'Registro de Entradas ou Saídas de Estoque'
   };
 
   paginaAtual: string = 'LOGIN';
   itemIdAtual: number = 0;
+  itemModo?: number = 0;
   titulo: string = this.titulos[this.paginaAtual];
   usuarioLogado!: Usuario;
 
@@ -62,6 +66,7 @@ export class AppComponent {
     this.paginaAtual = navegacaoApp.nomePagina;
     this.titulo = this.titulos[navegacaoApp.nomePagina];
     this.itemIdAtual = navegacaoApp.itemId;
+    this.itemModo = navegacaoApp.itemModo;
   }
 
   checkLoggedUser() {

@@ -1,6 +1,7 @@
 export interface NavegacaoApp {
   nomePagina: string,
-  itemId: number
+  itemId: number,
+  itemModo?: number
 }
 
 export interface Model {

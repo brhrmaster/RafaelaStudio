@@ -1,0 +1,114 @@
+<div class="error-message" *ngIf="errorMessage !== ''">{{errorMessage}}</div>
+
+<form [formGroup]="entradaSaidaForm" (ngSubmit)="onSubmitForm()">
+  <div class="container">
+    <div class="row page-header inner-page-header" [ngClass]="{'entrada': itemModo == 1, 'saida': itemModo != 1}">
+        <div class="col-sm-12">
+            <h1>Registrar {{itemModo == 1 ? 'Entrada' : 'Saída'}} de Estoque</h1>
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <div class="col-sm-12">
+            &nbsp;
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <div class="col-sm-1">
+            <label for="produto" class="label">Produto:</label>
+        </div>
+        <div class="col-sm-11">
+          <input type="text" id="produto" aria-disabled="true" name="produto" formControlName="produtoNome" placeholder="Nome do produto..." class="form-control">
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <div class="col-sm-1">
+            <label for="total" class="label">Total {{itemModo == 1 ? 'Entrada' : 'Saída'}}:</label>
+        </div>
+        <div class="col-sm-3">
+            <input type="text" id="total" name="total" inputmode="number" class="form-control" required>
+        </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-3">
+        <label class="label">Produto com validade definida:</label>
+      </div>
+      <div class="col-sm-3">
+        <label for="sim">
+            <input type="radio" id="sim" name="sim" value="1" formControlName="isValidadeDefinida"> Sim
+        </label>
+        <label for="nao">
+            <input type="radio" id="nao" name="nao" value="0" formControlName="isValidadeDefinida"> Não
+        </label>
+      </div>
+      <div class="col-sm-2">
+        <label for="date">Validade:</label>
+      </div>
+      <div class="col-sm-4">
+        <input type="date" id="date" name="date">
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-12">
+        <label>Qtd. para clientes</label>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-6">
+          <label for="qtd-clientes">Qtd. para clientes:</label>
+          <input type="number" id="qtd-clientes" name="qtd-clientes">
+      </div>
+      <div class="col-sm-6">
+          <div class="input-field read-only">
+              <label for="qtd-clientes-atual">Atual</label>
+              <label id="qtd-clientes-atual">00</label>
+          </div>
+      </div>
+    </div>
+
+  <div class="row">
+    <div class="col-sm-12">
+      <label>Qtd. para cursos</label>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-6">
+        <label for="qtd-clientes">Qtd. para cursos:</label>
+        <input type="number" id="qtd-saida-clientes" name="qtd-cursos">
+    </div>
+    <div class="col-sm-6">
+      <div class="input-field read-only">
+          <label for="qtd-cursos-atual">Atual</label>
+          <label id="qtd-cursos-atual">00</label>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+      <div class="col-sm-12 input-field read-only">
+          <label class="label">Estoque atual:</label>
+          <label id="estoque-atual">00</label>
+      </div>
+  </div>
+
+  <div class="row">
+      <div class="col-sm-12 input-field read-only">
+          <label class="label">Estoque após {{itemModo == 1 ? 'entrada' : 'saída'}} :</label>
+          <label id="estoque-apos-operacao">00</label>
+      </div>
+  </div>
+
+    <div class="row page-footer">
+        <div class="col-sm-12 text-end">
+          <button type="button" class="btn btn-danger" (click)="confirmarCancelar()">CANCELAR</button>&nbsp;
+          <input type="submit" class="btn btn-success" value="REGISTRAR">
+        </div>
+    </div>
+  </div>
+</form>
+
+<app-loading *ngIf="isLoadingVisible"></app-loading>

@@ -138,24 +138,11 @@ export class ProdutoListaComponent extends BaseTelaListagemComponent {
     }
 
     if (action === 'op-estoque-entrada') {
-      console.log('navegar para o registro de estoque - entrada');
-
-      this.openModal({
-        title: 'AGUARDE',
-        message: `Em breve será possível registrar <b>entradas</b> de estoque.`,
-        cancelButtonText: 'OK',
-        cancelButtonClass: 'btn-primary'
-      });
+      this.alterarPaginaAtual.emit({ nomePagina: 'ENTRADA_SAIDA-FORM', itemId: this.produtoSelecionado.id, itemModo: 1});
     }
 
     if (action === 'op-estoque-saida') {
-      console.log('navegar para o registro de estoque - saída');
-      this.openModal({
-        title: 'AGUARDE',
-        message: `Em breve será possível registrar <b>sa&iacute;das</b> de estoque.`,
-        cancelButtonText: 'OK',
-        cancelButtonClass: 'btn-primary'
-      });
+      this.alterarPaginaAtual.emit({ nomePagina: 'ENTRADA_SAIDA-FORM', itemId: this.produtoSelecionado.id, itemModo: 0});
     }
   }
 

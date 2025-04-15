@@ -46,4 +46,29 @@ export abstract class BaseTelaListagemComponent {
       this.fatiarListaModels();
     }
   }
+
+  protected compare<T>(colunaOrdenar: string, ordem: string) {
+    return ( a: T, b: T ) => {
+      const valueA: any = a[colunaOrdenar as keyof T];
+      const valueB: any = b[colunaOrdenar as keyof T];
+
+      if (ordem === 'ASC') {
+        if ( valueA < valueB ){
+          return -1;
+        }
+        if ( valueA > valueB ){
+          return 1;
+        }
+        return 0;
+      } else {
+        if ( valueA > valueB ){
+          return -1;
+        }
+        if ( valueA < valueB ){
+          return 1;
+        }
+        return 0;
+      }
+    };
+  }
 }

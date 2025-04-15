@@ -53,13 +53,13 @@
           <label for="qtd-clientes">Qtd. para clientes:</label>
         </div>
         <div class="col-sm-3">
-          <input type="text" currencyMask formControlName="totalClientes" (blur)="calcular()" id="qtd-clientes" name="qtd-clientes" class="form-control">
+          <input type="text" currencyMask formControlName="totalClientes" (blur)="calcular('clientes')" id="qtd-clientes" name="qtd-clientes" class="form-control">
         </div>
         <div class="col-sm-1">
           <label for="qtd-clientes-atual">Atual</label>
         </div>
         <div class="col-sm-3">
-          <label id="qtd-clientes-atual" class="form-control">{{produtoSelecionado.estoqueClientes || 0}}</label>
+          <label id="qtd-clientes-atual" class="form-control">{{produtoSelecionado.estoqueClientes}}</label>
         </div>
       </div>
     </div>
@@ -75,13 +75,13 @@
           <label for="qtd-cursos">Qtd. para cursos:</label>
         </div>
         <div class="col-sm-3">
-          <input type="text" currencyMask formControlName="totalCursos" (blur)="calcular()" id="qtd-cursos" name="qtd-cursos" class="form-control">
+          <input type="text" currencyMask formControlName="totalCursos" (blur)="calcular('cursos')" id="qtd-cursos" name="qtd-cursos" class="form-control">
         </div>
         <div class="col-sm-1">
           <label for="qtd-cursos-atual">Atual</label>
         </div>
         <div class="col-sm-3">
-          <label id="qtd-cursos-atual" class="form-control">{{produtoSelecionado.estoqueCursos || 0}}</label>
+          <label id="qtd-cursos-atual" class="form-control">{{produtoSelecionado.estoqueCursos}}</label>
         </div>
       </div>
     </div>

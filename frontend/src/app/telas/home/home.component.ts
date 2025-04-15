@@ -101,19 +101,27 @@ export class HomeComponent {
           entrada: item.total,
           saida: 0
         });
+
+        maxEntrada = maxEntrada < item.total ? item.total : maxEntrada;
       } else {
         entradasSaidas.push({
           entrada: 0,
           saida: item.total
         });
+
+        maxSaida = maxSaida < item.total ? item.total : maxSaida;
       }
 
-      if (!xlabels.includes(item.dayOfMonth)) xlabels.push("" + datePipe.transform(item.dayOfMonth, 'dd/MM/yyyy'));
+      const currentFormatedDate = "" + datePipe.transform(item.dayOfMonth, 'dd/MM/yyyy');
+      if (!xlabels.includes(currentFormatedDate)) xlabels.push("" + currentFormatedDate);
     });
 
     const itemsEntradas = entradasSaidas.map(item => item.entrada);
     const itemsSaidas = entradasSaidas.map(item => item.saida);
 
+    console.log(itemsEntradas);
+    console.log(itemsSaidas);
+    console.log(xlabels);
     const NUMBER_CFG_Entradas = {
       count: itemsEntradas.length,
       min: 0,

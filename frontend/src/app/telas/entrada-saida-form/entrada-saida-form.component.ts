@@ -133,6 +133,9 @@ export class EntradaSaidaFormComponent {
     const isValidadeDefinida = this.produtoSelecionado.isValidadeDefinida;
     const vencimento: Date = isValidadeDefinida ? this.entradaSaidaForm.controls.validade.value || new Date() : new Date();
     const isDistributed = totalCursos + totalClientes == totalLote;
+    const restante = totalLote - totalCursos - totalClientes;
+    const totalSoma = totalClientes + totalCursos;
+    const dica = restante >= 0 ? `Distribua <b>${restante}</b> para cursos e/ou clientes` : `Remova <b>${restante*-1}</b> de cursos e/ou clientes`;
     const isEntrada = this.itemModo == 1;
 
     if (totalCursos == 0 && totalClientes == 0) {
@@ -148,7 +151,7 @@ export class EntradaSaidaFormComponent {
     if (!isDistributed) {
       this.openModal({
         title: 'AVISO',
-        message: `Você precisa distribuir a quantidade para <b>Clientes</b> e <b>Cursos</b> conforme o total de ${this.itemModo != 1 ? 'saída' : 'entrada'}, que é ${totalLote}.`,
+        message: `Você precisa distribuir a quantidade para <b>Clientes</b> e <b>Cursos</b> conforme o total de ${this.itemModo != 1 ? 'saída' : 'entrada'}. <p>Total: <b>${totalLote}</b><br/>Atribuído: <b>${totalSoma}</b><br/>Dica: ${dica}</p>`,
         cancelButtonText: 'OK',
         cancelButtonClass: 'btn-success'
       });
@@ -231,20 +234,36 @@ export class EntradaSaidaFormComponent {
     });
   }
 
-  calcular() {
+  private getModalAvisoContent(mensagem: string) {
+    return {
+      title: 'AVISO',
+      message: mensagem,
+      cancelButtonText: 'OK',
+      cancelButtonClass: 'btn-success'
+    };
+  }
+
+  calcular(tipo?: string) {
     if (this.itemModo != 1
       && Number(this.entradaSaidaForm.controls.totalLote.value) > this.produtoSelecionado.estoqueTotal) {
-      this.openModal({
-        title: 'AVISO',
-        message: 'O valor <b>Total de Saída</b> não deve ser maior que o estoque atual.',
-        cancelButtonText: 'OK',
-        cancelButtonClass: 'btn-success'
-      });
+      this.openModal(this.getModalAvisoContent('O valor <b>Total de Saída</b> não deve ser maior que o estoque atual.'));
       this.entradaSaidaForm.controls.totalLote.setValue(this.produtoSelecionado.estoqueTotal);
     }
 
     if (this.itemModo != 1) {
       this.totalCalculado = this.produtoSelecionado.estoqueTotal - Number(this.entradaSaidaForm.controls.totalLote.value);
+      const totalCalculadoClientes = this.produtoSelecionado.estoqueClientes - Number(this.entradaSaidaForm.controls.totalClientes.value);
+      const totalCalculadoCursos = this.produtoSelecionado.estoqueCursos - Number(this.entradaSaidaForm.controls.totalCursos.value);
+
+      if (tipo === 'cursos' && totalCalculadoCursos < 0) {
+        this.openModal(this.getModalAvisoContent(`A quantidade de saída para cursos não deve maior que ${this.produtoSelecionado.estoqueCursos}.`));
+        this.entradaSaidaForm.controls.totalCursos.setValue(this.produtoSelecionado.estoqueCursos);
+      }
+
+      if (tipo === 'clientes' && totalCalculadoClientes < 0) {
+        this.openModal(this.getModalAvisoContent(`A quantidade de saída para clientes não deve maior que ${this.produtoSelecionado.estoqueClientes}.`));
+        this.entradaSaidaForm.controls.totalClientes.setValue(this.produtoSelecionado.estoqueClientes);
+      }
     } else {
       this.totalCalculado = this.produtoSelecionado.estoqueTotal + Number(this.entradaSaidaForm.controls.totalLote.value);
     }

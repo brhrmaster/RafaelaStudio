@@ -81,23 +81,28 @@ export class ProdutoListaComponent extends BaseTelaListagemComponent {
 
   gerenciarEstoque(produto: Produto) {
     this.produtoSelecionado = produto;
+    const botoes = [
+      {
+        text: 'Registrar Entrada',
+        action: 'op-estoque-entrada',
+        cssClass: 'btn-primary'
+      }
+    ];
+
+    if (produto.estoqueTotal > 0) {
+      botoes.push({
+        text: 'Registrar Saída',
+        action: 'op-estoque-saida',
+        cssClass: 'btn-success'
+      });
+    }
+
     this.openModal({
       title: 'Gerenciar Estoque',
-      message: 'Atualizar estoque do produto: <b>'+this.produtoSelecionado.nome+'</b><br/><br/><b>Qual a operação desejada?</b>',
+      message: 'Atualizar estoque do produto: <b>'+produto.nome+'</b><br/><br/><b>Qual a operação desejada?</b>',
       cancelButtonText: 'Cancelar',
       cancelButtonClass: 'btn-danger',
-      buttons: [
-        {
-          text: 'Registrar Entrada',
-          action: 'op-estoque-entrada',
-          cssClass: 'btn-primary'
-        },
-        {
-          text: 'Registrar Saída',
-          action: 'op-estoque-saida',
-          cssClass: 'btn-success'
-        }
-      ]
+      buttons: botoes
     });
   }
 
@@ -105,7 +110,7 @@ export class ProdutoListaComponent extends BaseTelaListagemComponent {
     this.produtoSelecionado = produto;
     this.openModal({
       title: 'AVISO',
-      message: 'Deseja realmente remover este produto? <p><center><b>'+this.produtoSelecionado.nome+'</b></center></p>',
+      message: 'Deseja realmente remover este produto? <p><center><b>'+produto.nome+'</b></center></p>',
       cancelButtonText: 'Não',
       cancelButtonClass: 'btn-primary',
       buttons: [

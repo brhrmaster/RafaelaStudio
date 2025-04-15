@@ -7,3 +7,29 @@
 .inner-page-header.entrada {
   background-color: #cceff1;
 }
+
+.input-field label {
+  width: 200px;
+}
+
+.qttySubtitle {
+  font-size: 14pt;
+  font-weight: 600;
+  padding: 10px 0px 5px 15px;
+  border-bottom: 1px solid #ccc;
+  margin-bottom: 10px;
+}
+
+label.form-control {
+  background: none;
+  filter: drop-shadow(1px 1px 0px #fff);
+}
+
+.blocking {
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  margin: 10px 5px 10px 10px;
+  background-color: #e5e9ff;
+  filter: drop-shadow(1px 1px 0px #bbb);
+}
+

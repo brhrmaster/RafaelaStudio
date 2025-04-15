@@ -16,8 +16,8 @@ export class ProdutoService {
     return firstValueFrom(this.http.get<GetProdutosResponse>(this.getUrlWithPath('produtos?filtro=' + filtro)));
   }
 
-  async getById(id: number): Promise<ProdutoInsert> {
-    return firstValueFrom(this.http.get<ProdutoInsert>(this.getUrlWithPath('produto/' + id)));
+  async getById(id: number): Promise<Produto> {
+    return firstValueFrom(this.http.get<Produto>(this.getUrlWithPath('produto/' + id)));
   }
 
   async deleteById(id: number): Promise<GenericResponse> {

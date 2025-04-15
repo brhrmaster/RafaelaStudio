@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { firstValueFrom } from 'rxjs';
-import { GetAtividadesEstoque } from '../models/models.component';
+import { AtividadeEstoque, GetAtividadesEstoque, ResponseData } from '../models/models.component';
 import { environment } from '../../environments/environment';
 
 @Injectable({
@@ -14,6 +14,10 @@ export class EstoqueService {
 
   async getAll(filtro: string): Promise<GetAtividadesEstoque> {
     return firstValueFrom(this.http.get<GetAtividadesEstoque>(this.getUrlWithPath('produto-estoque?produto=' + filtro)));
+  }
+
+  async save(atividadeEstoque: AtividadeEstoque): Promise<ResponseData> {
+    return firstValueFrom(this.http.post<ResponseData>(this.getUrlWithPath('produto-estoque/' + atividadeEstoque.produtoId), atividadeEstoque));
   }
 
   async getAllByProdutoId(produtoId: number): Promise<GetAtividadesEstoque> {

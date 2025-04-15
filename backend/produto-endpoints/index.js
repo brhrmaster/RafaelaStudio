@@ -59,7 +59,10 @@ module.exports = (app, db, helpers) => {
                     p.nome,
                     p.preco,
                     p.is_validade_definida=1 AS isValidadeDefinida,
-                    p.formato_id AS formatoId
+                    p.formato_id AS formatoId,
+                    p.estoque_total AS estoqueTotal,
+                    p.estoque_cursos AS estoqueCursos,
+                    p.estoque_clientes AS estoqueClientes
                 FROM tbl_produtos p
                 WHERE p.id = ?
             `;

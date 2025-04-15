@@ -15,90 +15,93 @@
     </div>
 
     <div class="row mb-3">
-        <div class="col-sm-1">
+        <div class="col-sm-2">
             <label for="produto" class="label">Produto:</label>
         </div>
-        <div class="col-sm-11">
+        <div class="col-sm-10">
           <input type="text" id="produto" aria-disabled="true" name="produto" formControlName="produtoNome" placeholder="Nome do produto..." class="form-control">
         </div>
     </div>
 
     <div class="row mb-3">
-        <div class="col-sm-1">
+        <div class="col-sm-2">
             <label for="total" class="label">Total {{itemModo == 1 ? 'Entrada' : 'Saída'}}:</label>
         </div>
         <div class="col-sm-3">
-            <input type="text" id="total" name="total" inputmode="number" class="form-control" required>
+            <input type="text" currencyMask id="total" name="total" (blur)="calcular()" formControlName="totalLote" inputmode="number" class="form-control" required>
         </div>
     </div>
 
-    <div class="row">
-      <div class="col-sm-3">
-        <label class="label">Produto com validade definida:</label>
+    <div class="row mb-3" *ngIf="itemModo == 1 && produtoSelecionado.isValidadeDefinida">
+      <div class="col-sm-2">
+        <label for="validade">Validade:</label>
       </div>
       <div class="col-sm-3">
-        <label for="sim">
-            <input type="radio" id="sim" name="sim" value="1" formControlName="isValidadeDefinida"> Sim
-        </label>
-        <label for="nao">
-            <input type="radio" id="nao" name="nao" value="0" formControlName="isValidadeDefinida"> Não
-        </label>
+        <input type="date" id="validade" name="validade" class="form-control" formControlName="validade">
+      </div>
+    </div>
+
+  <div class="row mb-3">
+    <div class="col blocking">
+      <div class="row">
+        <div class="col-sm-12 qttySubtitle">
+          <label>Quantidade para clientes</label>
+        </div>
+      </div>
+      <div class="row" style="padding-bottom: 10px;">
+        <div class="col-sm-3">
+          <label for="qtd-clientes">Qtd. para clientes:</label>
+        </div>
+        <div class="col-sm-3">
+          <input type="text" currencyMask formControlName="totalClientes" (blur)="calcular()" id="qtd-clientes" name="qtd-clientes" class="form-control">
+        </div>
+        <div class="col-sm-1">
+          <label for="qtd-clientes-atual">Atual</label>
+        </div>
+        <div class="col-sm-3">
+          <label id="qtd-clientes-atual" class="form-control">{{produtoSelecionado.estoqueClientes || 0}}</label>
+        </div>
+      </div>
+    </div>
+
+    <div class="col blocking">
+      <div class="row">
+        <div class="col-sm-12 qttySubtitle">
+          <label>Quantidade para cursos</label>
+        </div>
+      </div>
+      <div class="row" style="padding-bottom: 10px;">
+        <div class="col-sm-3">
+          <label for="qtd-cursos">Qtd. para cursos:</label>
+        </div>
+        <div class="col-sm-3">
+          <input type="text" currencyMask formControlName="totalCursos" (blur)="calcular()" id="qtd-cursos" name="qtd-cursos" class="form-control">
+        </div>
+        <div class="col-sm-1">
+          <label for="qtd-cursos-atual">Atual</label>
+        </div>
+        <div class="col-sm-3">
+          <label id="qtd-cursos-atual" class="form-control">{{produtoSelecionado.estoqueCursos || 0}}</label>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row mb-3">
+      <div class="col-sm-2 input-field read-only">
+        <label class="label">Estoque atual:</label>
       </div>
       <div class="col-sm-2">
-        <label for="date">Validade:</label>
-      </div>
-      <div class="col-sm-4">
-        <input type="date" id="date" name="date">
-      </div>
-    </div>
-
-    <div class="row">
-      <div class="col-sm-12">
-        <label>Qtd. para clientes</label>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-sm-6">
-          <label for="qtd-clientes">Qtd. para clientes:</label>
-          <input type="number" id="qtd-clientes" name="qtd-clientes">
-      </div>
-      <div class="col-sm-6">
-          <div class="input-field read-only">
-              <label for="qtd-clientes-atual">Atual</label>
-              <label id="qtd-clientes-atual">00</label>
-          </div>
-      </div>
-    </div>
-
-  <div class="row">
-    <div class="col-sm-12">
-      <label>Qtd. para cursos</label>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-sm-6">
-        <label for="qtd-clientes">Qtd. para cursos:</label>
-        <input type="number" id="qtd-saida-clientes" name="qtd-cursos">
-    </div>
-    <div class="col-sm-6">
-      <div class="input-field read-only">
-          <label for="qtd-cursos-atual">Atual</label>
-          <label id="qtd-cursos-atual">00</label>
-      </div>
-    </div>
-  </div>
-
-  <div class="row">
-      <div class="col-sm-12 input-field read-only">
-          <label class="label">Estoque atual:</label>
-          <label id="estoque-atual">00</label>
+        <label id="estoque-atual" class="form-control">{{produtoSelecionado.estoqueTotal || 0}}</label>
       </div>
   </div>
 
   <div class="row">
-      <div class="col-sm-12 input-field read-only">
-          <label class="label">Estoque após {{itemModo == 1 ? 'entrada' : 'saída'}} :</label>
-          <label id="estoque-apos-operacao">00</label>
+      <div class="col-sm-2">
+        <label class="label">Estoque após {{itemModo == 1 ? 'entrada' : 'saída'}} :</label>
+      </div>
+      <div class="col-sm-2">
+        <label id="estoque-apos-operacao" class="form-control">{{totalCalculado}}</label>
       </div>
   </div>
 

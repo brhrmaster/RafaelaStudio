@@ -189,14 +189,22 @@ module.exports = (app, db, helpers) => {
 
         await helpers.waitForABit(3000);
 
+        const consulta = req.query;
         try {
+            let filtro;
+            if (consulta && consulta.filtro) {
+                filtro = [ `%${consulta.filtro}%`, `%${consulta.filtro}%` ]
+            } else {
+                filtro = [ '%', '%' ];
+            }
+
             const queryUsers = `
                 SELECT u.id, u.nome, u.login
                 FROM tbl_usuarios u
-                WHERE is_active = 1
+                WHERE is_active = 1 AND (u.nome LIKE ? OR u.login LIKE ?)
             `;
 
-            const [results] = await db.query(queryUsers);
+            const [results] = await db.query(queryUsers, filtro);
 
             return res.status(200).json({ users: results });
         } catch (e) {

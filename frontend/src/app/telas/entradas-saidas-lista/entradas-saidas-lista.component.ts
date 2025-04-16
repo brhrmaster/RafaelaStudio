@@ -56,6 +56,9 @@ export class EntradaSaidaListaComponent extends BaseTelaListagemComponent {
     }
   }
 
+  async modalAction(action: string) {
+  }
+
   getListaEntradasSaidas() : AtividadeEstoque[] {
     return <AtividadeEstoque[]> this.paginacao.listaModelsPaginados();
   }

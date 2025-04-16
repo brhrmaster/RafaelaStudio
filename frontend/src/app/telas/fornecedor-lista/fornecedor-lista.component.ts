@@ -4,8 +4,6 @@ import { FornecedorService } from '../../services/fornecedor.service';
 import { Fornecedor, GenericResponse, GetFornecedoresResponse, ModalContent, NavegacaoApp } from '../../models/models.component';
 import { BaseTelaListagemComponent } from '../../componentes/BaseTelaListagemComponent';
 import { LoadingComponent } from "../../componentes/loading/loading.component";
-import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { ModalComponent } from '../../componentes/modal/modal-generic/modal-generic.component';
 
 @Component({
   selector: 'app-fornecedor-lista',
@@ -22,8 +20,6 @@ export class FornecedorListaComponent extends BaseTelaListagemComponent {
   errorMessage: string = '';
   isLoadingVisible: boolean = false;
   @Output() alterarPaginaAtual = new EventEmitter<NavegacaoApp>();
-  private modalService = inject(NgbModal);
-  private currentModal!: NgbModalRef;
   private fornecedorService: FornecedorService = inject(FornecedorService);
   fornecedorSelecionado!: Fornecedor;
   fornecedoresDisponiveis!: Fornecedor[];
@@ -92,12 +88,6 @@ export class FornecedorListaComponent extends BaseTelaListagemComponent {
         }
       ]
     });
-  }
-
-  openModal(modalContent: ModalContent) {
-    this.currentModal = this.modalService.open(ModalComponent);
-    this.currentModal.componentInstance.modalContent = modalContent;
-    this.currentModal.componentInstance.onModalAction.subscribe(async (action:string) => await this.modalAction(action));
   }
 
   async modalAction(action: string) {

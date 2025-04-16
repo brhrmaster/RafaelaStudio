@@ -33,11 +33,11 @@
             <td class="list-items-not-found" colspan="4" scope="row">Nenhum hist&oacute;rico dispon&iacute;vel no momento.</td>
           </tr>
           <tr [ngClass]="{'linha-entrada': entradaSaida.tipo == 1, 'linha-saida': entradaSaida.tipo != 1}" *ngFor="let entradaSaida of getListaEntradasSaidas()">
-            <td>{{getFormattedDate(entradaSaida.createdAt, 'dd/MM/yyyy HH:mm')}}</td>
+            <td>{{getFormattedDate(entradaSaida.createdAt!, 'dd/MM/yyyy HH:mm')}}</td>
             <td>{{entradaSaida.produtoNome}}</td>
             <td>{{entradaSaida.tipoNome}}</td>
             <td>{{entradaSaida.qtdClientes}} CL : {{entradaSaida.qtdCursos}} CS de {{entradaSaida.total}}</td>
-            <td>{{entradaSaida.isValidadeDefinida ? getFormattedDate(entradaSaida.validade, 'dd/MM/yyyy') : 'Indefinida'}}</td>
+            <td>{{entradaSaida.isValidadeDefinida ? getFormattedDate(entradaSaida.validade!, 'dd/MM/yyyy') : 'Indefinida'}}</td>
           </tr>
         </table>
       </div>

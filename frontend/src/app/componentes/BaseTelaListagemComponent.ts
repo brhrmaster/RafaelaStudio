@@ -1,5 +1,7 @@
-import { signal } from "@angular/core";
-import { Model } from "../models/models.component";
+import { inject, signal } from "@angular/core";
+import { ModalContent, Model } from "../models/models.component";
+import { NgbModal, NgbModalRef } from "@ng-bootstrap/ng-bootstrap";
+import { ModalComponent } from "./modal/modal-generic/modal-generic.component";
 
 export class Paginacao {
     listaModels = signal<Model[]>([]);
@@ -13,6 +15,8 @@ export class Paginacao {
 
 export abstract class BaseTelaListagemComponent {
   protected paginacao: Paginacao;
+  protected currentModal!: NgbModalRef;
+  protected modalService = inject(NgbModal);
 
   constructor(totalPorPagina: number = 10) {
     this.paginacao = new Paginacao();
@@ -70,5 +74,13 @@ export abstract class BaseTelaListagemComponent {
         return 0;
       }
     };
+  }
+
+  protected abstract modalAction(action: string): Promise<void>;
+
+  protected openModal(modalContent: ModalContent): void {
+    this.currentModal = this.modalService.open(ModalComponent);
+    this.currentModal.componentInstance.modalContent = modalContent;
+    this.currentModal.componentInstance.onModalAction.subscribe(async (action:string) => await this.modalAction(action));
   }
 }

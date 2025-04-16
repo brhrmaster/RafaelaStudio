@@ -5,8 +5,6 @@ import { BaseTelaListagemComponent } from '../../componentes/BaseTelaListagemCom
 import { ProdutoService } from '../../services/produto.service';
 import { Fornecedor, GenericResponse, GetFornecedoresResponse, GetProdutosResponse, ModalContent, NavegacaoApp, Produto } from '../../models/models.component';
 import { LoadingComponent } from "../../componentes/loading/loading.component";
-import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { ModalComponent } from '../../componentes/modal/modal-generic/modal-generic.component';
 import { FornecedorService } from '../../services/fornecedor.service';
 
 registerLocaleData(ptBr);
@@ -35,8 +33,6 @@ export class ProdutoListaComponent extends BaseTelaListagemComponent {
   isLoadingVisible: boolean = false;
   @Output() alterarPaginaAtual = new EventEmitter<NavegacaoApp>();
   @Output() showLoading = new EventEmitter<boolean>();
-  private modalService = inject(NgbModal);
-  private currentModal!: NgbModalRef;
   private produtoService: ProdutoService = inject(ProdutoService);
   private fornecedorService: FornecedorService = inject(FornecedorService);
   produtoSelecionado!: Produto;
@@ -127,12 +123,6 @@ export class ProdutoListaComponent extends BaseTelaListagemComponent {
         }
       ]
     });
-  }
-
-  openModal(modalContent: ModalContent) {
-    this.currentModal = this.modalService.open(ModalComponent);
-    this.currentModal.componentInstance.modalContent = modalContent;
-    this.currentModal.componentInstance.onModalAction.subscribe(async (action:string) => await this.modalAction(action));
   }
 
   async modalAction(action: string) {

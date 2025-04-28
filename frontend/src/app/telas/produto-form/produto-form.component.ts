@@ -9,6 +9,7 @@ import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ModalComponent } from '../../componentes/modal/modal-generic/modal-generic.component';
 import { CURRENCY_MASK_CONFIG, CurrencyMaskConfig, CurrencyMaskModule } from "ng2-currency-mask";
+import { BaseTela } from '../../componentes/BaseTela';
 
 export const CustomCurrencyMaskConfig: CurrencyMaskConfig = {
   align: "left",
@@ -37,7 +38,7 @@ export const CustomCurrencyMaskConfig: CurrencyMaskConfig = {
     './produto-form.component.css'
   ]
 })
-export class ProdutoFormComponent {
+export class ProdutoFormComponent extends BaseTela {
 
   errorMessage: string = '';
   isLoadingVisible: boolean = false;
@@ -46,8 +47,6 @@ export class ProdutoFormComponent {
   fornecedoresSelecionados = signal<Fornecedor[]>([]);
   produtoSelecionado: ProdutoInsert = { id: 0, fornecedores: [] };
   private isCadastroFinished = false;
-  private currentModal!: NgbModalRef;
-  private modalService = inject(NgbModal);
   private produtoService: ProdutoService = inject(ProdutoService);
   private fornecedorService: FornecedorService = inject(FornecedorService);
   @ViewChild('comboFornecedoresDisponiveis') comboFornecedoresDisponiveis!: ElementRef;
@@ -62,6 +61,7 @@ export class ProdutoFormComponent {
   });
 
   constructor() {
+    super();
     this.obterFormatos();
     this.obterFornecedores();
   }
@@ -248,12 +248,6 @@ export class ProdutoFormComponent {
     if (action === 'confirm-cancel') {
       this.alterarPaginaAtual.emit({ nomePagina: 'PRODUTO-LISTA', itemId: 0});
     }
-  }
-
-  openModal(modalContent: ModalContent) {
-    this.currentModal = this.modalService.open(ModalComponent);
-    this.currentModal.componentInstance.modalContent = modalContent;
-    this.currentModal.componentInstance.onModalAction.subscribe(async (action:string) => await this.modalAction(action));
   }
 
   confirmarCancelar() {

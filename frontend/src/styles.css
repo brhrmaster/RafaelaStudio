@@ -67,3 +67,11 @@ body{
   margin-right: 5px;
   margin-bottom: 5px;
 }
+
+.blocking {
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  margin: 10px 5px 10px 10px;
+  background-color: #e5e9ff;
+  filter: drop-shadow(1px 1px 0px #bbb);
+}

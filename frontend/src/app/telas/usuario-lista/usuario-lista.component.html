@@ -6,7 +6,7 @@
       <h1>Usu&aacute;rios</h1>
     </div>
     <div class="col-sm-6">
-      <button class="btn btn-success">INCLUIR</button>
+      <button class="btn btn-success" (click)="gotoCadastro()">INCLUIR</button>
     </div>
   </div>
   <div class="page-content">
@@ -40,7 +40,7 @@
               <a *ngIf="usuario.id != 1" class="icon" title="Alterar informações" (click)="atualizarUsuario(usuario.id)">
                 <i class="fa-solid fa-pen-to-square"></i>
               </a>
-              <a *ngIf="usuario.id != 1" class="icon" title="Excluir" (click)="confirmarRemocaoFornecedor(usuario)">
+              <a *ngIf="usuario.id != 1" class="icon" title="Excluir" (click)="confirmarRemocaoUsuario(usuario)">
                 <i class="fa-solid fa-trash-can"></i>
               </a>
             </td>

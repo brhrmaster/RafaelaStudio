@@ -13,6 +13,10 @@ export interface Usuario extends Model {
   login: string
 };
 
+export interface UsuarioUpdate extends Usuario {
+  password: string
+};
+
 export interface UserLogin extends Model {
   login: string,
   password: string

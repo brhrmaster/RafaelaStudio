@@ -5,9 +5,8 @@ import { Cidade, CidadeResponse, Estado, EstadoResponse, Fornecedor, ModalConten
 import { FornecedorService } from '../../services/fornecedor.service';
 import { LocalidadeService } from '../../services/localidade.service';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { ModalComponent } from '../../componentes/modal/modal-generic/modal-generic.component';
 import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
+import { BaseTela } from '../../componentes/BaseTela';
 
 @Component({
   selector: 'app-fornecedor-form',
@@ -26,15 +25,13 @@ import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
     './fornecedor-form.component.css'
   ]
 })
-export class FornecedorFormComponent {
+export class FornecedorFormComponent extends BaseTela {
   errorMessage: string = '';
   fornecedorSelecionado: Fornecedor = { id: 0 };
   isLoadingVisible: boolean = false;
   cidades = signal<Cidade[]>([]);
   estados = signal<Estado[]>([]);
   private isCadastroFinished = false;
-  private currentModal!: NgbModalRef;
-  private modalService = inject(NgbModal);
   private fornecedorService: FornecedorService = inject(FornecedorService);
   private localidadeService: LocalidadeService = inject(LocalidadeService);
   @Output() alterarPaginaAtual = new EventEmitter<NavegacaoApp>();
@@ -54,6 +51,7 @@ export class FornecedorFormComponent {
   });
 
   constructor() {
+    super();
     this.obterEstados();
   }
 
@@ -211,12 +209,6 @@ export class FornecedorFormComponent {
     if (action === 'confirm-cancel') {
       this.alterarPaginaAtual.emit({ nomePagina: 'FORNECEDOR-LISTA', itemId: 0});
     }
-  }
-
-  openModal(modalContent: ModalContent) {
-    this.currentModal = this.modalService.open(ModalComponent);
-    this.currentModal.componentInstance.modalContent = modalContent;
-    this.currentModal.componentInstance.onModalAction.subscribe(async (action:string) => await this.modalAction(action));
   }
 
   confirmarCancelar() {

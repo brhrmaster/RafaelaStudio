@@ -1,7 +1,68 @@
-
-<p>Formulario de Usuário</p>
-
-<!-- conteudo da pagina  -->
+<div class="error-message" *ngIf="errorMessage !== ''">{{errorMessage}}</div>
 
 
+<form [formGroup]="usuarioForm" (ngSubmit)="onSubmitForm()">
+  <div class="container">
+    <div class="row page-header inner-page-header">
+        <div class="col-sm-12">
+            <h1>{{itemId > 0 ? 'Atualizar' : 'Cadastrar'}} Usu&aacute;rio</h1>
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <div class="col-sm-12">
+            &nbsp;
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <div class="col-sm-1">
+            <label for="nome" class="form-label">Nome:</label>
+        </div>
+        <div class="col-sm-11">
+          <input type="text" id="nome" name="nome" formControlName="nome" placeholder="Nome do usuario..." class="form-control" required>
+        </div>
+    </div>
+
+    <div class="row mb-3">
+      <div class="col-sm-1">
+          <label for="login" class="form-label">Login:</label>
+      </div>
+      <div class="col-sm-11">
+        <input type="text" id="login" name="login" formControlName="login" placeholder="Login do usuario..." class="form-control" required>
+      </div>
+    </div>
+    <div class="row mb-3">
+      <div class="col blocking">
+        <div class="row" style="border-bottom: 1px solid #ccc; padding: 7px 0px 0px 0px;">
+          <div class="col-sm-12 qttySubtitle">
+            <h4>{{modoSenha}} Senha</h4>
+          </div>
+        </div>
+        <div class="row" style="padding: 10px 0px;">
+          <div class="col-sm-2">
+            <label for="senha">Senha:</label>
+          </div>
+          <div class="col-sm-4">
+            <input type="password" formControlName="senha" id="senha" name="senha" class="form-control">
+          </div>
+        </div>
+        <div class="row" style="padding-bottom: 10px;">
+          <div class="col-sm-2">
+            <label for="confirmarSenha">Confirmar Senha:</label>
+          </div>
+          <div class="col-sm-4">
+            <input type="password" formControlName="confirmarSenha" id="confirmarSenha" name="confirmarSenha" class="form-control">
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row page-footer">
+        <div class="col-sm-12 text-end">
+          <button type="button" class="btn btn-danger" (click)="confirmarCancelar()">CANCELAR</button>&nbsp;
+          <input type="submit" [disabled]="!usuarioForm.valid" class="btn btn-success" value="SALVAR">
+        </div>
+    </div>
+  </div>
+</form>
 <app-loading *ngIf="isLoadingVisible"></app-loading>

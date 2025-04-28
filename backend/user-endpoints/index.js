@@ -213,6 +213,25 @@ module.exports = (app, db, helpers) => {
         }
     };
 
+    const getUserById = async (req, res) => {
+        try {
+            const { id } = req.params;
+
+            const queryUsers = `
+                SELECT u.id, u.nome, u.login
+                FROM tbl_usuarios u
+                WHERE u.id = ?
+            `;
+
+            const [results] = await db.query(queryUsers, [id]);
+
+            return res.status(200).json(results);
+        } catch (e) {
+            if (!e.statusCode) e.statusCode = 400;
+            return res.status(e.statusCode).json({ error: e.message });
+        }
+    };
+
     const loginUser = async (req, res) => {
 
         await helpers.waitForABit(3000);
@@ -244,6 +263,8 @@ module.exports = (app, db, helpers) => {
     app.post('/api/usuario/login', loginUser);
 
     app.get('/api/usuarios', getUsers);
+
+    app.get('/api/usuario/:id', getUserById);
 
     app.post('/api/usuario', insertUser);
 

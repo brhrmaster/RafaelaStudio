@@ -99,7 +99,7 @@ module.exports = (app, db, helpers) => {
         await helpers.waitForABit(2000);
 
         const { id } = req.params;
-        const { nome, login } = req.body;
+        const { nome, login, password } = req.body;
 
         try {
             validateUserId(id);
@@ -114,7 +114,7 @@ module.exports = (app, db, helpers) => {
             `;
 
             const [resVerifyOwner = results] = await db.query(queryVerifyOwner, [ login, id ]);
-                
+
             if (resVerifyOwner.length > 0) {
                 throwError('Usuário já existe com este login!', 203);
             }
@@ -133,13 +133,21 @@ module.exports = (app, db, helpers) => {
             }
 
             // Insert into main table
-            const updateUsuarioQuery = `
+            let updateUsuarioQuery = `
                 UPDATE tbl_usuarios
                 SET nome = ?, login = ?
-                WHERE id = ?
             `;
 
-            await db.query(updateUsuarioQuery, [nome, login, id]);
+            let setupValues = [nome, login, id];
+
+            if (password && password.trim() !== '') {
+                updateUsuarioQuery += ', password = ? ';
+                setupValues = [nome, login, md5(password), id];
+            }
+
+            updateUsuarioQuery += ' WHERE id = ? ';
+
+            await db.query(updateUsuarioQuery, setupValues);
             return res.status(201).json({ message: 'Usuário atualizado com sucesso' });
         } catch (e) {
             if (!e.statusCode) e.statusCode = 400;
@@ -225,7 +233,7 @@ module.exports = (app, db, helpers) => {
 
             const [results] = await db.query(queryUsers, [id]);
 
-            return res.status(200).json(results);
+            return res.status(200).json(results[0]);
         } catch (e) {
             if (!e.statusCode) e.statusCode = 400;
             return res.status(e.statusCode).json({ error: e.message });

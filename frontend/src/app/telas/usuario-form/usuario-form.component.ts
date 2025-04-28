@@ -117,7 +117,7 @@ export class UsuarioFormComponent extends BaseTela {
         this.errorMessage = 'Falha na comunicação com o servidor';
         this.showLoadingComponent(false);
       }
-      if (error && error.status == 400) {
+      if (error && error.status >= 400) {
         this.errorMessage = error.error;
         this.showLoadingComponent(false);
       }

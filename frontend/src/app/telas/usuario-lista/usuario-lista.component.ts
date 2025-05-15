@@ -38,6 +38,7 @@ export class UsuarioListaComponent extends BaseTelaListagemComponent {
     try {
       const getUsuariosResponse: GetUsuariosResponse = await this.usuarioService.getAll(busca.trim());
 
+      console.log(getUsuariosResponse);
       if (getUsuariosResponse) {
         this.paginacao.listaModels.update(() => getUsuariosResponse.users);
         this.paginacao.paginaAtual = 1;
@@ -53,15 +54,15 @@ export class UsuarioListaComponent extends BaseTelaListagemComponent {
     }
   }
 
-  atualizarUsuario(id: number) {
-
-    this.showLoadingComponent(true);
-
-    // chamar tela fornecedor-form para atualizar com base no ID
-    console.log('abrir tela usuario-form com o id ' + id);
+  gotoCadastro() {
+    this.alterarPaginaAtual.emit({ nomePagina: 'USUARIO-FORM', itemId: 0});
   }
 
-  confirmarRemocaoFornecedor(usuario: Usuario) {
+  atualizarUsuario(id: number) {
+    this.alterarPaginaAtual.emit({ nomePagina: 'USUARIO-FORM', itemId: id });
+  }
+
+  confirmarRemocaoUsuario(usuario: Usuario) {
     this.usuarioSelecionado = usuario;
     this.openModal({
       title: 'AVISO',

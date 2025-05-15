@@ -32,7 +32,8 @@ export class UsuarioService {
   }
 
   async update(usuario: UsuarioUpdate): Promise<ResponseData> {
-    return firstValueFrom(this.http.put<ResponseData>(this.getUrlWithPath('usuario'), usuario));
+    console.log(usuario);
+    return firstValueFrom(this.http.put<ResponseData>(this.getUrlWithPath('usuario/'+usuario.id), usuario));
   }
 
   getUrlWithPath(path: string): string {

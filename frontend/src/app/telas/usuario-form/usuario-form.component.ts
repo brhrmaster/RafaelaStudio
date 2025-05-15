@@ -32,8 +32,8 @@ export class UsuarioFormComponent extends BaseTela {
   protected usuarioForm = new FormGroup({
     nome: new FormControl('', Validators.required),
     login: new FormControl('', Validators.required),
-    senha: new FormControl(''),
-    confirmaSenha: new FormControl('', this.valuesAreEqualValidator('senha', 'confirmaSenha')),
+    password: new FormControl(''),
+    confirmarSenha: new FormControl('', this.valuesAreEqualValidator('password', 'confirmaSenha')),
   });
 
   private showLoadingComponent(show: boolean) {
@@ -46,6 +46,8 @@ export class UsuarioFormComponent extends BaseTela {
       this.modoSenha = 'Redefinir'
     } else {
       this.usuarioForm.reset();
+      this.usuarioForm.controls.password.addValidators(Validators.required);
+      this.usuarioForm.controls.confirmarSenha.addValidators(Validators.required);
     }
   }
 
@@ -61,8 +63,8 @@ export class UsuarioFormComponent extends BaseTela {
         this.usuarioForm.setValue({
           nome: usuarioResponse.nome,
           login: usuarioResponse.login,
-          senha: '',
-          confirmaSenha: ''
+          password: '',
+          confirmarSenha: ''
         });
       }
     } catch (error: any) {
@@ -115,7 +117,7 @@ export class UsuarioFormComponent extends BaseTela {
         this.errorMessage = 'Falha na comunicação com o servidor';
         this.showLoadingComponent(false);
       }
-      if (error && error.status == 400) {
+      if (error && error.status >= 400) {
         this.errorMessage = error.error;
         this.showLoadingComponent(false);
       }

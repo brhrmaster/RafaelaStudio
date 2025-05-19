@@ -10,6 +10,7 @@ CREATE TABLE IF NOT EXISTS tbl_usuarios (
     login varchar(100) default null,
     password varchar(32) default null,
     is_active tinyint default 1,
+    tipo int not null default 3,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     primary key(id)
@@ -32,6 +33,12 @@ WHERE (SELECT COUNT(0) FROM tbl_usuarios) = 0;
 
 DROP TABLE IF EXISTS _DUMMY;
 
+CREATE TABLE IF NOT EXISTS tbl_formatos (
+    id int not null auto_increment, 
+    nome varchar(50) default null,
+    primary key(id)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
+
 CREATE TABLE IF NOT EXISTS tbl_produtos (
     id int not null auto_increment,
     nome varchar(100),
@@ -46,6 +53,8 @@ CREATE TABLE IF NOT EXISTS tbl_produtos (
     primary key (id)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
 
+ALTER TABLE tbl_produtos ADD COLUMN formato_id INT NULL;
+ALTER TABLE tbl_produtos ADD CONSTRAINT FK_produto_formato FOREIGN KEY (formato_id) REFERENCES tbl_formatos(id);
 
 CREATE TABLE IF NOT EXISTS tbl_produto_estoque (
     id int not null auto_increment,
@@ -58,14 +67,6 @@ CREATE TABLE IF NOT EXISTS tbl_produto_estoque (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     primary key (id)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
-
-
-CREATE TABLE IF NOT EXISTS tbl_produto_formatos (
-    id int not null auto_increment, 
-    nome varchar(50) default null,
-    primary key(id)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
-
 
 CREATE TABLE IF NOT EXISTS tbl_fornecedores (
     id int not null auto_increment, 

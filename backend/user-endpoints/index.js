@@ -99,7 +99,7 @@ module.exports = (app, db, helpers) => {
         await helpers.waitForABit(2000);
 
         const { id } = req.params;
-        const { nome, login, password } = req.body;
+        const { nome, login, password, tipo } = req.body;
 
         try {
             validateUserId(id);
@@ -135,14 +135,14 @@ module.exports = (app, db, helpers) => {
             // Insert into main table
             let updateUsuarioQuery = `
                 UPDATE tbl_usuarios
-                SET nome = ?, login = ?
+                SET nome = ?, login = ?, tipo = ?
             `;
 
-            let setupValues = [nome, login, id];
+            let setupValues = [nome, login, id, tipo];
 
             if (password && password.trim() !== '') {
                 updateUsuarioQuery += ', password = ? ';
-                setupValues = [nome, login, md5(password), id];
+                setupValues = [nome, login, md5(password), id, tipo];
             }
 
             updateUsuarioQuery += ' WHERE id = ? ';
@@ -207,7 +207,7 @@ module.exports = (app, db, helpers) => {
             }
 
             const queryUsers = `
-                SELECT u.id, u.nome, u.login
+                SELECT u.id, u.nome, u.login, u.tipo
                 FROM tbl_usuarios u
                 WHERE is_active = 1 AND (u.nome LIKE ? OR u.login LIKE ?)
             `;
@@ -226,7 +226,7 @@ module.exports = (app, db, helpers) => {
             const { id } = req.params;
 
             const queryUsers = `
-                SELECT u.id, u.nome, u.login
+                SELECT u.id, u.nome, u.login, u.tipo
                 FROM tbl_usuarios u
                 WHERE u.id = ?
             `;

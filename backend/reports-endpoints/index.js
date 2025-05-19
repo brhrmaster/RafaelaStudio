@@ -4,7 +4,6 @@ module.exports = (app, db, helpers) => {
     
     // API endpoints
     const getReports = async (req, res) => {
-        await helpers.waitForABit(1000);
         try {            
             // Fornecedores e o total de produtos relacionados
             const queryTotalProdutosPorFornecedor = `
@@ -53,11 +52,30 @@ module.exports = (app, db, helpers) => {
 
             const [totalEntradaSaidaProdutos = results] = await db.query(queryEntradaSaidaProdutos);
 
+            // semaforo - vencimentos
+            const queryVencimentoProdutos = `
+                SELECT 
+                    p.id,
+                    p.nome,
+                    e.validade,
+                    e.total,
+                    DATEDIFF(e.validade, NOW()) AS dias_restantes
+                FROM RAFAELA_STUDIO_DB.tbl_produtos p
+                JOIN RAFAELA_STUDIO_DB.tbl_produto_estoque e ON p.id = e.produto_id
+                WHERE e.tipo = 1
+                AND e.validade IS NOT NULL
+                AND DATEDIFF(e.validade, NOW()) <= 45
+                ORDER BY e.validade ASC
+            `;
+
+            const [produtosEmVencimento = results] = await db.query(queryVencimentoProdutos);
+
             return res.status(200).json({
                 totalFornecedoresRecentementeCriados: totalFornecedoresRecentementeCriados[0].total,
                 totalProdutosRecentementeCriados: totalProdutosRecentementeCriados[0].total,
                 totalProdutosPorFornecedor,
                 totalEntradaSaidaProdutos,
+                produtosEmVencimento,
             });
         } catch (e) {
             if (!e.statusCode) e.statusCode = 400;

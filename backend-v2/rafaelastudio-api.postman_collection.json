@@ -1,0 +1,206 @@
+{
+  "info": {
+    "name": "RafaelaStudio API",
+    "description": "Coleção de testes de integração geral da API RafaelaStudio (NestJS)",
+    "_postman_id": "rafaela-studio-api-collection-001",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Auth - Login",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"login\": \"admin\",\n  \"password\": \"admin123\"\n}",
+          "options": { "raw": { "language": "json" } }
+        },
+        "url": { "raw": "{{baseUrl}}/auth/login", "host": ["{{baseUrl}}"], "path": ["auth", "login"] }
+      },
+      "response": []
+    },
+    {
+      "name": "Usuários - Criar",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"login\": \"controlador\",\n  \"password\": \"123456\",\n  \"role\": \"controlador\"\n}",
+          "options": { "raw": { "language": "json" } }
+        },
+        "url": { "raw": "{{baseUrl}}/usuarios", "host": ["{{baseUrl}}"], "path": ["usuarios"] }
+      },
+      "response": []
+    },
+    {
+      "name": "Usuários - Listar",
+      "request": {
+        "method": "GET",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{jwtToken}}", "type": "text" }
+        ],
+        "url": { "raw": "{{baseUrl}}/usuarios", "host": ["{{baseUrl}}"], "path": ["usuarios"] }
+      },
+      "response": []
+    },
+    {
+      "name": "Produtos - Criar",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{jwtToken}}", "type": "text" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"nome\": \"Produto Teste\",\n  \"descricao\": \"Descrição do produto\",\n  \"preco\": 99.90,\n  \"formatoId\": 1\n}",
+          "options": { "raw": { "language": "json" } }
+        },
+        "url": { "raw": "{{baseUrl}}/produtos", "host": ["{{baseUrl}}"], "path": ["produtos"] }
+      },
+      "response": []
+    },
+    {
+      "name": "Produtos - Listar",
+      "request": {
+        "method": "GET",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{jwtToken}}", "type": "text" }
+        ],
+        "url": { "raw": "{{baseUrl}}/produtos", "host": ["{{baseUrl}}"], "path": ["produtos"] }
+      },
+      "response": []
+    },
+    {
+      "name": "Fornecedores - Criar",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{jwtToken}}", "type": "text" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"empresa\": \"Acme LTDA\",\n  \"nome_representante\": \"João Silva\",\n  \"telefone\": \"(11) 90000-0000\",\n  \"email\": \"joao@acme.com\",\n  \"endereco\": \"Rua das Flores\",\n  \"numero\": \"123\",\n  \"cidadeId\": 1,\n  \"cep\": \"01234-567\",\n  \"site\": \"www.acme.com\"\n}",
+          "options": { "raw": { "language": "json" } }
+        },
+        "url": { "raw": "{{baseUrl}}/fornecedores", "host": ["{{baseUrl}}"], "path": ["fornecedores"] }
+      },
+      "response": []
+    },
+    {
+      "name": "Fornecedores - Listar",
+      "request": {
+        "method": "GET",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{jwtToken}}", "type": "text" }
+        ],
+        "url": { "raw": "{{baseUrl}}/fornecedores", "host": ["{{baseUrl}}"], "path": ["fornecedores"] }
+      },
+      "response": []
+    },
+    {
+      "name": "Formatos - Criar",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{jwtToken}}", "type": "text" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"nome\": \"Formato Caixa\",\n  \"descricao\": \"Caixa de papelão\"\n}",
+          "options": { "raw": { "language": "json" } }
+        },
+        "url": { "raw": "{{baseUrl}}/formatos", "host": ["{{baseUrl}}"], "path": ["formatos"] }
+      },
+      "response": []
+    },
+    {
+      "name": "Formatos - Listar",
+      "request": {
+        "method": "GET",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{jwtToken}}", "type": "text" }
+        ],
+        "url": { "raw": "{{baseUrl}}/formatos", "host": ["{{baseUrl}}"], "path": ["formatos"] }
+      },
+      "response": []
+    },
+    {
+      "name": "Produto-Fornecedor - Associar",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{jwtToken}}", "type": "text" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"produtoId\": 1,\n  \"fornecedorId\": 1,\n  \"ativo\": true\n}",
+          "options": { "raw": { "language": "json" } }
+        },
+        "url": { "raw": "{{baseUrl}}/produto-fornecedor", "host": ["{{baseUrl}}"], "path": ["produto-fornecedor"] }
+      },
+      "response": []
+    },
+    {
+      "name": "Produto-Estoque - Movimentação",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{jwtToken}}", "type": "text" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"tipo\": 1,\n  \"produtoId\": 1,\n  \"total\": 100,\n  \"validade\": \"2024-12-31\",\n  \"qtd_clientes\": 10,\n  \"qtd_cursos\": 5\n}",
+          "options": { "raw": { "language": "json" } }
+        },
+        "url": { "raw": "{{baseUrl}}/produto-estoque", "host": ["{{baseUrl}}"], "path": ["produto-estoque"] }
+      },
+      "response": []
+    },
+    {
+      "name": "Produto-Estoque - Listar",
+      "request": {
+        "method": "GET",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{jwtToken}}", "type": "text" }
+        ],
+        "url": { "raw": "{{baseUrl}}/produto-estoque", "host": ["{{baseUrl}}"], "path": ["produto-estoque"] }
+      },
+      "response": []
+    },
+    {
+      "name": "Relatórios - Dashboard",
+      "request": {
+        "method": "GET",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{jwtToken}}", "type": "text" }
+        ],
+        "url": { "raw": "{{baseUrl}}/reports", "host": ["{{baseUrl}}"], "path": ["reports"] }
+      },
+      "response": []
+    },
+    {
+      "name": "Estados - Listar",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": { "raw": "{{baseUrl}}/estados", "host": ["{{baseUrl}}"], "path": ["estados"] }
+      },
+      "response": []
+    },
+    {
+      "name": "Cidades por Estado",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": { "raw": "{{baseUrl}}/cidades/1", "host": ["{{baseUrl}}"], "path": ["cidades", "1"] }
+      },
+      "response": []
+    }
+  ],
+  "variable": [
+    { "key": "baseUrl", "value": "http://localhost:3000" },
+    { "key": "jwtToken", "value": "" }
+  ]
+}

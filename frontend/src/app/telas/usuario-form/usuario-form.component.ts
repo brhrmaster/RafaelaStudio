@@ -1,7 +1,7 @@
-import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
+import { Component, EventEmitter, inject, Input, Output, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { LoadingComponent } from "../../componentes/loading/loading.component";
-import { NavegacaoApp, UsuarioUpdate } from '../../models/models.component';
+import { NavegacaoApp, UsuarioUpdate, Perfil } from '../../models/models.component';
 import { AbstractControl, FormControl, FormGroup, ReactiveFormsModule, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { UsuarioService } from '../../services/usuario.service';
 import { BaseTela } from '../../componentes/BaseTela';
@@ -21,7 +21,8 @@ import { BaseTela } from '../../componentes/BaseTela';
 })
 export class UsuarioFormComponent extends BaseTela {
   errorMessage: string = '';
-  usuarioSelecionado: UsuarioUpdate = { id: 0, login: '', nome: '', password: '' };
+  perfis = signal<Perfil[]>([]);
+  usuarioSelecionado: UsuarioUpdate = { id: 0, login: '', nome: '', password: '', tipo: 0 };
   isLoadingVisible: boolean = false;
   private isCadastroFinished = false;
   private usuarioService: UsuarioService = inject(UsuarioService);
@@ -29,9 +30,19 @@ export class UsuarioFormComponent extends BaseTela {
   @Input({ required: true }) itemId!: number;
   modoSenha: string = 'Definir';
 
+  constructor() {
+    super();
+    this.perfis.update(() => [
+      { id: 1, name: 'Gerente'},
+      { id: 2, name: 'Controlador'},
+      { id: 3, name: 'Visitante'},
+    ])
+  }
+
   protected usuarioForm = new FormGroup({
     nome: new FormControl('', Validators.required),
     login: new FormControl('', Validators.required),
+    tipo: new FormControl(0, Validators.required),
     password: new FormControl(''),
     confirmarSenha: new FormControl('', this.valuesAreEqualValidator('password', 'confirmaSenha')),
   });
@@ -63,6 +74,7 @@ export class UsuarioFormComponent extends BaseTela {
         this.usuarioForm.setValue({
           nome: usuarioResponse.nome,
           login: usuarioResponse.login,
+          tipo: usuarioResponse.tipo,
           password: '',
           confirmarSenha: ''
         });

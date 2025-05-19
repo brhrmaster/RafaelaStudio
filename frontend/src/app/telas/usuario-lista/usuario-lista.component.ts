@@ -38,7 +38,6 @@ export class UsuarioListaComponent extends BaseTelaListagemComponent {
     try {
       const getUsuariosResponse: GetUsuariosResponse = await this.usuarioService.getAll(busca.trim());
 
-      console.log(getUsuariosResponse);
       if (getUsuariosResponse) {
         this.paginacao.listaModels.update(() => getUsuariosResponse.users);
         this.paginacao.paginaAtual = 1;

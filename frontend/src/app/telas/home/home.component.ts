@@ -22,7 +22,8 @@ export class HomeComponent {
     totalFornecedoresRecentementeCriados: 0,
     totalProdutosRecentementeCriados: 0,
     totalProdutosPorFornecedor: [],
-    totalEntradaSaidaProdutos: []
+    totalEntradaSaidaProdutos: [],
+    produtosVencimento: { vencidos: [], vencendo: []},
   });
   @Output() alterarPaginaAtual = new EventEmitter<NavegacaoApp>();
   @Output() showLoading = new EventEmitter<boolean>();
@@ -43,6 +44,7 @@ export class HomeComponent {
       const reportsData: GetReportsData = await this.reportsService.getReports();
 
       if (reportsData) {
+        console.log(reportsData);
         this.reportsData.update(() => reportsData);
         this.setupGraficoEntradasSaidas();
         this.setupGraficoFornecedores();
@@ -55,6 +57,22 @@ export class HomeComponent {
         this.showLoadingComponent(false);
       }
     }
+  }
+
+  getTotalProdutosVencendo(): number {
+    const total = this.reportsData().produtosVencimento.vencendo
+      .map(produto => produto.total)
+      .reduce((acc, current) => acc + current, 0);
+
+    return total;
+  }
+
+  getTotalProdutosVencidos(): number {
+    const total =  this.reportsData().produtosVencimento.vencidos
+      .map(produto => produto.total)
+      .reduce((acc, current) => acc + current, 0);
+
+    return total;
   }
 
   setupGraficoFornecedores() {
@@ -119,9 +137,6 @@ export class HomeComponent {
     const itemsEntradas = entradasSaidas.map(item => item.entrada);
     const itemsSaidas = entradasSaidas.map(item => item.saida);
 
-    console.log(itemsEntradas);
-    console.log(itemsSaidas);
-    console.log(xlabels);
     const NUMBER_CFG_Entradas = {
       count: itemsEntradas.length,
       min: 0,

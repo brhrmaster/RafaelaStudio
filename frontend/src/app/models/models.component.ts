@@ -10,7 +10,8 @@ export interface Model {
 export interface Usuario extends Model {
   id: number,
   nome: string,
-  login: string
+  login: string,
+  tipo: number
 };
 
 export interface UsuarioUpdate extends Usuario {
@@ -24,10 +25,16 @@ export interface UserLogin extends Model {
 
 export interface ResponseData {}
 
+export interface Perfil {
+  id: number,
+  name: string
+}
+
 export interface LoginResponseData {
   id: number,
   nome: number,
   login: number,
+  tipo: number,
 };
 
 export interface Fornecedor extends Model {
@@ -115,11 +122,23 @@ export interface TotalProdutosPorFornecedor {
   totalProdutos: number,
 }
 
+export interface ProdutoExpirando {
+  id: number,
+  nome: string,
+  total: number
+}
+
+export interface ProdutoVencendo {
+  vencidos: ProdutoExpirando[],
+  vencendo: ProdutoExpirando[],
+}
+
 export interface GetReportsData {
   totalFornecedoresRecentementeCriados: number,
   totalProdutosRecentementeCriados: number,
   totalProdutosPorFornecedor: TotalProdutosPorFornecedor[],
-  totalEntradaSaidaProdutos: TotalEntradaSaidaProdutoReport[]
+  totalEntradaSaidaProdutos: TotalEntradaSaidaProdutoReport[],
+  produtosVencimento: ProdutoVencendo
 }
 
 export interface AtividadeEstoque {

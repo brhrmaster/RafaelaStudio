@@ -33,9 +33,7 @@ module.exports = (app, db, helpers) => {
 
     const insertUser = async (req, res) => {
 
-        await helpers.waitForABit(1500);
-
-        const { nome, login, password } = req.body;
+        const { nome, login, password, tipo } = req.body;
 
         try {
             validateUserNome(nome);
@@ -68,25 +66,25 @@ module.exports = (app, db, helpers) => {
                 // Insert into main table
                 const updateUsuarioQuery = `
                     UPDATE tbl_usuarios
-                    SET nome = ?, login = ?, password = ?, is_active = 1
+                    SET nome = ?, login = ?, password = ?, tipo = ?, is_active = 1
                     WHERE login LIKE ?
                 `;
 
                 const newPassword = md5(password);
 
-                await db.query(updateUsuarioQuery, [nome, login, newPassword, login]);
+                await db.query(updateUsuarioQuery, [nome, login, newPassword, login, tipo]);
                 return res.status(201).json({ message: 'Usuário adicionado com sucesso' });
             }
 
             // Insert into main table
             const insertUsuarioQuery = `
-                INSERT INTO tbl_usuarios (nome, login, password)
-                VALUES (?, ?, ?)
+                INSERT INTO tbl_usuarios (nome, login, password, tipo)
+                VALUES (?, ?, ?, ?)
             `;
 
             const newPassword = md5(password);
 
-            await db.query(insertUsuarioQuery, [nome, login, newPassword]);
+            await db.query(insertUsuarioQuery, [nome, login, newPassword, tipo]);
             return res.status(201).json({ message: 'Usuário adicionado com sucesso' });
         } catch (e) {
             if (!e.statusCode) e.statusCode = 400;
@@ -95,8 +93,6 @@ module.exports = (app, db, helpers) => {
     };
 
     const updateUser = async (req, res) => {
-
-        await helpers.waitForABit(2000);
 
         const { id } = req.params;
         const { nome, login, password, tipo } = req.body;
@@ -157,8 +153,6 @@ module.exports = (app, db, helpers) => {
 
     const deleteUser = async (req, res) => {
 
-        await helpers.waitForABit(2000);
-
         const { id } = req.params;
 
         try {
@@ -194,8 +188,6 @@ module.exports = (app, db, helpers) => {
     };
 
     const getUsers = async (req, res) => {
-
-        await helpers.waitForABit(3000);
 
         const consulta = req.query;
         try {
@@ -242,13 +234,11 @@ module.exports = (app, db, helpers) => {
 
     const loginUser = async (req, res) => {
 
-        await helpers.waitForABit(3000);
-
         const { login, password } = req.body;
 
         try {
             const queryUsers = `
-                SELECT u.id, u.nome, u.login
+                SELECT u.id, u.nome, u.login, u.tipo
                 FROM tbl_usuarios u
                 WHERE u.is_active = 1 AND u.login LIKE ? AND password = ?
             `;

@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { LoginResponseData, NavegacaoApp } from '../../models/models.component';
+import { BaseTela } from '../BaseTela';
 
 @Component({
   selector: 'app-menu-lateral',
@@ -8,17 +9,17 @@ import { LoginResponseData, NavegacaoApp } from '../../models/models.component';
   templateUrl: './menu-lateral.component.html',
   styleUrl: './menu-lateral.component.css'
 })
-export class MenuLateralComponent {
+export class MenuLateralComponent extends BaseTela {
 
-  user!: LoginResponseData;
+  protected override modalAction(action: string): Promise<void> {
+    throw new Error('Method not implemented.');
+  }
+
   paginaAtual: string = '';
   @Output() alterarPaginaAtual = new EventEmitter<NavegacaoApp>();
 
   constructor() {
-    const currentUser = localStorage.getItem('currentUser');
-    if(currentUser) {
-      this.user = JSON.parse(currentUser);
-    }
+    super();
   }
 
   public alterarPagina(pagina: string) {

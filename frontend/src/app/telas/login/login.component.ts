@@ -31,7 +31,6 @@ export class LoginComponent {
 
   OnInit() {
     const currentUser = localStorage.getItem('currentUser');
-    console.log(currentUser);
     if(currentUser) {
       this.user = JSON.parse(currentUser);
       this.alterarPaginaAtual.emit({ nomePagina: 'HOME', itemId: 0});

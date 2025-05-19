@@ -6,12 +6,12 @@
     <div class="row">
 
       <!-- Novos Fornecedores-->
-      <div class="col-xl-2 col-md-6 col-6 gy-6 gy-xl-0">
+      <div class="col-xl-3 col-md-6 col-6 gy-3 gy-xl-0">
         <div class="d-flex">
           <svg class="svg-icon svg-icon-sm svg-icon-heavy text-primary mt-1 flex-shrink-0">
             <use xlink:href="#user-1"> </use>
           </svg>
-          <div class="ms-2">
+          <div class="ms-12">
             <h3 class="h4 text-dark text-uppercase fw-normal">Novos Fornecedores</h3>
             <p class="text-gray-500 small">Último mês</p>
             <p class="display-6 mb-0">{{reportsData().totalFornecedoresRecentementeCriados}}</p>
@@ -20,12 +20,12 @@
       </div>
 
       <!-- Novos Produtos-->
-      <div class="col-xl-2 col-md-6 col-6 gy-6 gy-xl-0">
+      <div class="col-xl-3 col-md-6 col-6 gy-3 gy-xl-0">
         <div class="d-flex">
           <svg class="svg-icon svg-icon-sm svg-icon-heavy text-primary mt-1 flex-shrink-0">
             <use xlink:href="#user-1"> </use>
           </svg>
-          <div class="ms-2">
+          <div class="ms-12">
             <h3 class="h4 text-dark text-uppercase fw-normal">Novos Produtos</h3>
             <p class="text-gray-500 small">Último mês</p>
             <p class="display-6 mb-0">{{reportsData().totalProdutosRecentementeCriados}}</p>
@@ -33,6 +33,33 @@
         </div>
       </div>
 
+      <!-- Produtos Vencendo-->
+      <div class="col-xl-3 col-md-6 col-6 gy-3 gy-xl-0">
+        <div class="d-flex">
+          <svg class="svg-icon svg-icon-sm svg-icon-heavy text-primary mt-1 flex-shrink-0">
+            <use xlink:href="#user-1"> </use>
+          </svg>
+          <div class="ms-12">
+            <h3 class="h4 text-dark text-uppercase fw-normal">Produtos Vencendo</h3>
+            <p class="text-gray-500 small">Último mês</p>
+            <p class="display-6 mb-0">{{getTotalProdutosVencendo()}}</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Produtos Vencidos-->
+      <div class="col-xl-3 col-md-6 col-3 gy-3 gy-xl-0" style="background-color: #ed7171; color: #fff !important;">
+        <div class="d-flex">
+          <svg class="svg-icon svg-icon-sm svg-icon-heavy text-primary mt-1 flex-shrink-0">
+            <use xlink:href="#user-1"> </use>
+          </svg>
+          <div class="ms-12">
+            <h3 class="h4 text-dark text-uppercase fw-normal">Produtos Vencidos</h3>
+            <p class="text-gray-500 small">Aten&ccedil;&atilde;o</p>
+            <p class="display-6 mb-0">{{getTotalProdutosVencidos()}}</p>
+          </div>
+        </div>
+      </div>
     </div>
 
     <div class="row" style="margin-top: 50px;">

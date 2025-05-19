@@ -27,6 +27,7 @@
             <tr>
               <th scope="col">Nome</th>
               <th scope="col">Login</th>
+              <th scope="col">Perfil</th>
               <th scope="col">&nbsp;</th>
             </tr>
           </thead>
@@ -36,6 +37,7 @@
           <tr *ngFor="let usuario of getListaUsuarios()">
             <td>{{usuario.nome}}</td>
             <td>{{usuario.login}}</td>
+            <td>{{usuario.tipo === 1 ? 'Gerente' : usuario.tipo === 2 ? 'Controlador' : 'Visitante'}}</td>
             <td class="table-icons">
               <a *ngIf="usuario.id != 1" class="icon" title="Alterar informações" (click)="atualizarUsuario(usuario.id)">
                 <i class="fa-solid fa-pen-to-square"></i>

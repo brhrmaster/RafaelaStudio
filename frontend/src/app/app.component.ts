@@ -40,7 +40,7 @@ interface IPagina {
 })
 export class AppComponent {
   titulos: IPagina = {
-    'HOME': 'Painel de Controle',
+    'HOME': 'Painel - Relatório',
     'PRODUTO-LISTA': 'Lista de Produtos',
     'PRODUTO-FORM': 'Cadastro de Produtos',
     'FORNECEDOR-LISTA': 'Lista de Fornecedores',

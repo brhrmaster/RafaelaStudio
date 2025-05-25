@@ -14,6 +14,9 @@
   <app-entradas-saidas-lista *ngIf="paginaAtual === 'ENTRADA_SAIDA'" (alterarPaginaAtual)="alterarPaginaAtual($event)"></app-entradas-saidas-lista>
   <app-entrada-saida-form *ngIf="paginaAtual === 'ENTRADA_SAIDA-FORM'" (alterarPaginaAtual)="alterarPaginaAtual($event)" [itemId]="itemIdAtual" [itemModo]="itemModo || 0"></app-entrada-saida-form>
 
+  <app-formato-lista *ngIf="paginaAtual === 'FORMATO-LISTA'" (alterarPaginaAtual)="alterarPaginaAtual($event)"></app-formato-lista>
+  <app-formato-form *ngIf="paginaAtual === 'FORMATO-FORM'" (alterarPaginaAtual)="alterarPaginaAtual($event)" [itemId]="itemIdAtual"></app-formato-form>
+
   <app-fornecedor-lista *ngIf="paginaAtual === 'FORNECEDOR-LISTA'" (alterarPaginaAtual)="alterarPaginaAtual($event)"></app-fornecedor-lista>
   <app-fornecedor-form *ngIf="paginaAtual === 'FORNECEDOR-FORM'" (alterarPaginaAtual)="alterarPaginaAtual($event)" [itemId]="itemIdAtual"></app-fornecedor-form>
 

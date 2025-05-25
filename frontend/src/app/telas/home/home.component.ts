@@ -44,14 +44,12 @@ export class HomeComponent {
       const reportsData: GetReportsData = await this.reportsService.getReports();
 
       if (reportsData) {
-        console.log(reportsData);
         this.reportsData.update(() => reportsData);
         this.setupGraficoEntradasSaidas();
         this.setupGraficoFornecedores();
         this.showLoadingComponent(false);
       }
     } catch (error: any) {
-      console.log(error);
       if (error && error.status == 0) {
         this.errorMessage = 'Falha na comunicação com o servidor';
         this.showLoadingComponent(false);

@@ -1,0 +1,35 @@
+<div class="error-message" *ngIf="errorMessage !== ''">{{errorMessage}}</div>
+
+<form [formGroup]="formatoForm" (ngSubmit)="onSubmitForm()">
+  <div class="container">
+    <div class="row page-header inner-page-header">
+        <div class="col-sm-12">
+            <h1>{{itemId > 0 ? 'Atualizar' : 'Cadastrar'}} Formato</h1>
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <div class="col-sm-12">
+            &nbsp;
+        </div>
+    </div>
+
+    <div class="row mb-3">
+      <div class="col-sm-1">
+          <label for="formato" class="form-label">Formato:</label>
+      </div>
+      <div class="col-sm-11">
+          <input type="text" formControlName="nome" placeholder="Formato de produto..." id="formato" name="fromato" class="form-control">
+      </div>
+    </div>
+
+    <div class="row page-footer">
+        <div class="col-sm-12 text-end">
+            <button type="button" class="btn btn-danger" (click)="confirmarCancelar()">CANCELAR</button>&nbsp;
+            <input type="submit" [disabled]="!formatoForm.valid" class="btn btn-success" value="SALVAR">
+        </div>
+    </div>
+  </div>
+</form>
+
+<app-loading *ngIf="isLoadingVisible"></app-loading>

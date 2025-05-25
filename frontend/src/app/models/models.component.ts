@@ -54,6 +54,12 @@ export interface Fornecedor extends Model {
   site?: string
 };
 
+export interface Formato extends Model {
+  id: number,
+  nome: string,
+  produtoId?: number
+}
+
 export interface ProdutoInsert extends Model {
   id: number,
   nome?: string,
@@ -64,7 +70,6 @@ export interface ProdutoInsert extends Model {
 };
 
 export interface Produto extends ProdutoInsert {
-  id: number,
   formatoNome: string,
   estoqueTotal: number,
   estoqueCursos: number,
@@ -74,6 +79,10 @@ export interface Produto extends ProdutoInsert {
 
 export interface GetFornecedoresResponse {
   fornecedores: Fornecedor[]
+};
+
+export interface GetFormatosResponse {
+  produtoFormatos: Formato[]
 };
 
 export interface GetProdutosResponse {

@@ -13,6 +13,8 @@ import { LoginComponent } from "./telas/login/login.component";
 import { NavegacaoApp, Usuario } from './models/models.component';
 import { EntradaSaidaListaComponent } from './telas/entradas-saidas-lista/entradas-saidas-lista.component';
 import { EntradaSaidaFormComponent } from "./telas/entrada-saida-form/entrada-saida-form.component";
+import { FormatoListaComponent } from './telas/formato-lista/formato-lista.component';
+import { FormatoFormComponent } from './telas/formato-form/formato-form.component';
 
 interface IPagina {
   [key: string]: string;
@@ -26,10 +28,12 @@ interface IPagina {
     MenuLateralComponent,
     HomeComponent,
     ProdutoListaComponent,
+    FormatoListaComponent,
     FornecedorListaComponent,
     UsuarioListaComponent,
     EntradaSaidaListaComponent,
     ProdutoFormComponent,
+    FormatoFormComponent,
     FornecedorFormComponent,
     UsuarioFormComponent,
     LoginComponent,
@@ -42,11 +46,13 @@ export class AppComponent {
   titulos: IPagina = {
     'HOME': 'Painel - Relatório',
     'PRODUTO-LISTA': 'Lista de Produtos',
-    'PRODUTO-FORM': 'Cadastro de Produtos',
+    'PRODUTO-FORM': 'Cadastro de Produto',
+    'FORMATO-LISTA': 'Lista de Formatos',
+    'FORMATO-FORM': 'Cadastro de Formato',
     'FORNECEDOR-LISTA': 'Lista de Fornecedores',
-    'FORNECEDOR-FORM': 'Cadastro de Fornecedores',
+    'FORNECEDOR-FORM': 'Cadastro de Fornecedor',
     'USUARIO-LISTA': 'Lista de Usuários',
-    'USUARIO-FORM': 'Cadastro de Usuários',
+    'USUARIO-FORM': 'Cadastro de Usuário',
     'LOGIN': 'Acesso Restrito',
     'ENTRADA_SAIDA': 'Histórico de Entradas e Saídas',
     'ENTRADA_SAIDA-FORM': 'Registro de Entradas ou Saídas de Estoque'

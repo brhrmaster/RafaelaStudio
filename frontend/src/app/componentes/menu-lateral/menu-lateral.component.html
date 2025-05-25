@@ -31,6 +31,13 @@
         </ul>
       </li>
 
+      <li class="sidebar-item"><a class="sidebar-link" href="#formatos" data-bs-toggle="collapse">
+        <i class="fa-solid fa-truck-fast"></i>&nbsp;&nbsp; Formatos </a>
+      <ul class="collapse list-unstyled " id="formatos">
+        <li><a (click)="alterarPagina('FORMATO-LISTA')" class="sidebar-link sub"><i *ngIf="paginaAtual === 'FORMATO-LISTA'" class="fa-solid fa-angle-right"></i> Ver Lista</a></li>
+        <li *ngIf="userCanAdd()"><a (click)="alterarPagina('FORMATO-FORM')" class="sidebar-link sub"><i *ngIf="paginaAtual === 'FORMATO-FORM'" class="fa-solid fa-angle-right"></i> Cadastrar</a></li>
+      </ul>
+
       <li class="sidebar-item"><a class="sidebar-link" href="#fornecedores" data-bs-toggle="collapse">
         <i class="fa-solid fa-truck-fast"></i>&nbsp;&nbsp; Fornecedores </a>
       <ul class="collapse list-unstyled " id="fornecedores">

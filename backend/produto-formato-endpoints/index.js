@@ -1,14 +1,15 @@
 const { throwError } = require('../commons/error');
 
 module.exports = (app, db, helpers) => {
-    
+
     const getProdutoFormatos = async (req, res) => {
         try {
             const query = `
-                SELECT 
-                    id,
-                    nome
-                FROM tbl_produto_formatos
+                SELECT
+                    pf.id,
+                    pf.nome,
+	                (SELECT p.id FROM RAFAELA_STUDIO_DB.tbl_produtos p WHERE p.formato_id = pf.id LIMIT 1) AS produtoId
+                FROM tbl_produto_formatos pf
                 ORDER BY nome ASC
             `;
 
@@ -23,7 +24,8 @@ module.exports = (app, db, helpers) => {
     const insertProdutoFormato = async (req, res) => {
         try {
             const formato = req.body;
-            if (!formato.nome || formato.nome && formato.nome.trim()) {
+            console.log(formato);
+            if (!formato.nome || formato.nome.trim() === '') {
                 throwError("Campo 'nome' é obrigatório", 203);
             }
 
@@ -59,8 +61,8 @@ module.exports = (app, db, helpers) => {
     const updateProdutoFormato = async (req, res) => {
         try {
             const formato = req.body;
-            const id = req.query;
-            
+            const { id } = req.params;
+
             if (!id || Number(id) == NaN) {
                 throwError("O 'id' é obrigatório", 203);
             }
@@ -84,7 +86,31 @@ module.exports = (app, db, helpers) => {
         }
     };
 
-    app.get('/api/produto/formatos', getProdutoFormatos);
-    app.post('/api/produto/formato', insertProdutoFormato);
-    app.put('/api/produto/formato/:id', updateProdutoFormato);
+    const deleteProdutoFormato = async (req, res) => {
+        try {
+            const { id } = req.params;
+
+            if (!id || Number(id) === 'NaN') {
+                throwError("O 'id' é obrigatório", 203);
+            }
+
+            const deleteProdutoFormatoQuery = `
+                DELETE FROM tbl_produto_formatos
+                WHERE id = ?
+            `;
+
+            await db.query(deleteProdutoFormatoQuery, [id]);
+
+            return res.status(201).json({ message: 'Formato removido com sucesso!' });
+        } catch (e) {
+            console.log(e);
+            if (!e.statusCode) e.statusCode = 400;
+            return res.status(e.statusCode).send({ error: e.message });
+        }
+    };
+
+    app.get('/api/produto-formatos', getProdutoFormatos);
+    app.post('/api/produto-formato', insertProdutoFormato);
+    app.put('/api/produto-formato/:id', updateProdutoFormato);
+    app.delete('/api/produto-formato/:id', deleteProdutoFormato);
 }

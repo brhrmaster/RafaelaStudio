@@ -1,0 +1,62 @@
+<div class="error-message" *ngIf="errorMessage !== ''">{{errorMessage}}</div>
+
+<div class="container">
+  <div class="row page-header inner-page-header">
+    <div class="col-sm-6">
+      <h1>Formatos de Produtos</h1>
+    </div>
+    <div class="col-sm-6">
+      <button class="btn btn-success" *ngIf="userCanAdd()" (click)="gotoCadastro()">INCLUIR</button>
+    </div>
+  </div>
+  <div class="page-content">
+    <div class="row">
+      <div class="col-sm-8">
+        &nbsp;
+      </div>
+      <div class="col-sm-4 list-page-search-holder">
+        <div class="input-group">
+          <input type="text" class="form-control" placeholder="Buscar formato.." (keyup)="executarBuscaOnKeyboard($event)" (blur)="executarBuscaOnBlur($event)" aria-label="Buscar formato..">
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-12" class="items-table-holder">
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col"><a (click)="ordenarTabela('nome', 'ASC')">Nome</a></th>
+              <th scope="col">&nbsp;</th>
+            </tr>
+          </thead>
+          <tr *ngIf="getListaFormatos().length == 0">
+            <td class="list-items-not-found" colspan="4" scope="row">Nenhum formato de produto dispon&iacute;vel no momento.</td>
+          </tr>
+          @for (formato of getListaFormatos(); track $index) {
+            <tr>
+              <td scope="row">{{formato.nome}}</td>
+              <td class="table-icons">
+                <a *ngIf="userCanEdit()" class="icon" title="Alterar informações" (click)="atualizarFormato(formato.id)">
+                  <i class="fa-solid fa-pen-to-square"></i>
+                </a>
+                <a *ngIf="userCanDelete()" class="icon" title="Excluir">
+                  <i *ngIf="formato.produtoId === null" class="fa-solid fa-trash-can" (click)="confirmarRemocaoFormato(formato)"></i>
+                  <img *ngIf="formato.produtoId !== null" src="/img/cant-remove.png" style="width: 18px;" />
+                </a>
+              </td>
+            </tr>
+          }
+        </table>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-12 text-center table-footer">
+        <a (click)="paginaAnterior()" data-toggle="tooltip" data-placement="top" title="Página anterior" *ngIf="paginacao.paginaAtual > 1"><i class="fa-solid fa-backward"></i>&nbsp;</a>
+        <i class="bi bi-arrow-left-circle"></i> {{paginacao.paginaAtual}} / {{paginacao.totalPaginas}} <i class="bi bi-arrow-right-circle"></i>
+        <a (click)="proximaPagina()" data-toggle="tooltip" data-placement="top" title="Próxima página" *ngIf="paginacao.paginaAtual < paginacao.totalPaginas">&nbsp;<i class="fa-solid fa-forward"></i></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-loading *ngIf="isLoadingVisible"></app-loading>

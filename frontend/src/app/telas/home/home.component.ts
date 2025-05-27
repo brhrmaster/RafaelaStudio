@@ -73,6 +73,10 @@ export class HomeComponent {
     return total;
   }
 
+  public alterarPagina(pagina: string) {
+    this.alterarPaginaAtual.emit({ nomePagina: pagina, itemId: 0, itemNome: '' });
+  }
+
   setupGraficoFornecedores() {
     const totalProdutosPorFornecedor: number[] = [];
     const xlabels: string[] = [];

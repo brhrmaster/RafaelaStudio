@@ -5,7 +5,7 @@ module.exports = (app, db, helpers) => {
     const getTotalProdutosPorFornecedor = async () => {
         // Fornecedores e o total de produtos relacionados
         const queryTotalProdutosPorFornecedor = `
-            SELECT 
+            SELECT
                 f.empresa,
                 (SELECT COUNT(0) FROM tbl_produto_fornecedor WHERE fornecedor_id = f.id) AS totalProdutos
             FROM tbl_fornecedores f
@@ -31,7 +31,7 @@ module.exports = (app, db, helpers) => {
     }
 
     const getTotalProdutosCadastradosNoMes = async () => {
-        
+
         // Total produtos cadastrados no ultimo mes
         const queryProdutosRecentementeCriados = `
             SELECT COUNT(0) as total
@@ -42,12 +42,12 @@ module.exports = (app, db, helpers) => {
         const [totalProdutosRecentementeCriados = results] = await db.query(queryProdutosRecentementeCriados);
         return totalProdutosRecentementeCriados[0].total;
     }
-    
+
     const getTotalEntradasSaidasProdutos = async () => {
-        
+
         // Entradas e saídas de estoque
         const queryEntradaSaidaProdutos = `
-            SELECT 
+            SELECT
                 DATE_FORMAT(created_at, "%Y-%m-%d") AS dayOfMonth,
                 tipo,
                 CAST(SUM(total) AS UNSIGNED) AS total
@@ -64,9 +64,9 @@ module.exports = (app, db, helpers) => {
     const getProdutosVencidosVencendo = async () => {
         // 1. Consultar entradas (agrupadas por validade)
         const queryEntradas = `
-            SELECT 
-                p.id, 
-                p.nome, 
+            SELECT
+                p.id,
+                p.nome,
                 e.validade,
                 SUM(e.total) AS total_entrada
             FROM tbl_produtos p
@@ -82,8 +82,8 @@ module.exports = (app, db, helpers) => {
 
         // 2. Consultar saídas totais por produto
         const querySaidas = `
-            SELECT 
-                produto_id, 
+            SELECT
+                produto_id,
                 SUM(total) AS total_saida
             FROM tbl_produto_estoque
             WHERE tipo = 0

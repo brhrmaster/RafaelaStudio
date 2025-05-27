@@ -242,11 +242,11 @@ export class ProdutoFormComponent extends BaseTela {
     this.currentModal.close();
 
     if (this.isCadastroFinished && action === 'close') {
-      this.alterarPaginaAtual.emit({ nomePagina: 'PRODUTO-LISTA', itemId: 0});
+      this.alterarPaginaAtual.emit({ nomePagina: 'PRODUTO-LISTA', itemId: 0, itemNome: '' });
     }
 
     if (action === 'confirm-cancel') {
-      this.alterarPaginaAtual.emit({ nomePagina: 'PRODUTO-LISTA', itemId: 0});
+      this.alterarPaginaAtual.emit({ nomePagina: 'PRODUTO-LISTA', itemId: 0, itemNome: '' });
     }
   }
 

@@ -66,11 +66,11 @@ export class FornecedorListaComponent extends BaseTelaListagemComponent {
   }
 
   atualizarFornecedor(id: number) {
-    this.alterarPaginaAtual.emit({ nomePagina: 'FORNECEDOR-FORM', itemId: id });
+    this.alterarPaginaAtual.emit({ nomePagina: 'FORNECEDOR-FORM', itemId: id, itemNome: '' });
   }
 
   gotoCadastro() {
-    this.alterarPaginaAtual.emit({ nomePagina: 'FORNECEDOR-FORM', itemId: 0});
+    this.alterarPaginaAtual.emit({ nomePagina: 'FORNECEDOR-FORM', itemId: 0, itemNome: '' });
   }
 
   confirmarRemocaoFornecedor(fornecedor: Fornecedor) {

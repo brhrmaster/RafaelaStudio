@@ -27,9 +27,11 @@
             <tr>
               <th scope="col"><a (click)="ordenarTabela('nome', 'ASC')">Produto</a></th>
               <th scope="col"><a (click)="ordenarTabela('preco', 'ASC')">Pre&ccedil;o</a></th>
-              <th scope="col"><a (click)="ordenarTabela('validade', 'ASC')">Validade</a></th>
+              <!--<th scope="col"><a (click)="ordenarTabela('validade', 'ASC')">Validade</a></th>-->
               <th scope="col">Formato</th>
               <th scope="col"><a (click)="ordenarTabela('estoqueTotal', 'ASC')">Estoque</a></th>
+              <th scope="col"><a (click)="ordenarTabela('vencendo', 'DESC')"><i class="fa-solid fa-triangle-exclamation" style="color:#f59d2b"></i>&nbsp;Vencendo</a></th>
+              <th scope="col"><a (click)="ordenarTabela('vencidos', 'DESC')"><i class="fa-solid fa-skull-crossbones" style="color:#ef0000"></i>&nbsp;Vencidos</a></th>
               <th scope="col">&nbsp;</th>
             </tr>
           </thead>
@@ -38,11 +40,13 @@
           </tr>
           @for (produto of getListaProdutos(); track $index) {
             <tr>
-              <td><a class="product-details-link">{{produto.nome}}<div></div></a></td>
+              <td>{{produto.nome}}</td>
               <td>{{produto.preco | currency : 'BRL'}}</td>
-              <td>{{getFormattedDate(produto.validade)}}</td>
+              <!--<td>{{getFormattedDate(produto.validade)}}</td>-->
               <td>{{produto.formatoNome}}</td>
               <td>{{produto.estoqueClientes}} CL : {{produto.estoqueCursos}} CS de {{produto.estoqueTotal}}</td>
+              <td><span [ngClass]="{'vencimento-highlight': produto.vencendo > 0}">{{produto.vencendo}}</span></td>
+              <td><span [ngClass]="{'vencimento-highlight': produto.vencidos > 0}">{{produto.vencidos}}</span></td>
               <td class="table-icons">
                 <a *ngIf="userCanEdit()" class="icon" title="Gerenciar Estoque" (click)="gerenciarEstoque(produto)">
                   <div class="arrow-up-arrow-down"></div>

@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { LoginResponseData, NavegacaoApp } from '../../models/models.component';
+import { NavegacaoApp } from '../../models/models.component';
 import { BaseTela } from '../BaseTela';
 
 @Component({
@@ -24,11 +24,6 @@ export class MenuLateralComponent extends BaseTela {
 
   public alterarPagina(pagina: string) {
     this.paginaAtual = pagina;
-    this.alterarPaginaAtual.emit({ nomePagina: pagina, itemId: 0});
-  }
-
-  public loggout() {
-    localStorage.removeItem('currentUser');
-    this.alterarPagina('LOGIN');
+    this.alterarPaginaAtual.emit({ nomePagina: pagina, itemId: 0, itemNome: '' });
   }
 }

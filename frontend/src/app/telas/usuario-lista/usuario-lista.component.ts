@@ -54,11 +54,11 @@ export class UsuarioListaComponent extends BaseTelaListagemComponent {
   }
 
   gotoCadastro() {
-    this.alterarPaginaAtual.emit({ nomePagina: 'USUARIO-FORM', itemId: 0});
+    this.alterarPaginaAtual.emit({ nomePagina: 'USUARIO-FORM', itemId: 0, itemNome: '' });
   }
 
   atualizarUsuario(id: number) {
-    this.alterarPaginaAtual.emit({ nomePagina: 'USUARIO-FORM', itemId: id });
+    this.alterarPaginaAtual.emit({ nomePagina: 'USUARIO-FORM', itemId: id, itemNome: '' });
   }
 
   confirmarRemocaoUsuario(usuario: Usuario) {

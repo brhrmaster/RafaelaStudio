@@ -40,9 +40,11 @@
             <use xlink:href="#user-1"> </use>
           </svg>
           <div class="ms-12">
-            <h3 class="h4 text-dark text-uppercase fw-normal">Produtos Vencendo</h3>
-            <p class="text-gray-500 small">Último mês</p>
-            <p class="display-6 mb-0">{{getTotalProdutosVencendo()}}</p>
+            <a class="report-link" (click)="alterarPagina('GESTAO-VALIDADE-LISTA')">
+              <h3 class="h4 text-dark text-uppercase fw-normal">Produtos Vencendo</h3>
+              <p class="text-gray-500 small">Último mês</p>
+              <p class="display-6 mb-0">{{getTotalProdutosVencendo()}}</p>
+            </a>
           </div>
         </div>
       </div>
@@ -54,9 +56,11 @@
             <use xlink:href="#user-1"> </use>
           </svg>
           <div class="ms-12">
-            <h3 class="h4 text-dark text-uppercase fw-normal">Produtos Vencidos</h3>
-            <p class="text-gray-500 small">Aten&ccedil;&atilde;o</p>
-            <p class="display-6 mb-0">{{getTotalProdutosVencidos()}}</p>
+            <a class="report-link" (click)="alterarPagina('GESTAO-VALIDADE-LISTA')">
+              <h3 class="h4 text-dark text-uppercase fw-normal">Produtos Vencidos</h3>
+              <p class="text-gray-500 small">Aten&ccedil;&atilde;o</p>
+              <p class="display-6 mb-0">{{getTotalProdutosVencidos()}}</p>
+            </a>
           </div>
         </div>
       </div>

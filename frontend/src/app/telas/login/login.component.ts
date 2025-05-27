@@ -33,7 +33,7 @@ export class LoginComponent {
     const currentUser = localStorage.getItem('currentUser');
     if(currentUser) {
       this.user = JSON.parse(currentUser);
-      this.alterarPaginaAtual.emit({ nomePagina: 'HOME', itemId: 0});
+      this.alterarPaginaAtual.emit({ nomePagina: 'HOME', itemId: 0, itemNome: '' });
     }
   }
 
@@ -61,7 +61,7 @@ export class LoginComponent {
       if (loginSuccessData) {
         localStorage.setItem('currentUser', JSON.stringify(loginSuccessData));
         this.showLoadingComponent(false);
-        this.alterarPaginaAtual.emit({ nomePagina: 'HOME', itemId: 0});
+        this.alterarPaginaAtual.emit({ nomePagina: 'HOME', itemId: 0, itemNome: '' });
       }
     } catch (error: any) {
       if (error && error.status == 0) {

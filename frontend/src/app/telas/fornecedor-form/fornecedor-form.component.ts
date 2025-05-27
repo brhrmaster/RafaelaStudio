@@ -203,11 +203,11 @@ export class FornecedorFormComponent extends BaseTela {
     this.currentModal.close();
 
     if (this.isCadastroFinished && action === 'close') {
-      this.alterarPaginaAtual.emit({ nomePagina: 'FORNECEDOR-LISTA', itemId: 0});
+      this.alterarPaginaAtual.emit({ nomePagina: 'FORNECEDOR-LISTA', itemId: 0, itemNome: '' });
     }
 
     if (action === 'confirm-cancel') {
-      this.alterarPaginaAtual.emit({ nomePagina: 'FORNECEDOR-LISTA', itemId: 0});
+      this.alterarPaginaAtual.emit({ nomePagina: 'FORNECEDOR-LISTA', itemId: 0, itemNome: '' });
     }
   }
 

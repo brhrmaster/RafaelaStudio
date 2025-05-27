@@ -1,7 +1,8 @@
 export interface NavegacaoApp {
   nomePagina: string,
   itemId: number,
-  itemModo?: number
+  itemModo?: number,
+  itemNome: string
 }
 
 export interface Model {
@@ -74,7 +75,9 @@ export interface Produto extends ProdutoInsert {
   estoqueTotal: number,
   estoqueCursos: number,
   estoqueClientes: number,
-  validade: Date
+  validade: Date,
+  vencendo: number,
+  vencidos: number
 };
 
 export interface GetFornecedoresResponse {
@@ -131,7 +134,7 @@ export interface TotalProdutosPorFornecedor {
   totalProdutos: number,
 }
 
-export interface ProdutoExpirando {
+export interface ProdutoExpirando extends Model {
   id: number,
   nome: string,
   total: number
@@ -147,6 +150,10 @@ export interface GetReportsData {
   totalProdutosRecentementeCriados: number,
   totalProdutosPorFornecedor: TotalProdutosPorFornecedor[],
   totalEntradaSaidaProdutos: TotalEntradaSaidaProdutoReport[],
+  produtosVencimento: ProdutoVencendo
+}
+
+export interface GetReportsVencimentoData {
   produtosVencimento: ProdutoVencendo
 }
 

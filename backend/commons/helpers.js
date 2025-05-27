@@ -1,5 +1,5 @@
 const waitForABit = async (milis) => {
-    await sleep(milis);
+    // await sleep(milis);
 };
 
 const sleep = (ms) => {

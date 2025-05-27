@@ -4,14 +4,16 @@
 
 <div class="page" *ngIf="paginaAtual !== 'LOGIN'">
   <!-- header pagina -->
-  <app-header-pagina [titulo]="titulo"></app-header-pagina>
+  <app-header-pagina [titulo]="titulo" (alterarPaginaAtual)="alterarPaginaAtual($event)"></app-header-pagina>
 
   <app-home *ngIf="paginaAtual === 'HOME'" (alterarPaginaAtual)="alterarPaginaAtual($event)"></app-home>
 
   <app-produto-lista *ngIf="paginaAtual === 'PRODUTO-LISTA'" (alterarPaginaAtual)="alterarPaginaAtual($event)"></app-produto-lista>
   <app-produto-form *ngIf="paginaAtual === 'PRODUTO-FORM'" (alterarPaginaAtual)="alterarPaginaAtual($event)" [itemId]="itemIdAtual"></app-produto-form>
 
-  <app-entradas-saidas-lista *ngIf="paginaAtual === 'ENTRADA_SAIDA'" (alterarPaginaAtual)="alterarPaginaAtual($event)"></app-entradas-saidas-lista>
+  <app-gestao-validade-lista *ngIf="paginaAtual === 'GESTAO-VALIDADE-LISTA'" (alterarPaginaAtual)="alterarPaginaAtual($event)"></app-gestao-validade-lista>
+
+  <app-entradas-saidas-lista *ngIf="paginaAtual === 'ENTRADA_SAIDA'" (alterarPaginaAtual)="alterarPaginaAtual($event)" [itemNome]="itemNome"></app-entradas-saidas-lista>
   <app-entrada-saida-form *ngIf="paginaAtual === 'ENTRADA_SAIDA-FORM'" (alterarPaginaAtual)="alterarPaginaAtual($event)" [itemId]="itemIdAtual" [itemModo]="itemModo || 0"></app-entrada-saida-form>
 
   <app-formato-lista *ngIf="paginaAtual === 'FORMATO-LISTA'" (alterarPaginaAtual)="alterarPaginaAtual($event)"></app-formato-lista>

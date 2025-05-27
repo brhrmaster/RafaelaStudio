@@ -1,4 +1,4 @@
-import { Component, ElementRef, EventEmitter, inject, Output, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, inject, Input, Output, ViewChild, OnInit } from '@angular/core';
 import { CommonModule, formatDate  } from '@angular/common';
 import { catchError } from 'rxjs';
 import { BaseTelaListagemComponent } from '../../componentes/BaseTelaListagemComponent';
@@ -24,11 +24,15 @@ export class EntradaSaidaListaComponent extends BaseTelaListagemComponent {
   serverResponse: string = '';
   isLoadingVisible: boolean = false;
   @Output() alterarPaginaAtual = new EventEmitter<NavegacaoApp>();
+  @Input() itemNome!: string;
   estoqueService: EstoqueService = inject(EstoqueService);
 
   constructor() {
-    super();
-    this.obterEntradasSaidas();
+    super(20);
+  }
+
+  async ngOnChanges() {
+    this.obterEntradasSaidas(this.itemNome);
   }
 
   private showLoadingComponent(show: boolean) {

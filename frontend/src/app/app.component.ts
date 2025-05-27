@@ -15,6 +15,7 @@ import { EntradaSaidaListaComponent } from './telas/entradas-saidas-lista/entrad
 import { EntradaSaidaFormComponent } from "./telas/entrada-saida-form/entrada-saida-form.component";
 import { FormatoListaComponent } from './telas/formato-lista/formato-lista.component';
 import { FormatoFormComponent } from './telas/formato-form/formato-form.component';
+import { GestaoValidadeListaComponent } from './telas/gestao-validade-lista/gestao-validade-lista.component';
 
 interface IPagina {
   [key: string]: string;
@@ -37,7 +38,8 @@ interface IPagina {
     FornecedorFormComponent,
     UsuarioFormComponent,
     LoginComponent,
-    EntradaSaidaFormComponent
+    EntradaSaidaFormComponent,
+    GestaoValidadeListaComponent
 ],
   templateUrl: './app.component.html',
   styles: ''
@@ -47,6 +49,7 @@ export class AppComponent {
     'HOME': 'Painel - Relatório',
     'PRODUTO-LISTA': 'Lista de Produtos',
     'PRODUTO-FORM': 'Cadastro de Produto',
+    'GESTAO-VALIDADE-LISTA': 'Gestão de Validade',
     'FORMATO-LISTA': 'Lista de Formatos',
     'FORMATO-FORM': 'Cadastro de Formato',
     'FORNECEDOR-LISTA': 'Lista de Fornecedores',
@@ -61,6 +64,7 @@ export class AppComponent {
   paginaAtual: string = 'LOGIN';
   itemIdAtual: number = 0;
   itemModo?: number = 0;
+  itemNome: string = '';
   titulo: string = this.titulos[this.paginaAtual];
   usuarioLogado!: Usuario;
 
@@ -73,6 +77,7 @@ export class AppComponent {
     this.titulo = this.titulos[navegacaoApp.nomePagina];
     this.itemIdAtual = navegacaoApp.itemId;
     this.itemModo = navegacaoApp.itemModo;
+    this.itemNome = navegacaoApp.itemNome;
   }
 
   checkLoggedUser() {

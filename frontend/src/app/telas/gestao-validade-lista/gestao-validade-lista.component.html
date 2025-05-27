@@ -1,0 +1,81 @@
+<div class="error-message" *ngIf="errorMessage !== ''">{{errorMessage}}</div>
+
+<div class="container">
+  <div class="row page-header inner-page-header">
+    <div class="col-sm-12">
+      <h1>Produtos em Vencimento</h1>
+    </div>
+  </div>
+  <div class="page-content">
+    <!--
+    <div class="row">
+      <div class="col-sm-8">
+        &nbsp;
+      </div>
+      <div class="col-sm-4 list-page-search-holder">
+        <div class="input-group">
+          <input type="text" class="form-control" placeholder="Buscar produto.." (keyup)="executarBuscaOnKeyboard($event)" (blur)="executarBuscaOnBlur($event)" aria-label="Buscar produto..">
+        </div>
+      </div>
+    </div>
+    -->
+    <div class="row" style="margin-top:30px">
+      <div class="col-md-6 col-sm-12 table-holder">
+        <div class="row">
+          <div class="col-sm-12">
+            <h4><i class="fa-solid fa-triangle-exclamation" style="color:#f59d2b"></i>&nbsp;&nbsp; Vencendo</h4>
+          </div>
+          <div class="col-sm-12" class="items-table-holder">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th scope="col"><a (click)="ordenarTabela('vencendo', 'nome', 'ASC')">Produto</a></th>
+                  <th scope="col"><a (click)="ordenarTabela('vencendo', 'total', 'DESC')">Total</a></th>
+                  <th scope="col">&nbsp;</th>
+                </tr>
+              </thead>
+              <tr *ngIf="produtosVencendo.length == 0">
+                <td class="list-items-not-found" colspan="4" scope="row">Nenhum produto vencendo no momento.</td>
+              </tr>
+              @for (produto of produtosVencendo; track $index) {
+                <tr>
+                  <td><a class="product-details-link" (click)="viewHistory(produto)">{{produto.nome}}<div></div></a></td>
+                  <td>{{produto.total}}</td>
+                </tr>
+              }
+            </table>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6 col-sm-12 table-holder">
+        <div class="row">
+          <div class="col-sm-12">
+            <h4><i class="fa-solid fa-skull-crossbones" style="color:#ef0000"></i>&nbsp;&nbsp; Vencidos</h4>
+          </div>
+          <div class="col-sm-12" class="items-table-holder">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th scope="col"><a (click)="ordenarTabela('vencidos', 'nome', 'ASC')">Produto</a></th>
+                  <th scope="col"><a (click)="ordenarTabela('vencidos', 'total', 'DESC')">Total</a></th>
+                  <th scope="col">&nbsp;</th>
+                </tr>
+              </thead>
+              <tr *ngIf="produtosVencidos.length == 0">
+                <td class="list-items-not-found" colspan="4" scope="row">Nenhum produto vencido no momento.</td>
+              </tr>
+              @for (produto of produtosVencidos; track $index) {
+                <tr>
+                  <td><a class="product-details-link" (click)="viewHistory(produto)">{{produto.nome}}<div></div></a></td>
+                  <td>{{produto.total}}</td>
+                </tr>
+              }
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-loading *ngIf="isLoadingVisible"></app-loading>

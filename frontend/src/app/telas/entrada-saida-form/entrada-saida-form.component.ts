@@ -43,7 +43,7 @@ export class EntradaSaidaFormComponent {
 
   protected errorMessage: string = '';
   protected isLoadingVisible: boolean = false;
-  protected produtoSelecionado: Produto = {id:0, formatoNome:'', estoqueTotal:0, estoqueCursos:0, estoqueClientes:0, validade:new Date(), fornecedores:[] };
+  protected produtoSelecionado: Produto = {id:0, formatoNome:'', estoqueTotal:0, estoqueCursos:0, estoqueClientes:0, validade:new Date(), fornecedores:[], vencendo: 0, vencidos: 0 };
   protected totalCalculado: number = 0;
   private isCadastroFinished = false;
   private currentModal!: NgbModalRef;
@@ -204,11 +204,11 @@ export class EntradaSaidaFormComponent {
     this.currentModal.close();
 
     if (this.isCadastroFinished && action === 'close') {
-      this.alterarPaginaAtual.emit({ nomePagina: 'PRODUTO-LISTA', itemId: 0});
+      this.alterarPaginaAtual.emit({ nomePagina: 'PRODUTO-LISTA', itemId: 0, itemNome: '' });
     }
 
     if (action === 'confirm-cancel') {
-      this.alterarPaginaAtual.emit({ nomePagina: 'PRODUTO-LISTA', itemId: 0});
+      this.alterarPaginaAtual.emit({ nomePagina: 'PRODUTO-LISTA', itemId: 0, itemNome: '' });
     }
   }
 

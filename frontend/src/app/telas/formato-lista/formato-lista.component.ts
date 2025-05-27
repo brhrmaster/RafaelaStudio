@@ -66,11 +66,11 @@ export class FormatoListaComponent extends BaseTelaListagemComponent {
   }
 
   atualizarFormato(id: number) {
-    this.alterarPaginaAtual.emit({ nomePagina: 'FORMATO-FORM', itemId: id });
+    this.alterarPaginaAtual.emit({ nomePagina: 'FORMATO-FORM', itemId: id, itemNome: '' });
   }
 
   gotoCadastro() {
-    this.alterarPaginaAtual.emit({ nomePagina: 'FORMATO-FORM', itemId: 0});
+    this.alterarPaginaAtual.emit({ nomePagina: 'FORMATO-FORM', itemId: 0, itemNome: '' });
   }
 
   confirmarRemocaoFormato(formato: Formato) {

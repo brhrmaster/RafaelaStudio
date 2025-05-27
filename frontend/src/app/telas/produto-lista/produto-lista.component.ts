@@ -3,9 +3,10 @@ import { CommonModule, formatDate, registerLocaleData  } from '@angular/common';
 import ptBr from '@angular/common/locales/pt';
 import { BaseTelaListagemComponent } from '../../componentes/BaseTelaListagemComponent';
 import { ProdutoService } from '../../services/produto.service';
-import { Fornecedor, GenericResponse, GetFornecedoresResponse, GetProdutosResponse, ModalContent, NavegacaoApp, Produto } from '../../models/models.component';
+import { Fornecedor, GenericResponse, GetFornecedoresResponse, GetProdutosResponse, GetReportsVencimentoData, ModalContent, NavegacaoApp, Produto, ProdutoExpirando } from '../../models/models.component';
 import { LoadingComponent } from "../../componentes/loading/loading.component";
 import { FornecedorService } from '../../services/fornecedor.service';
+import { ReportsService } from '../../services/reports.service';
 
 registerLocaleData(ptBr);
 
@@ -17,7 +18,8 @@ registerLocaleData(ptBr);
   ],
   templateUrl: './produto-lista.component.html',
   styleUrls: [
-    '../../styles/tela-lista-registros.css'
+    '../../styles/tela-lista-registros.css',
+    './produto-lista.component.css'
   ],
   providers:    [
     {
@@ -35,8 +37,11 @@ export class ProdutoListaComponent extends BaseTelaListagemComponent {
   @Output() showLoading = new EventEmitter<boolean>();
   private produtoService: ProdutoService = inject(ProdutoService);
   private fornecedorService: FornecedorService = inject(FornecedorService);
+  private reportsService: ReportsService = inject(ReportsService);
   produtoSelecionado!: Produto;
   produtosDisponiveis!: Produto[];
+  produtosVencendo: ProdutoExpirando[] = [];
+  produtosVencidos: ProdutoExpirando[] = [];
 
   constructor() {
     super();
@@ -44,7 +49,7 @@ export class ProdutoListaComponent extends BaseTelaListagemComponent {
   }
 
   gotoCadastro() {
-    this.alterarPaginaAtual.emit({ nomePagina: 'PRODUTO-FORM', itemId: 0});
+    this.alterarPaginaAtual.emit({ nomePagina: 'PRODUTO-FORM', itemId: 0, itemNome: '' });
   }
 
   private showLoadingComponent(show: boolean) {
@@ -56,12 +61,25 @@ export class ProdutoListaComponent extends BaseTelaListagemComponent {
 
     try {
       const getProdutosResponse: GetProdutosResponse = await this.produtoService.getAll(busca.trim());
+      const getReportsVencimentoData: GetReportsVencimentoData = await this.reportsService.getReportsVencimento();
 
       if (getProdutosResponse) {
         this.produtosDisponiveis = getProdutosResponse.produtos;
-        this.atualizarListagem();
-        this.showLoadingComponent(false);
       }
+
+      if (getReportsVencimentoData) {
+        this.produtosVencendo = getReportsVencimentoData.produtosVencimento.vencendo;
+        this.produtosVencidos = getReportsVencimentoData.produtosVencimento.vencidos;
+
+        for (let i=0; i < this.produtosDisponiveis.length; i++) {
+          const currentId = this.produtosDisponiveis[i].id;
+          this.produtosDisponiveis[i].vencendo = this.produtosVencendo.find(pv => pv.id === currentId)?.total || 0;
+          this.produtosDisponiveis[i].vencidos = this.produtosVencidos.find(pv => pv.id === currentId)?.total || 0;
+        }
+      }
+
+      this.atualizarListagem();
+      this.showLoadingComponent(false);
     } catch (error: any) {
       console.log(error);
       if (error && error.status == 0) {
@@ -78,7 +96,7 @@ export class ProdutoListaComponent extends BaseTelaListagemComponent {
   }
 
   atualizarProduto(id: number) {
-    this.alterarPaginaAtual.emit({ nomePagina: 'PRODUTO-FORM', itemId: id });
+    this.alterarPaginaAtual.emit({ nomePagina: 'PRODUTO-FORM', itemId: id, itemNome: '' });
   }
 
   gerenciarEstoque(produto: Produto) {
@@ -133,11 +151,11 @@ export class ProdutoListaComponent extends BaseTelaListagemComponent {
     }
 
     if (action === 'op-estoque-entrada') {
-      this.alterarPaginaAtual.emit({ nomePagina: 'ENTRADA_SAIDA-FORM', itemId: this.produtoSelecionado.id, itemModo: 1});
+      this.alterarPaginaAtual.emit({ nomePagina: 'ENTRADA_SAIDA-FORM', itemId: this.produtoSelecionado.id, itemModo: 1, itemNome: '' });
     }
 
     if (action === 'op-estoque-saida') {
-      this.alterarPaginaAtual.emit({ nomePagina: 'ENTRADA_SAIDA-FORM', itemId: this.produtoSelecionado.id, itemModo: 0});
+      this.alterarPaginaAtual.emit({ nomePagina: 'ENTRADA_SAIDA-FORM', itemId: this.produtoSelecionado.id, itemModo: 0, itemNome: '' });
     }
   }
 

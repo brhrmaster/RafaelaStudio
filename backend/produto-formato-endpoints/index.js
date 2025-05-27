@@ -21,10 +21,39 @@ module.exports = (app, db, helpers) => {
         }
     };
 
+    const getProdutoFormatoById = async (req, res) => {
+        try {
+            const { id } = req.params;
+
+            if (!id || Number(id) === 'NaN') {
+                throwError("O 'id' é obrigatório", 203);
+            }
+
+            const query = `
+                SELECT
+                    id,
+                    nome
+                FROM tbl_produto_formatos
+                WHERE id = ?
+            `;
+
+            const [response] = await db.query(query, [id]);
+
+            if (response.length > 0) {
+                return res.status(200).json(response[0]);
+            } else
+                return res.status(404).json({ message: 'Formato indisponível' });
+
+        } catch (e) {
+            if (!e.statusCode) e.statusCode = 400;
+            return res.status(e.statusCode).json({ error: e.message });
+        }
+    };
+
     const insertProdutoFormato = async (req, res) => {
         try {
             const formato = req.body;
-            console.log(formato);
+
             if (!formato.nome || formato.nome.trim() === '') {
                 throwError("Campo 'nome' é obrigatório", 203);
             }
@@ -63,11 +92,11 @@ module.exports = (app, db, helpers) => {
             const formato = req.body;
             const { id } = req.params;
 
-            if (!id || Number(id) == NaN) {
+            if (!id || Number(id) === 'NaN') {
                 throwError("O 'id' é obrigatório", 203);
             }
 
-            if (!formato.nome || formato.nome && formato.nome.trim()) {
+            if (!formato.nome || formato.nome === '' && formato.nome.trim() === '') {
                 throwError("Campo 'nome' é obrigatório", 203);
             }
 
@@ -110,6 +139,7 @@ module.exports = (app, db, helpers) => {
     };
 
     app.get('/api/produto-formatos', getProdutoFormatos);
+    app.get('/api/produto-formato/:id', getProdutoFormatoById);
     app.post('/api/produto-formato', insertProdutoFormato);
     app.put('/api/produto-formato/:id', updateProdutoFormato);
     app.delete('/api/produto-formato/:id', deleteProdutoFormato);

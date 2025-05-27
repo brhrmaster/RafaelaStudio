@@ -161,7 +161,7 @@ export interface AtividadeEstoque {
   tipo: number,
   tipoNome?: string,
   total: number,
-  validade?: Date,
+  validade?: string,
   qtdClientes: number,
   qtdCursos: number,
   produtoId: number,

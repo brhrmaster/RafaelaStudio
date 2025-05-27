@@ -38,9 +38,6 @@ export const CustomNumberMaskConfig: CurrencyMaskConfig = {
 })
 export class EntradaSaidaFormComponent {
 
-  private currentDate = new Date();
-  private newDateAddMonth = new Date(new Date(this.currentDate).setMonth(this.currentDate.getMonth() + 1));
-
   protected errorMessage: string = '';
   protected isLoadingVisible: boolean = false;
   protected produtoSelecionado: Produto = {id:0, formatoNome:'', estoqueTotal:0, estoqueCursos:0, estoqueClientes:0, validade:new Date(), fornecedores:[], vencendo: 0, vencidos: 0 };
@@ -57,8 +54,8 @@ export class EntradaSaidaFormComponent {
   protected entradaSaidaForm = new FormGroup({
     produtoNome: new FormControl(''),
     isValidadeDefinida: new FormControl<boolean>(false),
-    validade: new FormControl<Date>(this.newDateAddMonth),
-    totalLote: new FormControl<number>(0, [Validators.required, Validators.min(0), Validators.max(50000)]),
+    validade: new FormControl<string>(''),
+    totalLote: new FormControl<number>(0, [Validators.required, Validators.min(1), Validators.max(50000)]),
     totalCursos: new FormControl<number>(0, [Validators.required, Validators.min(0), Validators.max(50000)]),
     totalClientes: new FormControl<number>(0, [Validators.required, Validators.min(0), Validators.max(50000)]),
   });
@@ -87,14 +84,17 @@ export class EntradaSaidaFormComponent {
         this.entradaSaidaForm.setValue({
           produtoNome: this.produtoSelecionado.nome!,
           isValidadeDefinida: this.produtoSelecionado.isValidadeDefinida!,
-          validade: this.newDateAddMonth,
+          validade: '',
           totalLote: 0,
           totalCursos: 0,
           totalClientes: 0
         });
         this.entradaSaidaForm.controls.produtoNome.disable();
         this.entradaSaidaForm.controls.isValidadeDefinida.disable();
-        this.entradaSaidaForm.controls.validade.validator = this.produtoSelecionado.isValidadeDefinida ? Validators.required : Validators.nullValidator;
+
+        if (this.produtoSelecionado.isValidadeDefinida) {
+          this.entradaSaidaForm.controls.validade.addValidators(Validators.required);
+        }
 
         if(this.itemModo != 1) { // se é saída, não pode ultrapassar o atual
           this.entradaSaidaForm.controls.totalLote.addValidators(Validators.max(this.produtoSelecionado.estoqueTotal));
@@ -130,8 +130,8 @@ export class EntradaSaidaFormComponent {
     const totalCursos = Number(this.entradaSaidaForm.controls.totalCursos.value);
     const totalClientes = Number(this.entradaSaidaForm.controls.totalClientes.value);
     const totalLote = Number(this.entradaSaidaForm.controls.totalLote.value);
-    const isValidadeDefinida = this.produtoSelecionado.isValidadeDefinida;
-    const vencimento: Date = isValidadeDefinida ? this.entradaSaidaForm.controls.validade.value || new Date() : new Date();
+    const isValidadeDefinida: boolean | undefined = this.produtoSelecionado.isValidadeDefinida;
+    const vencimento: string | null = isValidadeDefinida ? this.entradaSaidaForm.controls.validade.value : '';
     const isDistributed = totalCursos + totalClientes == totalLote;
     const restante = totalLote - totalCursos - totalClientes;
     const totalSoma = totalClientes + totalCursos;
@@ -158,13 +158,23 @@ export class EntradaSaidaFormComponent {
       return;
     }
 
+    if (!this.entradaSaidaForm.valid && isEntrada && isValidadeDefinida && vencimento === '') {
+      this.openModal({
+        title: 'AVISO',
+        message: `Você precisa definir a data de validade`,
+        cancelButtonText: 'OK',
+        cancelButtonClass: 'btn-success'
+      });
+      return;
+    }
+
     this.showLoadingComponent(true);
     try {
       await this.estoqueService.save({
         produtoId: this.produtoSelecionado.id,
         tipo: this.itemModo,
         total: totalLote,
-        validade: isEntrada && isValidadeDefinida ? vencimento : undefined,
+        validade: isEntrada && isValidadeDefinida && vencimento ? vencimento : undefined,
         qtdClientes: totalClientes,
         qtdCursos: totalCursos,
         tipoNome: ''

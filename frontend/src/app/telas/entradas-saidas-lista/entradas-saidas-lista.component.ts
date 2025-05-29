@@ -67,8 +67,9 @@ export class EntradaSaidaListaComponent extends BaseTelaListagemComponent {
     return <AtividadeEstoque[]> this.paginacao.listaModelsPaginados();
   }
 
-  getFormattedDate(datetime: Date, format: string) {
-    return datetime ? formatDate(datetime, format, 'pt-BR') : '';
+  getFormattedDate(datetime: string | Date, format: string) {
+    const dateValue: Date = typeof datetime === 'string' ? new Date(datetime) : datetime;
+    return datetime ? formatDate(dateValue, format, 'pt-BR') : '';
   }
 
   executarBuscaOnKeyboard(event: KeyboardEvent) {

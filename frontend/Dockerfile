@@ -1,4 +1,4 @@
-FROM node:22.14.0 as build
+FROM node:23.11.1-slim as build
 
 WORKDIR /usr/src/app
 

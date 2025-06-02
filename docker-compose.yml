@@ -16,6 +16,12 @@ services:
       interval: 5s
       timeout: 5s
       retries: 5
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 320M
 
   backend-api:
     build: ./backend/
@@ -25,7 +31,7 @@ services:
     environment:
       - DB_HOST=mysql
       - DB_USER=rafaela_studio
-      - DB_PASSWORD=123456
+      - DB_PASSWORD=Superstition!32@2
       - DB_NAME=RAFAELA_STUDIO_DB
       - JWT_SECRET=b889ee183bddc27a8c9ad825daacab2600feb2f2b73a3b896c55db38656529fff645551bf81039dac5cf78c47a7e333e2a7ff2e1ed3fdd0c5860bb9d38ef60cedc8493e3e49f22e05e6f4f4be502ae6b525731f63315ced25b69658e229a66e98c7a479c854c120398bb1e664a59307690b683cb40dbef92bd688bd9e2417b426d525de086050a7147a22978542622f2b1929223b65c45b5c9700fb562386e3583680e3add52f83ab6e2a783dee837b061abf026e9fd70d09dc9e668111c099545395db31af7041beaeb3051ccf4834ab9a059fce1bc2f44c9d1e504f4e80c601e7856897e4aa33d68e18a2f7e3ae88d68d90125d9026cbf0214ea2efdd6b0cf
     depends_on:
@@ -33,6 +39,12 @@ services:
         condition: service_healthy
     networks:
       - app-network
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 150M
 
   frontend:
     build: ./frontend/
@@ -46,6 +58,12 @@ services:
         condition: service_started
     networks:
       - app-network
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          cpus: '0.1'
+          memory: 60M
 
 networks:
   app-network:
